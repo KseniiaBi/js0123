@@ -1,19 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>JS FE</title> 
+	<title>JS FE</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
+
 <body>
-	Hello world!!
+
+
+	<script>
+		`use strict`
+		// ---------exercise 1-------------------------------
+		let lang;
+		let first;
+		let second;
+		let third;
+		let fourth;
+		let fifth;
+		let sixth;
+		let seventh;
+		let x = confirm(' are your language is english');
+		if (x == true) {
+			lang = 'en'
+		}
+		else if (x == false) {
+			lang = 'ua'
+		}
+		if (lang == 'ua') {
+			first = 'Понеділок'
+			second = 'Вівторок'
+			third = 'Середа'
+			fourth = 'Четвер'
+			fifth = "П'ятниця"
+			sixth = 'Субота'
+			seventh = 'Неділя'
+		}
+		else {
+			first = 'Monday'
+			second = 'Tuesday'
+			third = 'Wednesday'
+			fourth = 'Thursday'
+			fifth = "Friday"
+			sixth = 'Satuday'
+			seventh = 'Sunday'
+		}
+		let day = +prompt('Type number 1 - 7');
+		switch (day) {
+			case 1: console.log(first);
+				break;
+			case 2: console.log(second);
+				break;
+			case 3: console.log(third);
+				break;
+			case 4: console.log(fourth);
+				break;
+			case 5: console.log(fifth);
+				break;
+			case 6: console.log(sixth);
+				break;
+			case 7: console.log(seventh);
+				break;
+			default: console.log('not a day');
+		}
+		// ----------------exercise 2-----------------------
+		// let min;
+		// min = +prompt('Type number 1 - 59');
+		// if (min > 0 && min < 15) {
+		// 	console.log('first quarter');
+		// }
+		// else if (min > 16 && min < 29) {
+		// 	console.log('second quarter');
+		// }
+		// else if (min > 30 && min < 44) {
+		// 	console.log('third quarter');
+		// }
+		// else if (min > 45 && min < 59) {
+		// 	console.log('fourth quarter');
+		// }
+		// else {
+		// 	console.log('invalid value');
+		// }
+		// ----------------exercise 3-----------------------
+		// let a;
+		// a = +prompt('Type number');
+		// if (a == 0) {
+		// 	console.log('верно');
+		// }
+		// else{
+		// 	console.log('неверно');
+		// }
+		// ----------------exercise 4-----------------------
+		// let a;
+		// a = +prompt('Type number');
+		// if (a <= 0) {
+		// 	console.log('верно');
+		// }
+		// else{
+		// 	console.log('неверно');
+		// }
+		// ----------------exercise 5-----------------------
+		// ----------------exercise 5.1----------
+		// let test;
+		// test = confirm('test = True');
+		// if (test != true) {
+		// 	console.log('верно');
+		// }
+		// else {
+		// 	console.log('неверно')
+		// }
+		// ----------------exercise 5.2----------
+		// let test;
+		// test = confirm('test = True')
+		// let f = 'неверно'
+		// let t = 'верно'
+		// let value = test != true ? t : f;
+		// console.log(value);
+
+		
 
 
 
-<script>
 
 
-</script>
-
+	</script>
 </body>
+
 </html>
