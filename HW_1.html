@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+	Hello world! Dmitry Klochko_17/01
+
+
+№_1
+<script>
+	let lang = prompt('Type lang en - ua');
+    
+    if (lang == 'en') {
+	let day = +prompt('Type number 1 - 7');
+	switch(day){
+		case 1: console.log('Mon');
+				break;
+		case 2: console.log('Tue');
+				break;
+		case 3: console.log('Wed');
+				break;
+		case 4: console.log('Thu');
+				break;
+		case 5: console.log('Fri');
+				break;
+		case 6: console.log('Sat');
+				break;
+		case 7: console.log('Sun');
+				break;
+		default: console.log('Not a day');
+	}
+    }
+    
+    if (lang == 'ua') {
+	let day = +prompt('Type number 1 - 7');
+	switch(day){
+		case 1: console.log('Пн');
+				break;
+		case 2: console.log('Вт');
+				break;
+		case 3: console.log('Ср');
+				break;
+		case 4: console.log('Чт');
+				break;
+		case 5: console.log('Пт');
+				break;
+		case 6: console.log('Сб');
+				break;
+		case 7: console.log('Нд');
+				break;
+		default: console.log('Не сьогодні');
+	}
+    }
+</script>
+
+№_2   
+<script>     
+let min=+prompt("Введите число от 0 до 59");
+      if (min >= 0 && min <= 14) {
+        console.log ("I четверть");
+     }
+      else if (min >= 15 && min <= 30) {
+        console.log ("II четверть");
+     }
+     else if (min >= 31 && min <= 45) {
+        console.log ("III четверть");
+     }
+     else if (min >= 46 && min <= 59) {
+        console.log ("IV четверть");
+     }   
+    else{
+        console.error('Incorrect input')
+    }
+</script>  
+       
+№_3   
+<script> 
+let a= +prompt("Введите цифру 0");  
+if (a == 0) {
+	console.log ('Верно');
+} else {
+	console.log ('Неверно');
+}     
+</script>     
+    
+№_4   
+<script>   
+let b= +prompt("Введите цифру меньше или равно нулю");    
+if (b <= 0) {
+    console.log ('Верно');
+} else {
+    console.log ('Неверно');
+}       
+</script>   
+    
+№_5   
+  <script>   
+let test= prompt('true_or_false');    
+if (test != true) {
+    console.log ('Верно');
+} 
+else { 
+ console.log ('Неверно'); 
+}     
+</script>    
+      
+</body>
+</html>
