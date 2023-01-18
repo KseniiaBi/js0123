@@ -12,116 +12,98 @@
 
 	<script>
 		`use strict`
-		// ---------exercise 1-------------------------------
-		let lang;
-		let first;
-		let second;
-		let third;
-		let fourth;
-		let fifth;
-		let sixth;
-		let seventh;
-		let x = confirm(' are your language is english');
-		if (x == true) {
-			lang = 'en'
-		}
-		else if (x == false) {
-			lang = 'ua'
-		}
-		if (lang == 'ua') {
-			first = 'Понеділок'
-			second = 'Вівторок'
-			third = 'Середа'
-			fourth = 'Четвер'
-			fifth = "П'ятниця"
-			sixth = 'Субота'
-			seventh = 'Неділя'
-		}
-		else {
-			first = 'Monday'
-			second = 'Tuesday'
-			third = 'Wednesday'
-			fourth = 'Thursday'
-			fifth = "Friday"
-			sixth = 'Satuday'
-			seventh = 'Sunday'
-		}
-		let day = +prompt('Type number 1 - 7');
-		switch (day) {
-			case 1: console.log(first);
-				break;
-			case 2: console.log(second);
-				break;
-			case 3: console.log(third);
-				break;
-			case 4: console.log(fourth);
-				break;
-			case 5: console.log(fifth);
-				break;
-			case 6: console.log(sixth);
-				break;
-			case 7: console.log(seventh);
-				break;
-			default: console.log('not a day');
-		}
-		// ----------------exercise 2-----------------------
-		// let min;
-		// min = +prompt('Type number 1 - 59');
-		// if (min > 0 && min < 15) {
-		// 	console.log('first quarter');
-		// }
-		// else if (min > 16 && min < 29) {
-		// 	console.log('second quarter');
-		// }
-		// else if (min > 30 && min < 44) {
-		// 	console.log('third quarter');
-		// }
-		// else if (min > 45 && min < 59) {
-		// 	console.log('fourth quarter');
-		// }
-		// else {
-		// 	console.log('invalid value');
-		// }
-		// ----------------exercise 3-----------------------
-		// let a;
-		// a = +prompt('Type number');
-		// if (a == 0) {
-		// 	console.log('верно');
-		// }
-		// else{
-		// 	console.log('неверно');
-		// }
-		// ----------------exercise 4-----------------------
-		// let a;
-		// a = +prompt('Type number');
-		// if (a <= 0) {
-		// 	console.log('верно');
-		// }
-		// else{
-		// 	console.log('неверно');
-		// }
-		// ----------------exercise 5-----------------------
-		// ----------------exercise 5.1----------
-		// let test;
-		// test = confirm('test = True');
-		// if (test != true) {
-		// 	console.log('верно');
-		// }
-		// else {
-		// 	console.log('неверно')
-		// }
-		// ----------------exercise 5.2----------
-		// let test;
-		// test = confirm('test = True')
-		// let f = 'неверно'
-		// let t = 'верно'
-		// let value = test != true ? t : f;
-		// console.log(value);
+		// ------------------- Задание 1 ---------------------------
+		// Дано число n=1000. Делите его на 2 столько раз, пока результат деления не станет меньше 50.
+		// Какое число получится?
+		// Посчитайте количество итераций, необходимых для этого (итерация - это проход цикла),
+		// и запишите его в переменную
+		// num.
 
-		
+		let n = 1000;
+		let num = 0;
+		while (n / 2 >= 50) {
+			n /= 2;
+			num++;
+		}
+		console.log(`n = ${n}`);
+		console.log(`num = ${num}`);
 
+		// ------------------- Задание 2 ---------------------------
+		// Если задано число n, вернуть количество положительных нечетных чисел меньше n
 
+		// let n = +prompt('number N');
+		// let x = 1;
+		// let i = 0;
+		// while (x < n) {
+		// 	if (x%2 != 0) {
+		// 	    i++;
+		// 	    console.log (x);
+		// 	}
+		// 	x++;
+		// 	}
+		// console.log (`i = ${i}`);
 
+		// ------------------- Задание 3 ---------------------------
+		// Компания по транспортировке мебели заносит любую мебель на 1 - й этаж бесплатно,
+		//  со 2 - го по 4 - й включительно - по 20грн., с 5 - го по 7 - й включительно - по 30грн.,
+		//   а с 8 - го и выше - по 40грн.
+		// Узнайте у пользователя, на какой этаж нужно занести мебель, и рассчитайте стоимость транспортировки.
+
+		// let floor = +prompt('number of floor')
+		// let i;
+		// let price = 0;
+		// if (floor === 1) {
+		// 	console.log(`floor = ${floor}эт`)
+		// 	console.log(`price = ${price}грн`)
+		// }
+		// else if (floor > 1) {
+		// 	for (i = 2; i <= floor && i <= 4; i++) {
+		// 		price += 20;
+		// 	}
+		// 	for (i == 5; i <= floor && i <= 7; i++) {
+		// 		price += 30;
+		// 	}
+		// 	for (i == 8; i <= floor; i++) {
+		// 		price += 40;
+		// 	}
+		// 	console.log(`floor = ${floor}эт`)
+		// 	console.log(`price = ${price}грн`)
+		// }
+		// else console.log("invalid value")
+
+		// ------------------- Задание 4 ---------------------------
+
+		// получить с помощью prompt аргументы a,b,c, вывести в консоли квадратное уравнение с ними,
+		//  а затем вычислить корни этого уравнения и вывести в консоли
+
+		// let a = +prompt("number a");
+		// let b = +prompt("number b");
+		// let c = +prompt("number c");
+		// let x1;
+		// let x2;
+		// let D;
+		// console.log("a*Math.pow(x,2) + b*x + c = 0")
+		// D = Math.pow(b, 2) - (4 * a * c);
+		// if (a != 0) {
+		// 	if (D < 0) {
+		// 		console.log(`discriminant = ${D}`);
+		// 		console.log("корней нет")
+		// 	}
+		// 	else if (D > 0) {
+		// 		x1 = (-b + Math.sqrt(D)) / (a * 2);
+		// 		x2 = (-b - Math.sqrt(D)) / (a * 2);
+		// 		console.log(`discriminant = ${D}`);
+		// 		console.log(`x1 = ${x1}`);
+		// 		console.log(`x2 = ${x2}`);
+
+		// 	}
+		// 	else {
+		// 		x1 = (-b + Math.sqrt(D)) / (a * 2);
+		// 		console.log(`discriminant = 0`);
+		// 		console.log(`x1 = ${x1}`);
+		// 	}
+		// }
+		// else console.log("incorrect value a");
 
 
 	</script>
