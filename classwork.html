@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+	Hello world!
+
+
+
+<script>
+	// ДЗ 1
+
+	let num = 1000;
+	let iter = 0;
+
+	while(num >= 50){
+		num /= 2; // num = num/2;
+		iter++;
+	}
+	console.warn(`num: ${num}, i: ${iter}`);
+
+	// 2
+
+	let n = +prompt('Type anu positive number');
+	if(!isNaN(n) && n>0){
+		let odd = 0;
+		let current = 1;
+
+		while(current < n){
+			if(current %2 !== 0){
+				odd++;
+			}
+			current++;
+		}
+		console.log(`Number of odd numbers before ${n} : ${odd}`);
+	}
+	else{
+		console.error('Can not count odd numbers');
+	}
+
+	// 3
+
+	let price24 = 20;
+	let price57 = 30;
+	let price8up = 40;
+	let targetFloor = +prompt('Type target floor');
+	let delivery = 0;
+
+	if(targetFloor > 1){
+		for(let i = 2; i <= targetFloor; i++){
+			if(i < 5){
+				delivery += 20;
+			}
+			else if(i>=5 && i <8){
+				delivery += 30;
+			}
+			else{
+				delivery += 40;
+			}
+		}
+	}
+
+	console.warn(`Delivery on ${targetFloor} will cost ${delivery} UAH`);
+
+	// 4
+
+	let a = +prompt('Type A');
+	let b = +prompt('Type B');
+	let c = +prompt('Type C');
+
+	if(a === 0){
+		console.error('Рівняння не може бути вирішене');
+	}
+
+	console.log(`${a}x^2 + ${b}x + ${c}`);
+
+	let d = b*b - 4*a*c;
+
+	if(d > 0){
+		let x1 = (-b -Math.sqrt(d))/(2*a);
+		let x2 = (-b +Math.sqrt(d))/(2*a);
+
+		console.log(`Рівняння має два корені x1 = ${x1}, x2 = ${x2}`);
+	}
+	else if(d === 0){
+		let x = -b/(2*a);
+		console.log(`Рівняння один корінь x = ${x}`);
+	}
+	else{
+		console.log('Рівняння не має дійсних коренів')
+	}
+</script>
+
+</body>
+</html>
