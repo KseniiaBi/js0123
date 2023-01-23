@@ -11,83 +11,266 @@
 
 
 <script>
-// filter arr
-let arr6 = [-9,1,2,3, -4, 5, -2, 8, -6, 7, -12, 22, 7, -5];
-	let positiveNums = [];
-	let negativeNums = [];
-	let index6 = 0;
-	let ind6 = 0;
-	for(let i = 0; i < arr6.length; i++){
-		if(arr6[i] >= 0){
-			positiveNums[index6] = arr6[i];
-			index6++;
+
+
+	// functions
+
+	// -> [] ->
+
+	let a = 10;
+	// function declaration
+	function foo(){
+		let a = 5;
+		console.log(a);
+	}
+ // вызов функции всегда состоит из ее имени и круглых скобок за ним
+	foo();
+	console.log(a);
+
+	//  function expression 
+
+	let sayHi = function(){
+		console.error('Hi!');
+	}
+
+	sayHi();
+
+	// anonymous + self-calling
+
+	(function(){
+		console.error('Anonymous');
+	})();
+
+
+	// arrow function
+
+	let sayBye = () => console.log('Bye!');
+	sayBye();
+
+
+	// callback function
+
+	function accept(){
+		console.warn('Item was removed from cart!');
+	}
+	function decline(){
+		console.log('Item was not removed');
+	}
+
+	// calls after user clicked 'trash' icon on cart page
+	function removeItem(conf,undo){
+		confirm('Are you sure you want to delete item from cart?') ? conf() : undo();
+	} 
+
+	// removeItem(accept, decline);
+
+
+	// another one callback
+
+	setTimeout(function(){
+		console.error('Timeout');
+	}, 1000);
+
+	setTimeout(()=> console.warn('Timeout warn'), 1500);
+
+
+	//  arguments
+
+	function greeting(name){
+		console.log(`Hello, ${name}`);
+	}
+
+	greeting('User');
+	greeting('Yulius', 'Caesar');
+	greeting();
+
+	function smartGreeting(){
+		if(arguments.length == 0){
+			console.log('Hello, Stranger!');
+		}
+		else if(arguments.length == 1){
+			console.log(`Hello, ${arguments[0]}`);
+		}
+		else if(arguments.length == 2){
+			console.log(`Hello, ${arguments[0]}  ${arguments[1]}`);
 		}
 		else{
-			negativeNums[ind6] = arr6[i];
-			ind6++;
+			let msg = '';
+			for(let i = 0; i < arguments.length; i++){
+				msg += arguments[i] + ' ';
+			}
+			console.log(msg);
 		}
 	}
-	
-	console.log(negativeNums);
 
-	let arr62 = [];
-	let index = 0;
+	smartGreeting();
+	smartGreeting('Teacher');
+	smartGreeting('Yulius', 'Caesar');
+	smartGreeting('Good afternoon!','Yulius', 'Caesar', 'How are you?');
 
-	for(let i = 0; i < negativeNums.length; i++){
-		let min;
-		for(let j = 0; j < negativeNums.length; j++){
-			if(negativeNums[i] < negativeNums[j]){
-				min = negativeNums[j];
-				negativeNums[j] = negativeNums[i];
-				negativeNums[i] = min;
+
+	let x = 12;
+	let y = 5;
+
+	function stupidSum(){
+		console.log(x+y);
+	}
+	stupidSum();
+	stupidSum();
+	stupidSum();
+
+	function sum(a,b){
+		console.log(`sum = ${a+b}`);
+	}
+
+	sum(2,4);
+	sum(7,12);
+	sum(10, 45, 10);
+
+	function smartSum(){
+		let sum = 0;
+		for(let i = 0; i < arguments.length; i++){
+			sum += arguments[i];
+		}
+		console.log(`sum = ${sum}`);
+	}
+
+	smartSum();
+	smartSum(2);
+	smartSum(3,4,5);
+	smartSum(6,8);
+
+
+	console.log(smartSum(2,3));
+
+	function square(n){
+		return n*n;
+	}
+
+	function pow(n,m){
+		let power = 1;
+		let msg = 'This is system message';
+		for(let i = 1; i <=m; i++){
+			power *= n;
+		}
+		return power;
+		// return [power,msg]; // you can return multiple values in data structure
+		// return msg; // incorrect! only one return statement
+	}
+
+	let b = square(2);
+	console.log(square(3));
+
+	// let msg = pow(2,2)[1];
+	// console.log(msg);
+	console.log(pow(4,2));
+
+	let summ = (a,b) => a+b;
+	console.warn(summ(2,3));
+
+	// recursive function - calls itself
+
+	function showNum(n){
+		if(n <= 10){
+			console.log(n);
+			showNum(++n);
+		}
+		else{
+			console.warn('finished recursion');
+		}
+	}
+
+	showNum(1);	
+
+	let arr = [1,2,3,4,5,6,7,8,9];
+
+	function printArr(ar, index = 0){
+		if(index < ar.length){
+			console.log(`array[${index}]: ${ar[index]}`);
+			printArr(ar,++index);
+		}
+	}
+
+	printArr(arr);
+
+
+	// a+b/c
+
+	let calc = (a,b,c) => (a+b)/c;
+
+	console.log(calc(4,6,2));
+
+	// a,b -> max
+
+	// let max = (a,b) => {
+	// 	if(a > b){
+	// 		return a;
+	// 	}
+	// 	else{
+	// 		return b;
+	// 	}
+	// }
+
+	let max = (a,b) => a > b ? a : b;
+	console.log(max(4,5));
+
+
+	let sayHello = name => console.log(`Hello, ${name}`);
+	sayHello('Student');
+
+	// let superSum = () => {
+	// 	let sum = 0;
+	// 	for(let i = 0; i < arguments.length; i++){ // ReferenceError: arguments is not defined
+	// 		sum += arguments[i];
+	// 	}
+	// 	return sum;
+	// }
+	// console.log(superSum(2,3,4,5));
+
+
+	let ar = [[1,2,[3,[4,5]]], [6,[7,8,[9,10,[11,12,[13,14]]]]], 15];
+
+	function sumArr(arr){
+		let sum = 0;
+		for(let i = 0; i < arr.length; i++){
+			if(typeof arr[i] == 'number'){
+			// if(arr[i].length > 0)
+				sum += arr[i];
+			}
+			else{
+				sum += sumArr(arr[i]);
 			}
 		}
+		return sum;
 	}
 
-	for(let i = 0; i < positiveNums.length; i++){
-		let min;
-		for(let j = 0; j < positiveNums.length; j++){
-			if(positiveNums[i] < positiveNums[j]){
-				min = positiveNums[j];
-				positiveNums[j] = positiveNums[i];
-				positiveNums[i] = min;
-			}
+	console.log(sumArr(ar));
+
+	// 12397856 => 41 => 5
+	// 9992378 => 47 => 11 => 2
+	// 999999999999999999999999999 => 171 => 9
+
+	function getDigitsSum(n){
+		let str = String(n);
+		let sum = 0;
+		for(let i = 0; i < str.length; i++){
+			sum += Number(str[i]);
+		}
+		if(sum > 9){
+			getDigitsSum(sum);
+		}
+		else{
+			console.log(sum);
 		}
 	}
 
-	console.log(positiveNums);
-
-	for(let n of negativeNums){
-		arr62[index] = n;
-		index++;
-	}
-	for(let p of positiveNums){
-		arr62[index] = p;
-		index++;
-	}
-
-	console.log(arr62);
+	// getDigitsSum(12397856);
+	getDigitsSum(9999999997899999);
 
 
- // HW 1) на базе задачи с фильтрацией массивов создать третий массив, в котором сначала будут идти по порядку отрицательные числа, а потом положительные
-//  2 ) вывести числа от 1 до 50 (*break) в консоли c помощью "бесконечного цикла" while, но пропустить числа 10,20,30 и 40 (*continue)
-// 3) отсортировать массив пузырьком [5,7,1,9,4,2,6,3,8] -> [1,2,3,4,5,6,7,8,9]
 
-// 2
-
-let k = 0;
-
-while(k < 50){
-	k++;
-	if(k % 10 === 0 && k != 50){
-		continue;
-	}
-	console.log(k);
-
-	if(k === 50){
-		break;
-	}
-}
+	// 1) recursive fibonacci
+	// 2) recursive factorial
 
 </script>
 
