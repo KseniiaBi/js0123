@@ -8,25 +8,87 @@
 </head>
 <body>
 
-<Script>
-
-
-// TASK 1
- for (n = 1000, num = 0; n >= 50; n /= 2, num++); 
-    console.log(n);
-	  console.log(num);
-		
-</Script>
-
-
-<!-- // TASK 2  -->
-<Script>
-
-</Script>
-
-
-<!-- TASK 3 -->
 <script>
+
+
+// TASK 1 
+let num = 1000;
+let i = 0;
+while(num >= 50){
+  num /= 2;
+  i++;
+}
+ console.log(`num: ${num}, i: ${i}`);
+
+
+
+
+//  TASK 2  
+let n = +prompt('Type any positive number');
+if(!isNaN(n) && n>0){
+  let odd = 0;
+  let current = 1;
+
+  while(current < n){
+    if(current %2 !== 0){
+      odd++;
+    }
+    current++;
+  }
+  console.log(`Number of odd numbers before ${n} : ${odd} `);
+}
+
+
+
+// TASK 3
+let price24 = 20;
+let price57 = 30;
+let price8up = 40;
+let targetFloor = +prompt('Type target floor');
+let delivery = 0;
+
+
+if(targetFloor > 1){
+  for(let i = 2; i <= targetFloor; i++){
+    if(i < 5) {
+    delivery += 20;
+  } 
+  else if(i >= 5 && i <8){
+    delivery += 30;
+  }
+  else{
+    delivery += 40;
+  }
+  }
+  
+}
+
+console.log(`Delivery on ${targetFloor} will cost ${delivery} UAH`);
+
+
+
+// TASK 4
+let a = +prompt('Type A');
+let b = +prompt('Type B');
+let c = +prompt('Type C');
+
+console.log(`${a}x^2 + ${b}x + ${c}`);
+
+let d = b*b - 4*a*c;
+
+if(d > 0){
+  let x1 = (-b -Math.sqrt(d))/(2+a);
+  let x2 = (-b -Math.sqrt(d))/(2+a);
+
+  console.log(`It has two roots x1 = ${x1}, x2 = ${x2}`);
+}
+else if(d == 0){
+  let x = -b/(2*a);
+  console.log(`It has one roots x = ${x}`);
+}
+else{
+  console.log(`It has not any roots`);
+}
 
 </script>
 
