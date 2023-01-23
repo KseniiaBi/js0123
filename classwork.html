@@ -11,87 +11,84 @@
 
 
 <script>
-	// ДЗ 1
-
-	let num = 1000;
-	let iter = 0;
-
-	while(num >= 50){
-		num /= 2; // num = num/2;
-		iter++;
-	}
-	console.warn(`num: ${num}, i: ${iter}`);
-
-	// 2
-
-	let n = +prompt('Type anu positive number');
-	if(!isNaN(n) && n>0){
-		let odd = 0;
-		let current = 1;
-
-		while(current < n){
-			if(current %2 !== 0){
-				odd++;
-			}
-			current++;
+// filter arr
+let arr6 = [-9,1,2,3, -4, 5, -2, 8, -6, 7, -12, 22, 7, -5];
+	let positiveNums = [];
+	let negativeNums = [];
+	let index6 = 0;
+	let ind6 = 0;
+	for(let i = 0; i < arr6.length; i++){
+		if(arr6[i] >= 0){
+			positiveNums[index6] = arr6[i];
+			index6++;
 		}
-		console.log(`Number of odd numbers before ${n} : ${odd}`);
+		else{
+			negativeNums[ind6] = arr6[i];
+			ind6++;
+		}
 	}
-	else{
-		console.error('Can not count odd numbers');
-	}
+	
+	console.log(negativeNums);
 
-	// 3
+	let arr62 = [];
+	let index = 0;
 
-	let price24 = 20;
-	let price57 = 30;
-	let price8up = 40;
-	let targetFloor = +prompt('Type target floor');
-	let delivery = 0;
-
-	if(targetFloor > 1){
-		for(let i = 2; i <= targetFloor; i++){
-			if(i < 5){
-				delivery += 20;
-			}
-			else if(i>=5 && i <8){
-				delivery += 30;
-			}
-			else{
-				delivery += 40;
+	for(let i = 0; i < negativeNums.length; i++){
+		let min;
+		for(let j = 0; j < negativeNums.length; j++){
+			if(negativeNums[i] < negativeNums[j]){
+				min = negativeNums[j];
+				negativeNums[j] = negativeNums[i];
+				negativeNums[i] = min;
 			}
 		}
 	}
 
-	console.warn(`Delivery on ${targetFloor} will cost ${delivery} UAH`);
-
-	// 4
-
-	let a = +prompt('Type A');
-	let b = +prompt('Type B');
-	let c = +prompt('Type C');
-
-	if(a === 0){
-		console.error('Рівняння не може бути вирішене');
+	for(let i = 0; i < positiveNums.length; i++){
+		let min;
+		for(let j = 0; j < positiveNums.length; j++){
+			if(positiveNums[i] < positiveNums[j]){
+				min = positiveNums[j];
+				positiveNums[j] = positiveNums[i];
+				positiveNums[i] = min;
+			}
+		}
 	}
 
-	console.log(`${a}x^2 + ${b}x + ${c}`);
+	console.log(positiveNums);
 
-	let d = b*b - 4*a*c;
+	for(let n of negativeNums){
+		arr62[index] = n;
+		index++;
+	}
+	for(let p of positiveNums){
+		arr62[index] = p;
+		index++;
+	}
 
-	if(d > 0){
-		let x1 = (-b -Math.sqrt(d))/(2*a);
-		let x2 = (-b +Math.sqrt(d))/(2*a);
+	console.log(arr62);
 
-		console.log(`Рівняння має два корені x1 = ${x1}, x2 = ${x2}`);
+
+ // HW 1) на базе задачи с фильтрацией массивов создать третий массив, в котором сначала будут идти по порядку отрицательные числа, а потом положительные
+//  2 ) вывести числа от 1 до 50 (*break) в консоли c помощью "бесконечного цикла" while, но пропустить числа 10,20,30 и 40 (*continue)
+// 3) отсортировать массив пузырьком [5,7,1,9,4,2,6,3,8] -> [1,2,3,4,5,6,7,8,9]
+
+// 2
+
+let k = 0;
+
+while(k < 50){
+	k++;
+	if(k % 10 === 0 && k != 50){
+		continue;
 	}
-	else if(d === 0){
-		let x = -b/(2*a);
-		console.log(`Рівняння один корінь x = ${x}`);
+	console.log(k);
+
+	if(k === 50){
+		break;
 	}
-	else{
-		console.log('Рівняння не має дійсних коренів')
-	}
+}
+
 </script>
 
 </body>
