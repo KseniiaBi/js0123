@@ -6,35 +6,135 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1"> 
 </head>
 <body>
-	Hello world! Dmitry Klochko
+	Homework № 2 (12/01/2023)
 
-
+<!--
+// №_1
+// Переменная lang может принимать 2 значения: 'ua’ 'en'. 
+// В зависимости от значения lang выводить название дней недели из задачи, 
+// решенной на занятии, на занятии на украинском или английском языке    
+-->
+    
 <script>
-    // №_1
+	let lang = prompt('Type lang en - ua');
     
-    // Дано число n=1000. Делите его на 2 столько раз, пока результат деления не станет меньше 50. 
-    // Какое число получится? Посчитайте количество итераций, необходимых для этого (итерация - это
-    // проход // цикла), и запишите его в переменную num.
-
-	for (n = 1000, num = 0; n >= 50; n /= 2, num++);
-    
-		console.log(n);
-		console.log(num);
-//    
-//    // №_2
-//    
-//   // Если задано число n, вернуть количество положительных нечетных чисел меньше n
-    
-    let n = +prompt('Введите число n');
-    let a = 1;
-    let b = 0;
-    while (a < n) {
-        if (a%2 !=0) 
-            b++;
-    console.log(a); 
+    if (lang == 'en') {
+	let day = +prompt('Type number 1 - 7');
+	switch(day){
+		case 1: console.log('Mon');
+				break;
+		case 2: console.log('Tue');
+				break;
+		case 3: console.log('Wed');
+				break;
+		case 4: console.log('Thu');
+				break;
+		case 5: console.log('Fri');
+				break;
+		case 6: console.log('Sat');
+				break;
+		case 7: console.log('Sun');
+				break;
+		default: console.log('Not a day');
+	}
     }
     
+    if (lang == 'ua') {
+	let day = +prompt('Type number 1 - 7');
+	switch(day){
+		case 1: console.log('Пн');
+				break;
+		case 2: console.log('Вт');
+				break;
+		case 3: console.log('Ср');
+				break;
+		case 4: console.log('Чт');
+				break;
+		case 5: console.log('Пт');
+				break;
+		case 6: console.log('Сб');
+				break;
+		case 7: console.log('Нд');
+				break;
+		default: console.log('Не сьогодні');
+	}
+    }
+</script>
+
+<!--
+№_2   
+
+// В переменной min лежит число от 0 до 59. 
+// Определите в какую четверть часа попадает это число (в первую, вторую, третью или четвертую).  
+-->
     
+<script>     
+let min=+prompt("Введите число от 0 до 59");
+      if (min >= 0 && min <= 14) {
+        console.log ("I четверть");
+     }
+      else if (min >= 15 && min <= 30) {
+        console.log ("II четверть");
+     }
+     else if (min >= 31 && min <= 45) {
+        console.log ("III четверть");
+     }
+     else if (min >= 46 && min <= 59) {
+        console.log ("IV четверть");
+     }   
+    else{
+        console.error('Incorrect input')
+    }
+</script>  
+       
+<!--
+№_3  
+    
+// Если переменная a равна нулю, то выведите 'Верно', иначе выведите 'Неверно'. 
+// Проверьте работу скрипта при a, равном 1, 0, -3. 
+-->
+    
+<script> 
+let a= +prompt("Введите цифру 0");  
+if (a == 0) {
+	console.log ('Верно');
+} else {
+	console.log ('Неверно');
+}     
+</script>     
+    
+<!--
+№_4   
+   
+// Если переменная a меньше или равна нулю, то выведите 'Верно', иначе выведите 'Неверно'. 
+// Проверьте работу скрипта при a, равном 1, 0, -3. 
+-->
+    
+<script>   
+let b= +prompt("Введите цифру меньше или равно нулю");    
+if (b <= 0) {
+    console.log ('Верно');
+} else {
+    console.log ('Неверно');
+}       
+</script>   
+    
+<!--
+№_5 
+
+// Если переменная test не равна true, то выведите 'Верно', иначе выведите 'Неверно'. 
+// Проверьте работу скрипта при test, равном true, false. 
+// Напишите два варианта скрипта - с короткой записью и с длинной. 
+-->
+    
+  <script>   
+let test= prompt('true_or_false');    
+if (test != true) {
+    console.log ('Верно');
+} 
+else { 
+ console.log ('Неверно'); 
+}     
 </script>    
       
 </body>
