@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>JS FE</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+	Hello world!
+
+
+
+	<script>
+
+
+		// 1) recursive fibonacci-----------------------------------
+
+		function fibo(n) {
+			if (n < 2) {
+				return n;
+			}
+			return fibo(n - 1) + fibo(n - 2);
+		};
+		console.log(fibo(7));
+
+
+
+		// 2) recursive factorial-------------------------------------------
+
+		// function fact(num) {
+		// 	if (num <= 0) {
+		// 		return 1;
+		// 	}
+		// 	else {
+		// 		return (num * fact(num - 1));
+		// 	}
+		// };
+		// console.log(fact(5));
+
+
+
+
+
+		//  3) найти сумму диапазона чисел, которые приходят в аргументах функции.------------
+
+		// function sumNumb(a, b) {
+		// 	if (a < b) {
+		// 		let sum = 0;
+		// 		for (let i = a; i <= b; i++) {
+		// 			sum += i;
+		// 		}
+		// 		return sum;
+		// 	}
+		// 	else {
+		// 		let sum = 0;
+		// 		for (let i = a; i > b; i--) {
+		// 			sum += i;
+		// 		}
+		// 		return sum;
+		// 	}
+		// }
+		// console.log(sumNumb(1, 5));
+
+		// 4) Дана строка с цифрами, например, '12345'. Напишите функцию, в которой проверьте,---------------------
+		//      что первым символом этой строки является цифра 1, 2 или  3.
+
+			// function firstNum(str)  {
+			// 	let n1 = Number(str[0]);
+			// 	if ( n1 === 1 || n1=== 2 || n1 === 3) {
+			// 		console.log("да");
+			// 	}
+			// 	else {
+			// 		console.log("нет");
+			// 	}
+
+			// }
+			// firstNum('12345');
+
+
+		//  5) Дана строка, например, '123456'. Переверните эту строку с помощью функции -------------------
+
+		// function upendStr(str) {
+		// 	let strRev = '';
+		// 	for (let i = 0; i < str.length; i++) {
+		// 		strRev += str[str.length-1 -i];
+		// 	}
+		// 	return strRev;
+		// }
+		// console.log(upendStr('123456'))
+
+		// 6) Найдите все года от 1 до 2018, сумма цифр которых равна 13. Для этого используйте-----------------
+		//     вспомогательную функцию getDigitsSum из задачи, которую решали в классе
+
+
+
+	// for ( n =1; n <= 2018; n++) {
+		
+	// 	getDigitsSum(n);
+	// }
+	// function getDigitsSum(n){
+	// 	let str = String(n);
+	// 	let sum = 0;
+	// 	for(let i = 0; i < str.length; i++){
+	// 		sum += Number(str[i]);
+	// 	}
+	// 	if (sum === 13 ) {
+	// 	console.log(n);
+	// 	}
+	// }
+	
+
+	// function getDigitsSum(n){
+	// 	let str = String(n);
+	// 	let sum = 0;
+	// 	for(let i = 0; i < str.length; i++){
+	// 		sum += Number(str[i]);
+	// 	}
+	// 	if(sum > 9){
+	// 		getDigitsSum(sum);
+	// 	}
+	// 	else{
+	// 		console.log(sum);
+	// 	}
+	// }
+
+	// getDigitsSum(9999999997899999);
+
+	</script>
+
+</body>
+
+</html>
