@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1
+        let lang = "en";
+        switch(lang){
+            case "ua": console.log("Понеділок");
+            break;
+            case"en": console.log("Monday");
+            break;
+            default: console.log("sorry")
+        }
+
+        // 2
+        let min =+prompt("enter value 0-59");
+        if (min <= 15 && min >= 1){
+            alert("first quarter")
+        }
+        else if (min >= 16 && min <= 30){
+            alert("second quarter")
+        }
+        else if (min >=31 && min <= 45){
+            alert("thirth quarter")
+        }
+        else if (min >=46 && min <=59) {
+            alert("fourth quarter")
+        }
+        else(alert("error"))
+
+        // 3
+        let b = +prompt("введите число")
+        if (b == 0){
+            console.log("верно")
+        }
+        else{
+            console.log("не верно")
+        }
+        // 4
+        let a = +prompt("введите число")
+        if (a >= 0){
+            console.log("верно")
+        }
+        else{
+            console.log("не верно")
+        }
+        // 5
+        let test = false;
+        test != true ? console.log("верно"): console.log("не верно")
+        if (test != true){
+            console.log("верно")
+        }
+        else{"не верно"}
+    </script>
+</body>
+</html>
