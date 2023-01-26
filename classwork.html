@@ -11,129 +11,178 @@
 
 
 <script>
+	/// here are hoisted var's and function 
+	'use strict'
 
+	foo();
+// functions
 
-	// 1) recursive fibonacci
+// console.log(a); // Cannot access 'a' before initialization
+console.log(b);
+let a = 10;
 
-	function fibonacci(a,b,n,current=3){
-		let c = a + b;
-		current++;
-		if(current <= n ){
-			fibonacci(b,c,n,current);
-		}
-		else {
-			console.log(c);
-		}
-	}
-
-	fibonacci(0,1,10);
-
-	// 2) recursive factorial
-
-	function factorial(n){
-
-		if(n < 1 ){
-			return 1;
-		}
-		else{
-			return n * factorial(n-1);
-		}
-
-	}
-
-	console.log(factorial(5));
-
-//  3) найти сумму диапазона чисел, которые приходят в аргументах функции.
-
-function sumRange(start, end){
-	let sum = 0;
-	if(start > end){
-		let max = start;
-		start = end;
-		end = max;
-	}
-
-	for(let i = start; i <= end; i++){
-		sum += i;
-	}
-
-	console.log(sum);
+if(3){
+	let a = 20;
+	console.log(a);
 }
 
-sumRange(1,10);
-sumRange(10,1);
+console.log(a);
 
-// 4) Дана строка с цифрами, например, '12345'. Напишите функцию, в которой проверьте, 
-// что первым символом этой строки является цифра 1, 2 или 3. Если это так - выведите 'да', в противном случае выведите 'нет'.
+var b = 10;
+if(5){
+	var b = 15;
+}
 
-function checkNumString(str){
-	let num = +str[0];
-	if(!isNaN(num)){
-		if(num > 0 && num <= 3){
-			console.log('Yes');
-		}
-		else{
-			console.log('No');
-		}
-	}
-	else{
-		console.error('Not a number');
+function foo(){
+	var b = 30;
+	console.log(b);
+}
+foo();
+console.log(b);
+
+
+let name = 'Jane';
+
+function greeting(){
+	// var message = undefined;
+	var message = `Hello, ${name}`; // message = 'Hello, Jane'
+	console.log(message);
+}
+
+greeting();
+
+name = 'John';
+
+greeting(); // 'Hello, John'
+
+// hoisting - про всплывание переменных var и function declaration
+
+function printNum(){
+	console.log(`A = ${a}`);
+}
+
+printNum();
+
+
+
+// closures
+
+function makeCounter(){
+	let count = 1;
+
+	return function(){
+		console.log(count++);
 	}
 }
 
-checkNumString('12345');
-checkNumString('2345');
-checkNumString('345');
-checkNumString('45');
-checkNumString('Apple');
+let counter = makeCounter();
+counter();
+counter();
+counter();
 
-// 5) Дана строка, например, '123456'. Переверните эту строку с помощью функции
+let counter2 = makeCounter();
+counter2();
+counter2();
 
-function reverseString(str){
-	let reversed = '';
-	 for(let i = str.length - 1; i >= 0; i-- ){
-		reversed += str[i];
-	 }
-	 console.log(reversed);
+counter();
+counter();
+
+function sum(a,b){
+	return a+b;
 }
 
-reverseString('123456');
+let x = sum(2,3);
+console.warn(`x=${x}`);
 
-// 6) Найдите все года от 1 до 2018, сумма цифр которых равна 13. Для этого используйте
-//вспомогательную функцию getDigitsSum из задачи, которую решали в классе
 
-function checkDigitsSum(n){
-	let str = String(n);
-	let sum = 0;
-	for(let i = 0; i < str.length; i++){
-		sum += Number(str[i]);
-	}
-	if(sum === 13){
-		return true;
-	}
-	else if(sum > 13){
-		checkDigitsSum(sum);
-	}
-	else{
-		return false;
-	}
+/// arr => even numbers arr
+
+function isEven(num){
+	// long version
+	// let numIsEven = false;
+	// if(num % 2 === 0){
+	// 	numIsEven = true;
+	// }
+	// return  numIsEven;
+
+	// short version
+	return num % 2 === 0;
 }
 
-function checkYearSum(){
-	let arr = [];
+console.warn(isEven(3));
+let y = isEven(2);
+console.log(y);
+
+function createArrOfEvenNumbers(arr){
+	let evens = [];
 	let index = 0;
-
-	for(let i = 1; i <= 2018; i++){
-		if(checkDigitsSum(i)){
-			arr[index] = i;
+	for(let n of arr){
+		if(isEven(n)){
+			evens[index] = n;
 			index++;
 		}
 	}
-
-	console.log(arr);
+	// console.log(evens); // if we will not use this array, just want to see it
+	return evens
 }
-checkYearSum();
 
+let array = createArrOfEvenNumbers([3,7,9,2,10,4,6,1,5,12,8]);
+
+function reverseArr(arr){
+	let reversed = [];
+	for(let i = 0; i < arr.length; i++){
+		reversed[i] = arr[arr.length - 1 - i]
+	}
+
+	console.log(reversed);
+}
+
+reverseArr(array);
+
+reverseArr(createArrOfEvenNumbers([100,22,13,17,18,3,7,9,2,10,4,6,1,5,12,8]));
+
+// sum(2)(3) => 5
+
+function sum(a){
+	//a is defined like argument
+	return function(b){
+		return a + b;
+	}
+}
+console.log(sum(2)(3));
+
+
+let sum2 = sum(2);
+console.warn(sum2(3));
+console.warn(sum2(4));
+console.warn(sum2(10));
+
+let sum3 = sum(3);
+console.error(sum3(3));
+
+
+// HW (2)(3)(5) =>10 усложнить функцию sum до уровня, когда может быть любое количество скобок с аргументами
+// *** (2)(3)(5)()
+
+
+// range (start,end) -> true/false  arr[]-> [inRange]
+
+let isNumberInRange = (start, end, num) => num >= start && num <= end;
+
+let filterArray = (arr, start, end) => {
+	let filtered = [];
+	let index = 0;
+
+	for(let a of arr){
+		if(isNumberInRange(start, end, a)){
+			filtered[index] = a;
+			index++;
+		}
+	}
+	console.log(filtered);
+}
+
+filterArray([1,2,3,4,5,6,7,8,9,10], 4, 8);
 
 
 </script>
