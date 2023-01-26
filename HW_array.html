@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+// TASK 1 
+
+let arr6 = [-9,1,2,3,-4,5,-2,8,-6,7,-12,22,7,-5];
+let positiveNums = [];
+let negativeNums = [];
+let negativePositive = [];
+let index6 = 0;
+let ind6 = 0;
+let in6 = 0;
+for (let i = 0; i <arr6.length; i++){
+  if(arr6[i] >=0){
+    positiveNums[index6] = arr6[i];
+    index6++;
+     }
+  
+  else if(arr6[i] <=0){
+    negativeNums[ind6] = arr6[i];
+    ind6++;
+  } 
+  if(arr6[i] > arr6[i+1]){
+    negativePositive[in6] = arr6[i];
+    in6++;
+  }
+        
+  }
+
+
+  console.log(positiveNums);
+  console.log(negativeNums);
+  console.log(negativePositive);
+ 
+ 
+  function showSum(elem, x, y) {
+    elem.textContent = x + y;
+  }
+  const out1 = document.querySelector('.out-1');
+  showSum(out1, 5, 6);
+ 
+  
+ 
+
+//  TASK 2  
+
+
+// TASK 3
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
