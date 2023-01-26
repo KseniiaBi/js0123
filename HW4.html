@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /// 1
+    let arr = [-3,-5,4,6,23,-2,-4,5,-7,1];
+    let newArr = [];
+    let ind = 0;
+    let ind2 = 5;
+    for (let i = 0; i <= arr.length; i++){
+        if ( arr[i] <= 0 ){ 
+            newArr[ind] = arr[i]
+            ind++;
+        }
+        else{
+            newArr[ind2] = arr[i]
+            ind2++;
+        }
+    }
+    console.log(newArr)
+    // 2
+
+    let n = 0;
+    while(n<50){
+     n++;
+    if(n % 10 !==0){
+        console.log(n)
+    }
+ }
+
+
+// 3
+    let array = [5,7,1,9,4,2,6,3,8]; 
+    let temp = 0
+    for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length - i; j++) {
+      if (array[j] > array[j + 1]) {
+        temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  console.log(array)
+    
+    </script>    
+</body>
+</html>
