@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1
+        let number = 8;
+        function fibon(n) {
+            if (n == 1 || n == 2) {
+                return 1;
+            }
+            else {
+                return fibon(n - 2) + fibon(n - 1);
+            }
+        }
+        console.log(fibon(number));
+        //  2
+        let num = 5;
+        function fact(n) {
+            if (n === 1) {
+                return 1;
+            }
+            else {
+                return (n) * fact(n - 1);
+            }
+        }
+        console.log(`${fact(num)}`);
+        //  3
+        summa = 0;
+        function foo(a, b) {
+            for (let i = a; a <= b; a++) {
+                summa += a
+            }
+            console.log(summa)
+        }
+        foo(2, 5)
+        // 4
+        let str = "1,2,3,4,5"
+        function includes () {
+            for (let i = 0; i < str.length; i++){
+                if(str[0] == 1 || str[0] == 2 || str[0] == 3){
+                    console.log("yes")
+                }
+                else{
+                    console.log("no")
+                }
+            }
+        }
+        includes()
+        // 5
+        let string = "1,2,3,4,5"
+        function foo(string){
+        let x = "";
+        let k = -1;
+        for (let i = 0; i < string.length; i++){
+            let last = string[string.length + k]
+            k--;
+            x = last
+          console.log(x)
+        }
+          }
+          foo(string)
+        //   6
+
+
+    </script>
+</body>
+
+</html>
