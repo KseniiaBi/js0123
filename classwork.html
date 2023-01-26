@@ -13,264 +13,128 @@
 <script>
 
 
-	// functions
-
-	// -> [] ->
-
-	let a = 10;
-	// function declaration
-	function foo(){
-		let a = 5;
-		console.log(a);
-	}
- // вызов функции всегда состоит из ее имени и круглых скобок за ним
-	foo();
-	console.log(a);
-
-	//  function expression 
-
-	let sayHi = function(){
-		console.error('Hi!');
-	}
-
-	sayHi();
-
-	// anonymous + self-calling
-
-	(function(){
-		console.error('Anonymous');
-	})();
-
-
-	// arrow function
-
-	let sayBye = () => console.log('Bye!');
-	sayBye();
-
-
-	// callback function
-
-	function accept(){
-		console.warn('Item was removed from cart!');
-	}
-	function decline(){
-		console.log('Item was not removed');
-	}
-
-	// calls after user clicked 'trash' icon on cart page
-	function removeItem(conf,undo){
-		confirm('Are you sure you want to delete item from cart?') ? conf() : undo();
-	} 
-
-	// removeItem(accept, decline);
-
-
-	// another one callback
-
-	setTimeout(function(){
-		console.error('Timeout');
-	}, 1000);
-
-	setTimeout(()=> console.warn('Timeout warn'), 1500);
-
-
-	//  arguments
-
-	function greeting(name){
-		console.log(`Hello, ${name}`);
-	}
-
-	greeting('User');
-	greeting('Yulius', 'Caesar');
-	greeting();
-
-	function smartGreeting(){
-		if(arguments.length == 0){
-			console.log('Hello, Stranger!');
-		}
-		else if(arguments.length == 1){
-			console.log(`Hello, ${arguments[0]}`);
-		}
-		else if(arguments.length == 2){
-			console.log(`Hello, ${arguments[0]}  ${arguments[1]}`);
-		}
-		else{
-			let msg = '';
-			for(let i = 0; i < arguments.length; i++){
-				msg += arguments[i] + ' ';
-			}
-			console.log(msg);
-		}
-	}
-
-	smartGreeting();
-	smartGreeting('Teacher');
-	smartGreeting('Yulius', 'Caesar');
-	smartGreeting('Good afternoon!','Yulius', 'Caesar', 'How are you?');
-
-
-	let x = 12;
-	let y = 5;
-
-	function stupidSum(){
-		console.log(x+y);
-	}
-	stupidSum();
-	stupidSum();
-	stupidSum();
-
-	function sum(a,b){
-		console.log(`sum = ${a+b}`);
-	}
-
-	sum(2,4);
-	sum(7,12);
-	sum(10, 45, 10);
-
-	function smartSum(){
-		let sum = 0;
-		for(let i = 0; i < arguments.length; i++){
-			sum += arguments[i];
-		}
-		console.log(`sum = ${sum}`);
-	}
-
-	smartSum();
-	smartSum(2);
-	smartSum(3,4,5);
-	smartSum(6,8);
-
-
-	console.log(smartSum(2,3));
-
-	function square(n){
-		return n*n;
-	}
-
-	function pow(n,m){
-		let power = 1;
-		let msg = 'This is system message';
-		for(let i = 1; i <=m; i++){
-			power *= n;
-		}
-		return power;
-		// return [power,msg]; // you can return multiple values in data structure
-		// return msg; // incorrect! only one return statement
-	}
-
-	let b = square(2);
-	console.log(square(3));
-
-	// let msg = pow(2,2)[1];
-	// console.log(msg);
-	console.log(pow(4,2));
-
-	let summ = (a,b) => a+b;
-	console.warn(summ(2,3));
-
-	// recursive function - calls itself
-
-	function showNum(n){
-		if(n <= 10){
-			console.log(n);
-			showNum(++n);
-		}
-		else{
-			console.warn('finished recursion');
-		}
-	}
-
-	showNum(1);	
-
-	let arr = [1,2,3,4,5,6,7,8,9];
-
-	function printArr(ar, index = 0){
-		if(index < ar.length){
-			console.log(`array[${index}]: ${ar[index]}`);
-			printArr(ar,++index);
-		}
-	}
-
-	printArr(arr);
-
-
-	// a+b/c
-
-	let calc = (a,b,c) => (a+b)/c;
-
-	console.log(calc(4,6,2));
-
-	// a,b -> max
-
-	// let max = (a,b) => {
-	// 	if(a > b){
-	// 		return a;
-	// 	}
-	// 	else{
-	// 		return b;
-	// 	}
-	// }
-
-	let max = (a,b) => a > b ? a : b;
-	console.log(max(4,5));
-
-
-	let sayHello = name => console.log(`Hello, ${name}`);
-	sayHello('Student');
-
-	// let superSum = () => {
-	// 	let sum = 0;
-	// 	for(let i = 0; i < arguments.length; i++){ // ReferenceError: arguments is not defined
-	// 		sum += arguments[i];
-	// 	}
-	// 	return sum;
-	// }
-	// console.log(superSum(2,3,4,5));
-
-
-	let ar = [[1,2,[3,[4,5]]], [6,[7,8,[9,10,[11,12,[13,14]]]]], 15];
-
-	function sumArr(arr){
-		let sum = 0;
-		for(let i = 0; i < arr.length; i++){
-			if(typeof arr[i] == 'number'){
-			// if(arr[i].length > 0)
-				sum += arr[i];
-			}
-			else{
-				sum += sumArr(arr[i]);
-			}
-		}
-		return sum;
-	}
-
-	console.log(sumArr(ar));
-
-	// 12397856 => 41 => 5
-	// 9992378 => 47 => 11 => 2
-	// 999999999999999999999999999 => 171 => 9
-
-	function getDigitsSum(n){
-		let str = String(n);
-		let sum = 0;
-		for(let i = 0; i < str.length; i++){
-			sum += Number(str[i]);
-		}
-		if(sum > 9){
-			getDigitsSum(sum);
-		}
-		else{
-			console.log(sum);
-		}
-	}
-
-	// getDigitsSum(12397856);
-	getDigitsSum(9999999997899999);
-
-
-
 	// 1) recursive fibonacci
+
+	function fibonacci(a,b,n,current=3){
+		let c = a + b;
+		current++;
+		if(current <= n ){
+			fibonacci(b,c,n,current);
+		}
+		else {
+			console.log(c);
+		}
+	}
+
+	fibonacci(0,1,10);
+
 	// 2) recursive factorial
+
+	function factorial(n){
+
+		if(n < 1 ){
+			return 1;
+		}
+		else{
+			return n * factorial(n-1);
+		}
+
+	}
+
+	console.log(factorial(5));
+
+//  3) найти сумму диапазона чисел, которые приходят в аргументах функции.
+
+function sumRange(start, end){
+	let sum = 0;
+	if(start > end){
+		let max = start;
+		start = end;
+		end = max;
+	}
+
+	for(let i = start; i <= end; i++){
+		sum += i;
+	}
+
+	console.log(sum);
+}
+
+sumRange(1,10);
+sumRange(10,1);
+
+// 4) Дана строка с цифрами, например, '12345'. Напишите функцию, в которой проверьте, 
+// что первым символом этой строки является цифра 1, 2 или 3. Если это так - выведите 'да', в противном случае выведите 'нет'.
+
+function checkNumString(str){
+	let num = +str[0];
+	if(!isNaN(num)){
+		if(num > 0 && num <= 3){
+			console.log('Yes');
+		}
+		else{
+			console.log('No');
+		}
+	}
+	else{
+		console.error('Not a number');
+	}
+}
+
+checkNumString('12345');
+checkNumString('2345');
+checkNumString('345');
+checkNumString('45');
+checkNumString('Apple');
+
+// 5) Дана строка, например, '123456'. Переверните эту строку с помощью функции
+
+function reverseString(str){
+	let reversed = '';
+	 for(let i = str.length - 1; i >= 0; i-- ){
+		reversed += str[i];
+	 }
+	 console.log(reversed);
+}
+
+reverseString('123456');
+
+// 6) Найдите все года от 1 до 2018, сумма цифр которых равна 13. Для этого используйте
+//вспомогательную функцию getDigitsSum из задачи, которую решали в классе
+
+function checkDigitsSum(n){
+	let str = String(n);
+	let sum = 0;
+	for(let i = 0; i < str.length; i++){
+		sum += Number(str[i]);
+	}
+	if(sum === 13){
+		return true;
+	}
+	else if(sum > 13){
+		checkDigitsSum(sum);
+	}
+	else{
+		return false;
+	}
+}
+
+function checkYearSum(){
+	let arr = [];
+	let index = 0;
+
+	for(let i = 1; i <= 2018; i++){
+		if(checkDigitsSum(i)){
+			arr[index] = i;
+			index++;
+		}
+	}
+
+	console.log(arr);
+}
+checkYearSum();
+
+
 
 </script>
 
