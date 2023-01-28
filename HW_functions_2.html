@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H/W</title>
+</head>
+<body>
+
+<script>
+
+// TASK 1 
+function sum(a){
+ return function(b){
+  return function(c){
+      return a + b + c;
+  }
+ }
+}
+console.log(sum(2)(3)(5));
+// или можно не вкладывать функцию в функцию
+
+function sum2(d,e,f){
+  return d + e + f;
+}
+console.log(sum2(2,3,5));
+
+
+
+// TASK 2  
+let number = 2;
+function ggg(num,func){
+  return func(num);
+}
+function funcAnonimus(a){
+ return Math.pow(a,2)
+}
+console.log(ggg( (ggg(number, funcAnonimus)), funcAnonimus));
+
+// TASK 3
+let arr = [20, 30, 40, 50, 60];
+function each(letArr,func){
+  return func(letArr);
+}
+  function newFunc(a){
+    newArr = [];
+    for(i = 0; i < a.length; i++){
+      newArr[i] = Math.sqrt(a[i]);
+    }
+    return newArr;
+ }
+ console.log(each(arr,newFunc));
+
+
+// TASK 4
+
+
+</script>
+
+</body>
+</html>
