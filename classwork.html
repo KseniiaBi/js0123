@@ -11,100 +11,200 @@
 
 
 <script>
-	//HW
-	// 1 sum(2)(3)(4)() *sum(2)(3)(4)
 
-	function sum(a){
-		let result = a;
+// objects
 
-		function sum2(b){
-			if(b){
-				result += b;
-				return sum2;
+let o = {
+	name: 'John',
+	lastname: 'Doe',
+	age: 22,
+	hobbys: ['art', 'photography', 'travelling'],
+	isAdmin: false
+}
+
+console.log(o);
+console.log(o.name);
+console.log(o['lastname']);
+// console.log(o[lastname]); // lastname is not defined
+
+// mutable 
+o.age += 1;
+
+delete o.isAdmin;// will not left empty space
+
+o.isAuthor = true;
+
+// in - help us find property in object
+let a = 10;
+console.log(a in window);
+
+console.log('name' in o);
+console.log('girlfriend' in o);
+o.girlfriend = 'Jane';
+console.log('girlfriend' in o);
+
+
+// loop
+
+for(let prop in o){
+	console.log(`${prop}: ${o[prop]}`);
+}
+
+let admin = {
+	name: 'Admin',
+	// property-function calls method
+	administrate: function(){
+		console.log('Admin is administrating');
+	},
+	sayHi(msg = 'Hi'){
+		console.log(`${msg}, I am ${admin.name}`);
+	}
+}
+
+admin.administrate();
+admin.sayHi();
+admin.sayHi('Good evening');
+
+
+// days ru/en
+
+let days = {
+	ru: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+	en: ['Mo', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+}
+
+function typeDay(n, lang){
+	if(typeof n !== 'number' || n > 7 || n < 1 || lang != 'ru' && lang != 'en'){
+		console.error('Not a day');
+	}
+	else{
+		console.log(days[lang][n]);
+	}
+}
+typeDay(5, 'ru');
+typeDay(2, 'en');
+typeDay(5, 'fr');
+typeDay(51, 'ru');
+
+
+// ({start,end} ) => sum 
+let obj = {
+	start: 4,
+	end: 10
+}
+
+function sumObj(obj){
+	let sum = 0;
+	let start = Math.min(obj.end, obj.start);
+	let end = obj.start < obj.end ? obj.end : obj.start;
+
+	for(let i = start; i <= end; i++){
+		sum += i;
+	}
+	console.log(`sum = ${sum}`);
+}
+
+sumObj(obj);
+sumObj({start: 12, end: 8});
+
+
+// count all instances of letter (arg)
+
+let s = {
+	name: 'Anna',
+	city: 'Los Angeles',
+	hobbys: ['art', 'football'],
+	biography: {
+		born: 'Saint Louis',
+		graduated: 'Princeton',
+		married: 'Alfred Doe'
+	}
+}
+
+function countLetter(str, letter){
+	let count = 0;
+	for(char of str){
+		if(char === letter){
+			count++;
+		}
+	}
+	return count;
+}
+console.log(countLetter('bubble', 'b')); // testing function
+
+function findLettersInObject(obj, letter){
+	let total = 0;
+	for(let key in obj){
+		// перебираем свойства обьекта, который пришел в функцию и определяем какого типа наши значения свойств
+		if(typeof obj[key] == 'string'){  // строка
+			total += countLetter(obj[key], letter);
+		}
+		else if(typeof obj[key] == 'object' && obj[key].length > 0){ // массив
+			for(let item of obj[key]){ // в массиве нужно перебрать каждый его элемент
+				total += countLetter(item, letter);
 			}
-			else{
-				return result;
+		}
+		else if(typeof obj[key] == 'object' && !obj[key].length ){ // обьект
+			total += findLettersInObject(obj[key], letter);// вызываем рекурсивно findLettersInObject
+		}
+	}
+	return total;
+}
+
+console.log(findLettersInObject(s, 'a'));
+
+//
+let numbers = {
+	a: 5,
+	b: 7,
+	c: 8, 
+	d: 2,
+	e: 4,
+	f: 3,
+	g: 'admin',
+	h: [1,2,3]
+}
+
+// obj to arr
+
+function numsFromObjToArr(obj){
+	let arr = [];
+	let index = 0;
+	for(let prop in obj){
+		if(typeof obj[prop] == 'number'){
+			arr[index] = obj[prop];
+			index++;
+		}
+	}
+	console.log(arr);
+}
+
+numsFromObjToArr(numbers);
+
+
+// HW 1) допилить функцию numsFromObjToArr, чтобы она могла находить числа внутри дочерних обьектов или массивов
+
+
+// num => {1:, 2: , 3 ... 9:}
+
+function foo(n){
+	let o = {}; // создаем обьект, в котором будем записывать какая цифра сколько раз встречается в числах от 1 до n
+	for(let i = 1; i <= n; i++){
+		let num = String(i); // превращаем число в строку, чтобы иметь возможность перебирать двухзначные и трехзначные числа
+		for(let char of num){ // итерируем числа побуквенно 12=> 1 и 2
+			if(char in o){ //если такую букву (цифры) мы уже записывали в обьект, то
+				o[char]++;  // плюсуем единицу к количеству такой буквы (цифры)
+			}
+			else{ // если такую букву (цифры) мы не записывали в обьект, то
+				o[char] = 1; // записываем в обьект новое свойство с этой цифрой и количеством 1
 			}
 		}
-		return sum2;
-	}	
-
-
-	console.log(sum(2)(3)());
-	console.log(sum(2)(3)(4)());
-
-
-	// 2 
-
-	function ggg(num, fn){
-		return fn(num);
 	}
-
-	console.log(ggg(2,num=> num*num)); // 2*2 => 4
-	console.log(ggg(ggg(2, num=> num*num), num=> num*num)); // 16
-
-
-// anonymous
-(function(){
-	console.warn('Anonymous');
-})();
-
-setTimeout(()=>{
-console.log('Postponed!!');
-}, 1000);
-
-
-// 3
-
-function each(arr, fn){ // функция принимает массив и фунцию как параметры
-	let newArr = []; // создаем новый массив
-	for(let i = 0; i < arr.length; i++){
-		newArr[i] = fn(arr[i]); // 2 => pow2(2) => 4 
-	}
-	return newArr;
+	console.log(o);
 }
 
-function pow2(n){
-	return n*n;
-}
+foo(50);
 
-function sum2(n){
-	return n+2;
-}
-
-let arr1 = [2,3,4,5,6];
-console.log(each(arr1,pow2));
-console.log(each(arr1,sum2));
-console.log(arr1);
-
-// 4
-
-function encode(str){
-	if(str === ''){
-		console.error('Can not encode empty string');
-	}
-	let encoded = '';
-	let count = 1;
-	let letter = str[0];
-
-	for(let i = 1; i < str.length; i++){
-		if(str[i] === letter){
-			count += 1;
-		}
-		else{
-			encoded += count + letter;
-			// reset values
-			count = 1;
-			letter = str[i];
-		}
-	}
-	encoded += count + letter;
-
-	console.log(encoded);
-}
-
-encode('AAAABBBCCDAA');
-encode('AAAABBBCCDAAR');
 
 
 </script>
