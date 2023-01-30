@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>JS FE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+  <script>
+    // 1
+    function sum(a) {
+
+      let currentSum = a;
+
+      function f(b) {
+        currentSum += b;
+        return f;
+      }
+
+      f.toString = function () {
+        return currentSum;
+      };
+
+      return f;
+    }
+    alert(sum(1)(2)(3));
+    // 2
+    let x = function (a) {
+      return a * a
+    };
+    function ggg(func) {
+      return x(func) * x(func)
+    }
+    console.log(ggg(3));
+    //    3
+    function culcSum(arg) {
+      return arg * 2
+    }
+    let array = [3, 2, 3, 4, 5]
+    function each(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        console.log(culcSum(arr[i]))
+      }
+    }
+    each(array)
+
+
+
+
+  </script>
+
+</body>
+
+</html>
