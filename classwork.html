@@ -11,178 +11,100 @@
 
 
 <script>
-	/// here are hoisted var's and function 
-	'use strict'
+	//HW
+	// 1 sum(2)(3)(4)() *sum(2)(3)(4)
 
-	foo();
-// functions
+	function sum(a){
+		let result = a;
 
-// console.log(a); // Cannot access 'a' before initialization
-console.log(b);
-let a = 10;
-
-if(3){
-	let a = 20;
-	console.log(a);
-}
-
-console.log(a);
-
-var b = 10;
-if(5){
-	var b = 15;
-}
-
-function foo(){
-	var b = 30;
-	console.log(b);
-}
-foo();
-console.log(b);
-
-
-let name = 'Jane';
-
-function greeting(){
-	// var message = undefined;
-	var message = `Hello, ${name}`; // message = 'Hello, Jane'
-	console.log(message);
-}
-
-greeting();
-
-name = 'John';
-
-greeting(); // 'Hello, John'
-
-// hoisting - про всплывание переменных var и function declaration
-
-function printNum(){
-	console.log(`A = ${a}`);
-}
-
-printNum();
-
-
-
-// closures
-
-function makeCounter(){
-	let count = 1;
-
-	return function(){
-		console.log(count++);
-	}
-}
-
-let counter = makeCounter();
-counter();
-counter();
-counter();
-
-let counter2 = makeCounter();
-counter2();
-counter2();
-
-counter();
-counter();
-
-function sum(a,b){
-	return a+b;
-}
-
-let x = sum(2,3);
-console.warn(`x=${x}`);
-
-
-/// arr => even numbers arr
-
-function isEven(num){
-	// long version
-	// let numIsEven = false;
-	// if(num % 2 === 0){
-	// 	numIsEven = true;
-	// }
-	// return  numIsEven;
-
-	// short version
-	return num % 2 === 0;
-}
-
-console.warn(isEven(3));
-let y = isEven(2);
-console.log(y);
-
-function createArrOfEvenNumbers(arr){
-	let evens = [];
-	let index = 0;
-	for(let n of arr){
-		if(isEven(n)){
-			evens[index] = n;
-			index++;
+		function sum2(b){
+			if(b){
+				result += b;
+				return sum2;
+			}
+			else{
+				return result;
+			}
 		}
+		return sum2;
+	}	
+
+
+	console.log(sum(2)(3)());
+	console.log(sum(2)(3)(4)());
+
+
+	// 2 
+
+	function ggg(num, fn){
+		return fn(num);
 	}
-	// console.log(evens); // if we will not use this array, just want to see it
-	return evens
-}
 
-let array = createArrOfEvenNumbers([3,7,9,2,10,4,6,1,5,12,8]);
+	console.log(ggg(2,num=> num*num)); // 2*2 => 4
+	console.log(ggg(ggg(2, num=> num*num), num=> num*num)); // 16
 
-function reverseArr(arr){
-	let reversed = [];
+
+// anonymous
+(function(){
+	console.warn('Anonymous');
+})();
+
+setTimeout(()=>{
+console.log('Postponed!!');
+}, 1000);
+
+
+// 3
+
+function each(arr, fn){ // функция принимает массив и фунцию как параметры
+	let newArr = []; // создаем новый массив
 	for(let i = 0; i < arr.length; i++){
-		reversed[i] = arr[arr.length - 1 - i]
+		newArr[i] = fn(arr[i]); // 2 => pow2(2) => 4 
 	}
-
-	console.log(reversed);
+	return newArr;
 }
 
-reverseArr(array);
-
-reverseArr(createArrOfEvenNumbers([100,22,13,17,18,3,7,9,2,10,4,6,1,5,12,8]));
-
-// sum(2)(3) => 5
-
-function sum(a){
-	//a is defined like argument
-	return function(b){
-		return a + b;
-	}
+function pow2(n){
+	return n*n;
 }
-console.log(sum(2)(3));
 
+function sum2(n){
+	return n+2;
+}
 
-let sum2 = sum(2);
-console.warn(sum2(3));
-console.warn(sum2(4));
-console.warn(sum2(10));
+let arr1 = [2,3,4,5,6];
+console.log(each(arr1,pow2));
+console.log(each(arr1,sum2));
+console.log(arr1);
 
-let sum3 = sum(3);
-console.error(sum3(3));
+// 4
 
+function encode(str){
+	if(str === ''){
+		console.error('Can not encode empty string');
+	}
+	let encoded = '';
+	let count = 1;
+	let letter = str[0];
 
-// HW (2)(3)(5) =>10 усложнить функцию sum до уровня, когда может быть любое количество скобок с аргументами
-// *** (2)(3)(5)()
-
-
-// range (start,end) -> true/false  arr[]-> [inRange]
-
-let isNumberInRange = (start, end, num) => num >= start && num <= end;
-
-let filterArray = (arr, start, end) => {
-	let filtered = [];
-	let index = 0;
-
-	for(let a of arr){
-		if(isNumberInRange(start, end, a)){
-			filtered[index] = a;
-			index++;
+	for(let i = 1; i < str.length; i++){
+		if(str[i] === letter){
+			count += 1;
+		}
+		else{
+			encoded += count + letter;
+			// reset values
+			count = 1;
+			letter = str[i];
 		}
 	}
-	console.log(filtered);
+	encoded += count + letter;
+
+	console.log(encoded);
 }
 
-filterArray([1,2,3,4,5,6,7,8,9,10], 4, 8);
+encode('AAAABBBCCDAA');
+encode('AAAABBBCCDAAR');
 
 
 </script>
