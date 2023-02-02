@@ -14,146 +14,6 @@
 
 // objects
 
-let o = {
-	name: 'John',
-	lastname: 'Doe',
-	age: 22,
-	hobbys: ['art', 'photography', 'travelling'],
-	isAdmin: false
-}
-
-console.log(o);
-console.log(o.name);
-console.log(o['lastname']);
-// console.log(o[lastname]); // lastname is not defined
-
-// mutable 
-o.age += 1;
-
-delete o.isAdmin;// will not left empty space
-
-o.isAuthor = true;
-
-// in - help us find property in object
-let a = 10;
-console.log(a in window);
-
-console.log('name' in o);
-console.log('girlfriend' in o);
-o.girlfriend = 'Jane';
-console.log('girlfriend' in o);
-
-
-// loop
-
-for(let prop in o){
-	console.log(`${prop}: ${o[prop]}`);
-}
-
-let admin = {
-	name: 'Admin',
-	// property-function calls method
-	administrate: function(){
-		console.log('Admin is administrating');
-	},
-	sayHi(msg = 'Hi'){
-		console.log(`${msg}, I am ${admin.name}`);
-	}
-}
-
-admin.administrate();
-admin.sayHi();
-admin.sayHi('Good evening');
-
-
-// days ru/en
-
-let days = {
-	ru: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-	en: ['Mo', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-}
-
-function typeDay(n, lang){
-	if(typeof n !== 'number' || n > 7 || n < 1 || lang != 'ru' && lang != 'en'){
-		console.error('Not a day');
-	}
-	else{
-		console.log(days[lang][n]);
-	}
-}
-typeDay(5, 'ru');
-typeDay(2, 'en');
-typeDay(5, 'fr');
-typeDay(51, 'ru');
-
-
-// ({start,end} ) => sum 
-let obj = {
-	start: 4,
-	end: 10
-}
-
-function sumObj(obj){
-	let sum = 0;
-	let start = Math.min(obj.end, obj.start);
-	let end = obj.start < obj.end ? obj.end : obj.start;
-
-	for(let i = start; i <= end; i++){
-		sum += i;
-	}
-	console.log(`sum = ${sum}`);
-}
-
-sumObj(obj);
-sumObj({start: 12, end: 8});
-
-
-// count all instances of letter (arg)
-
-let s = {
-	name: 'Anna',
-	city: 'Los Angeles',
-	hobbys: ['art', 'football'],
-	biography: {
-		born: 'Saint Louis',
-		graduated: 'Princeton',
-		married: 'Alfred Doe'
-	}
-}
-
-function countLetter(str, letter){
-	let count = 0;
-	for(char of str){
-		if(char === letter){
-			count++;
-		}
-	}
-	return count;
-}
-console.log(countLetter('bubble', 'b')); // testing function
-
-function findLettersInObject(obj, letter){
-	let total = 0;
-	for(let key in obj){
-		// перебираем свойства обьекта, который пришел в функцию и определяем какого типа наши значения свойств
-		if(typeof obj[key] == 'string'){  // строка
-			total += countLetter(obj[key], letter);
-		}
-		else if(typeof obj[key] == 'object' && obj[key].length > 0){ // массив
-			for(let item of obj[key]){ // в массиве нужно перебрать каждый его элемент
-				total += countLetter(item, letter);
-			}
-		}
-		else if(typeof obj[key] == 'object' && !obj[key].length ){ // обьект
-			total += findLettersInObject(obj[key], letter);// вызываем рекурсивно findLettersInObject
-		}
-	}
-	return total;
-}
-
-console.log(findLettersInObject(s, 'a'));
-
-//
 let numbers = {
 	a: 5,
 	b: 7,
@@ -162,50 +22,151 @@ let numbers = {
 	e: 4,
 	f: 3,
 	g: 'admin',
-	h: [1,2,3]
+	h: [1,2,3],
+	i: {
+		n: 4,
+		m: 5
+	}
 }
 
 // obj to arr
 
-function numsFromObjToArr(obj){
-	let arr = [];
-	let index = 0;
+function numsFromObjToArr(obj, array = [], i = 0){
+	let arr = array;
+	let index = i;
 	for(let prop in obj){
 		if(typeof obj[prop] == 'number'){
 			arr[index] = obj[prop];
 			index++;
 		}
+		else if(typeof obj[prop] == 'object' && obj[prop].length > 0){
+			for(let data of obj[prop]){
+				if(typeof data == 'number'){
+					arr[index] = data;
+					index++;
+				}
+			}
+		}
+		else if(typeof obj[prop] == 'object' && obj[prop].length == undefined){ // нашли вложенный обьект и вызываем рекурсивно numsFromObjToArr
+			numsFromObjToArr(obj[prop], arr, index);
+		}
 	}
-	console.log(arr);
+	return arr;
 }
 
-numsFromObjToArr(numbers);
+console.log(numsFromObjToArr(numbers));
 
 
 // HW 1) допилить функцию numsFromObjToArr, чтобы она могла находить числа внутри дочерних обьектов или массивов
 
 
-// num => {1:, 2: , 3 ... 9:}
+//2 
 
-function foo(n){
-	let o = {}; // создаем обьект, в котором будем записывать какая цифра сколько раз встречается в числах от 1 до n
-	for(let i = 1; i <= n; i++){
-		let num = String(i); // превращаем число в строку, чтобы иметь возможность перебирать двухзначные и трехзначные числа
-		for(let char of num){ // итерируем числа побуквенно 12=> 1 и 2
-			if(char in o){ //если такую букву (цифры) мы уже записывали в обьект, то
-				o[char]++;  // плюсуем единицу к количеству такой буквы (цифры)
-			}
-			else{ // если такую букву (цифры) мы не записывали в обьект, то
-				o[char] = 1; // записываем в обьект новое свойство с этой цифрой и количеством 1
+//({ a: 1, b: 2 }) => [['a', 1], ['b', 2]]
+
+function objectToArray(obj){
+	let arr = [];
+	let index = 0;
+
+	for(let prop in obj){
+		let innerArr = [];
+		innerArr[0] = prop;
+		innerArr[1] = obj[prop];
+
+		arr[index] = innerArr;
+		index++;
+	}
+
+	return arr;
+}
+
+
+console.log(objectToArray({ a: 1, b: 2 , c: 3, d: 4}));
+
+
+// 3
+
+//({ a: 1, b: 2 }, 'b') => { a: 1 }
+
+let o1 = { a: 1, b: 2};
+let o2 = { a: 1, b: 2 , c: 3, d: 4};
+
+function excludeFromObject(obj){
+	// mutable
+	// for(let prop in obj){
+	// 	for(let prop in obj){
+	// 		for(let i = 1; i < arguments.length; i++){ // все параметры функции, которые пришли после обьекта (arguments[0]) - это то, что нужно удалить
+	// 			if(prop === arguments[i]){
+	// 				delete obj[prop];
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// return obj;
+
+	// better immutable version will use array methods
+
+	let newObj = {};
+	for(let prop in obj){
+		newObj[prop] = obj[prop];
+	}
+	for(let prop in newObj){
+		for(let prop in newObj){
+			for(let i = 1; i < arguments.length; i++){ // все параметры функции, которые пришли после обьекта (arguments[0]) - это то, что нужно удалить
+				if(prop === arguments[i]){
+					delete newObj[prop];
+				}
 			}
 		}
 	}
-	console.log(o);
+	return newObj;
+
 }
 
-foo(50);
+console.log(excludeFromObject(o1, 'b'));
+console.log(excludeFromObject(o2, 'b', 'c'));
 
 
+//4 
+
+function isEmpty(obj){
+	let objectIsEmpty = true;
+	for(let prop in obj){
+		if(obj[prop] !== undefined){
+			objectIsEmpty = false;
+		}
+	}
+	console.log(objectIsEmpty);
+}
+
+isEmpty({});
+isEmpty({a: undefined});
+isEmpty({a: undefined, b: undefined, c: undefined, d: 1});
+isEmpty({a: 1});
+
+// 5
+
+function equalObjects(obj1, obj2){
+	let objectsAreEqual = true;
+	for(let prop in obj1){
+		if(!prop in obj2 || obj2[prop] !== obj1[prop]){ // если во втором обьекте нет такого свойства или значение свойства в обьекте2 отличается от значения в обьекте1
+			objectsAreEqual = false;
+		}
+	}
+	// второй раз мы проходим циклом по второму обьекту на случай, если в нем было больше свойств
+	for(let prop in obj2){
+		if(!prop in obj1 || obj2[prop] !== obj1[prop]){ // если во первом обьекте нет такого свойства или значение свойства в обьекте2 отличается от значения в обьекте1
+			objectsAreEqual = false;
+		}
+	}
+	return objectsAreEqual;
+}
+
+
+console.log(equalObjects({ a: 1, b: 1 }, { a: 1, b: 1 }));
+console.log(equalObjects({ a: 1, b: 1, c: 1 }, { a: 1, b: 1 }));
+console.log(equalObjects({ a: 1, b: 1 }, { a: 1, b: 1, c: 1 }));
+console.log(equalObjects({ a: 1, b: 1, c: 2 }, { a: 1, b: 1, c: 1 }));
 
 </script>
 
