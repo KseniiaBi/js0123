@@ -12,161 +12,351 @@
 
 <script>
 
-// objects
+// array methods
 
-let numbers = {
-	a: 5,
-	b: 7,
-	c: 8, 
-	d: 2,
-	e: 4,
-	f: 3,
-	g: 'admin',
-	h: [1,2,3],
-	i: {
-		n: 4,
-		m: 5
+// concat array1.concat(array2, array3, ..., arrayX)
+
+let girls = ['Mary', 'Jane', 'Ann'];
+let boys = ['John', 'Peter', 'James'];
+let children = girls.concat(boys); // сначала девочки, потом мальчики
+
+console.log(children);
+
+// copyWithin array.copyWithin(target, start, end)
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.copyWithin(2, 0); // ["Banana", "Orange", "Banana", "Orange",];
+
+// array.entries() returns iterator
+
+let c = children.entries();
+
+for(let child of c){
+	console.log(child);
+}
+
+// every(fn) true/false
+
+console.log(children.every((name) => name.length > 4)); // every name in children array has length > 4
+
+
+// array.fill(value, start, end)
+
+// array.filter(function(currentValue, index, arr), thisValue)  /returns new array
+
+let longNames = children.filter(name => name.length > 4);
+console.log(longNames);
+
+
+// find /returns value or undefined
+
+console.log(children.find(name => name.length > 4));
+
+// findIndex / index or -1
+console.log(children.findIndex(name => name.length > 4));
+
+//array.forEach(function(currentValue, index, arr), thisValue)
+children.forEach((child, index) => {
+	console.log(`${index}: ${child}`);
+})
+
+
+// Array.from(object, mapFunction, thisValue)
+
+let nums = Array.from('12345', (num)=> num*2);
+console.log(nums);
+
+// indexOf array.indexOf(item, start) index/undefined
+
+console.log(children.indexOf('Kate')); // => -1 -> Kate not found
+
+// array.includes(element, start)
+
+console.log(children.includes('Kate'));
+
+
+// Array.isArray(obj)
+
+console.log(Array.isArray('12345'));
+console.log(Array.isArray(children));
+
+
+// array.join(separator)
+
+// array.keys() - returns object Iterator only with indexes
+
+
+// array.lastIndexOf(item, start) 
+
+// array.map(function(currentValue, index, arr), thisValue)
+
+console.log(children.map(name => name + ' Lastanme'));
+
+// push() - adds new value to the end of arr and returns new arr.length
+// pop() - removes last element of arr and returns IT
+// shift() - Removes the first element of an array, and returns that element
+// unshift() - adds new value to the start of arr and returns new arr.length
+
+//array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+
+let sum = nums.reduce((total, num) => total += num);
+console.log(sum);
+
+// reduceRight()
+
+console.log(children.reduceRight((str, name) => str += ' ' + name));
+
+// reverse()
+
+children.reverse(); //  ['James', 'Peter', 'John', 'Ann', 'Jane', 'Mary']
+
+// slice(start, end)
+
+let childrenCopy = children.slice();
+
+let boys2 = children.slice(0, 3); // end is not included
+console.log(boys2);
+
+// some()
+
+console.log(children.some(name => name.length > 4));
+
+
+// array.sort(compareFunction)
+childrenCopy.sort(); // sorts strings a-z
+console.log(childrenCopy);
+
+let numbers = [5,1,3,2,8,6,9,7,4];
+numbers.sort();
+
+console.log(numbers);
+
+
+let students = [
+	{
+		name: 'Jane',
+		age: 19
+	},
+	{
+		name: 'Rob',
+		age: 23
+	},
+	{
+		name: 'Mary',
+		age: 21
+	},
+	{
+		name: 'Ann',
+		age: 17
+	}
+];
+
+
+students.sort(); // no effect
+students.sort(function(a,b){ // by ascending
+	if(a.age > b.age){
+		return 1;
+	}
+	else if(a.age < b.age){
+		return -1;
+	}
+	else{
+		return 0
+	}
+});
+console.log(students);
+
+// toString
+
+// flat(level) 
+
+let arr = [[1,2,3], [4, [5, [6]]]];
+console.log(arr.flat(10));
+
+
+//  sum of arr 
+// 1
+function sumArr(a){
+	let flatArr = a.flat(Infinity);
+	let total = 0;
+	for(let num of flatArr){
+		total += num;
+	}
+	console.log(total);
+}
+sumArr(arr);
+
+let arr2 = [[1,2,3], [4,5,6], [7,8,9]];
+// 2
+function sumArr2(a){
+	let flatArr = a.reduce((full, inner) => { // reduce сворачивает массив
+		return full.concat(inner); // присоединяет массивы
+	});
+	console.log(flatArr);
+	let sum = flatArr.reduce((total, num) => total+= num);// reduce сворачивает массив
+	return sum;
+}
+
+console.log(sumArr2(arr2));
+
+// *HW сделать sumArr2 с подсчетом суммы сразу ** recursion
+
+//из списка товаров интернет-магазина вывести только те, которые участвуют в акции
+
+let toys = [
+	{
+		name: 'Ball',
+		price: 55,
+		sale: true
+	},
+	{
+		name: 'Doll',
+		price: 555
+	},
+	{
+		name: 'Busyboard',
+		price: 1099,
+		sale: true
+	},
+	{
+		name: 'Guitar',
+		price: 1095,
+		sale: true
+	},
+	{
+		name: 'Piano',
+		price: 999
+	},
+];
+
+function showToysInSale(a){
+	let inSale = hasSale(a);
+	inSale.forEach(toy => console.log(`${toy.name}: ${toy.price}UAH`));
+}
+
+function hasSale(a){
+	let newa = a.filter((toy)=>{
+		if(toy.sale){
+			return toy;
+		}
+	});
+	return newa;
+}
+function hasNotSale(a){
+	let newa = a.filter((toy)=>{
+		if(!toy.sale){
+			return toy;
+		}
+	});
+	return newa;
+}
+
+showToysInSale(toys);
+
+
+// отсортировать список игрушек так, чтобы сначала шли товары с акцией по возрастанию цены, а потом без акции и тоже по возрастанию цены
+
+function sortToys(a){
+	// сначала создаем массив игрушек с акцией и сортируем по цене
+	let withSale = hasSale(a);
+	let sortedWithSale = sortByPrice(withSale);
+	// потом создаем массив игрушек без акций и сортируем по цене
+	let withoutSale = hasNotSale(a);
+	let sortedWithoutSale = sortByPrice(withoutSale);
+
+	let fullSorted = sortedWithSale.concat(withoutSale);
+	console.log(fullSorted);
+}
+
+function sortByPrice(a){
+	let acopy = a.slice();// копируем исходный массив, чтобы не мутировать исходный
+	acopy.sort((a,b)=>{
+		if(a.price > b.price){
+			return 1;
+		}
+		else if(a.price < b.price){
+			return -1;
+		}
+		else{
+			return 0;
+		}
+	});
+	return acopy;
+}
+
+sortToys(toys);
+
+
+// create obj with methods sum/extr/div/mul
+
+let calc = {
+	sum(a,b){
+		if(typeof a !== 'number' || typeof b !== 'number'){
+			console.error('Can not execute sum not on numbers');
+		}
+		else{
+			return a+b
+		}
+	},
+	extr(a,b){
+		if(typeof a !== 'number' || typeof b !== 'number'){
+			console.error('Can not execute extraction not on numbers');
+		}
+		else{
+			return a-b;
+		}
+	},
+	div(a,b){
+		if(typeof a !== 'number' || typeof b !== 'number'){
+			console.error('Can not execute divide not on numbers');
+		}
+		else{
+			return a/b;
+		}
+	},
+	mul(a,b){
+		if(typeof a !== 'number' || typeof b !== 'number'){
+			console.error('Can not execute multiply not on numbers');
+		}
+		else{
+			return a*b;
+		}
 	}
 }
 
-// obj to arr
+console.log(calc.sum(2,3));
+console.log(calc.mul(2,3));
+console.log(calc.div(6,3));
+console.log(calc.extr(7,3));
 
-function numsFromObjToArr(obj, array = [], i = 0){
-	let arr = array;
-	let index = i;
-	for(let prop in obj){
-		if(typeof obj[prop] == 'number'){
-			arr[index] = obj[prop];
-			index++;
-		}
-		else if(typeof obj[prop] == 'object' && obj[prop].length > 0){
-			for(let data of obj[prop]){
-				if(typeof data == 'number'){
-					arr[index] = data;
-					index++;
-				}
-			}
-		}
-		else if(typeof obj[prop] == 'object' && obj[prop].length == undefined){ // нашли вложенный обьект и вызываем рекурсивно numsFromObjToArr
-			numsFromObjToArr(obj[prop], arr, index);
-		}
-	}
-	return arr;
-}
+// HW 1) реализовать методы вычитания, умножения и деления, используя только оператор + 
 
-console.log(numsFromObjToArr(numbers));
+// создать массив из 99 рандомных целых чисел в диапазоне от 1 до 100 и найти отсутствующее число
 
-
-// HW 1) допилить функцию numsFromObjToArr, чтобы она могла находить числа внутри дочерних обьектов или массивов
-
-
-//2 
-
-//({ a: 1, b: 2 }) => [['a', 1], ['b', 2]]
-
-function objectToArray(obj){
+function randomArrSearch(){
 	let arr = [];
-	let index = 0;
+	while(arr.length < 99){
+		let newnum = Math.ceil(Math.random()*100); //  генерируем число от 1 до 100
+		if(!arr.includes(newnum)){ // если такого числа еще нет в массиве
+			arr.push(newnum); // добавляем его
+		}
+	}
+	arr.sort(); // сортируем массив для упрощения визуальной проверки
+	console.log(arr); // необязательная строка решения, для визуальной проверки
 
-	for(let prop in obj){
-		let innerArr = [];
-		innerArr[0] = prop;
-		innerArr[1] = obj[prop];
-
-		arr[index] = innerArr;
-		index++;
+	let sumFull = 0; // считаем сумму все чисел от 1 до 100
+	for(let i = 1; i <= 100; i++){
+		sumFull += i;
 	}
 
-	return arr;
+	let arrSum = arr.reduce((total, num) => total += num); // считаем сумму всех элементов массива
+
+	let notInArr = sumFull - arrSum; // путем вычитания от общей суммы суммы по массиву, получаем искомое число
+
+	console.warn(`Number ${notInArr} was not in arr`);
 }
 
 
-console.log(objectToArray({ a: 1, b: 2 , c: 3, d: 4}));
-
-
-// 3
-
-//({ a: 1, b: 2 }, 'b') => { a: 1 }
-
-let o1 = { a: 1, b: 2};
-let o2 = { a: 1, b: 2 , c: 3, d: 4};
-
-function excludeFromObject(obj){
-	// mutable
-	// for(let prop in obj){
-	// 	for(let prop in obj){
-	// 		for(let i = 1; i < arguments.length; i++){ // все параметры функции, которые пришли после обьекта (arguments[0]) - это то, что нужно удалить
-	// 			if(prop === arguments[i]){
-	// 				delete obj[prop];
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// return obj;
-
-	// better immutable version will use array methods
-
-	let newObj = {};
-	for(let prop in obj){
-		newObj[prop] = obj[prop];
-	}
-	for(let prop in newObj){
-		for(let prop in newObj){
-			for(let i = 1; i < arguments.length; i++){ // все параметры функции, которые пришли после обьекта (arguments[0]) - это то, что нужно удалить
-				if(prop === arguments[i]){
-					delete newObj[prop];
-				}
-			}
-		}
-	}
-	return newObj;
-
-}
-
-console.log(excludeFromObject(o1, 'b'));
-console.log(excludeFromObject(o2, 'b', 'c'));
-
-
-//4 
-
-function isEmpty(obj){
-	let objectIsEmpty = true;
-	for(let prop in obj){
-		if(obj[prop] !== undefined){
-			objectIsEmpty = false;
-		}
-	}
-	console.log(objectIsEmpty);
-}
-
-isEmpty({});
-isEmpty({a: undefined});
-isEmpty({a: undefined, b: undefined, c: undefined, d: 1});
-isEmpty({a: 1});
-
-// 5
-
-function equalObjects(obj1, obj2){
-	let objectsAreEqual = true;
-	for(let prop in obj1){
-		if(!prop in obj2 || obj2[prop] !== obj1[prop]){ // если во втором обьекте нет такого свойства или значение свойства в обьекте2 отличается от значения в обьекте1
-			objectsAreEqual = false;
-		}
-	}
-	// второй раз мы проходим циклом по второму обьекту на случай, если в нем было больше свойств
-	for(let prop in obj2){
-		if(!prop in obj1 || obj2[prop] !== obj1[prop]){ // если во первом обьекте нет такого свойства или значение свойства в обьекте2 отличается от значения в обьекте1
-			objectsAreEqual = false;
-		}
-	}
-	return objectsAreEqual;
-}
-
-
-console.log(equalObjects({ a: 1, b: 1 }, { a: 1, b: 1 }));
-console.log(equalObjects({ a: 1, b: 1, c: 1 }, { a: 1, b: 1 }));
-console.log(equalObjects({ a: 1, b: 1 }, { a: 1, b: 1, c: 1 }));
-console.log(equalObjects({ a: 1, b: 1, c: 2 }, { a: 1, b: 1, c: 1 }));
+randomArrSearch();
 
 </script>
 
