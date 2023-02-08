@@ -11,31 +11,65 @@
 // №_1
 // recursive fibonacci
     
-function func(n) {
-  return n <= 1 ? n : func(n - 1) + func(n - 2);
+function fibonacci(a,b,n,current=3) {
+  let c = a+b;
+  current++;  
+    if(current <=n){
+        fibonacci(b,c,n,current);
+    }
+    else {
+        console.log(c);
+    }
 }
 
-alert(func(7)); 
+
     
 // №_2
 // recursive factorial
     
-     function factorial(n) {
-  return (n != 1) ? n * factorial(n - 1) : 1;
+function factorial(n) {
+    if(n<1){
+    return n * factorial(n-1);
+         }
+    else{
+        console.log(factorial(5));
+         }
 }
-
-alert( factorial(5) ); 
-    
-    
-    
+ 
 // №_3
 // найти сумму диапазона чисел, которые приходят в аргументах функции.
  
+    function sumRange(start, end){
+        if(start>end){
+            let max = start;
+            start=end;
+            end=max;
+        }
+        for(let i=start; i<=end; i++){
+            sum+=i;
+        }
+        console.log(sum)
+    }
+    
+    sumRange(1,10);
+    sumRange(10,1);
+    
 // №_4
 // Дана строка с цифрами, например, '12345'. Напишите функцию, в которой проверьте, что первым символом // этой строки является цифра 1, 2 или 3. Если это так - выведите 'да', в противном случае выведите 'нет'.
     
+    
+
+    
+    
+    
+    
 // №_5
 // Дана строка, например, '123456'. Переверните эту строку с помощью функции
+    
+    
+    
+    
+    
     
 // №_6
 // Найдите все года от 1 до 2018, сумма цифр которых равна 13. Для этого используйте

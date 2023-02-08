@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"> 
+</head>
+<body>
+	Homework №_9 (06/02/2023)
+<script>
+    
+// 1) реализовать методы вычитания, умножения и деления, используя только оператор +
+    
+    
+    
+    
+    
+// 2) Даны два массива: [1, 2, 3] и [4, 5, 6]. Объедините их вместе. 
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const arrsum = arr1.concat(arr2);
+    
+    console.log (arrsum)
+    
+// 3) Дан массив [1, 2, 3]. Добавьте ему в начало элементы 4, 5, 6. 
+    
+var arr3 = [1, 2, 3]; 
+var newLength = arr3.unshift(4, 5, 6);  
+
+    console.log (arr3)
+    
+// 4) Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [1, 2, 3]. 
+    
+var arr4 = [1, 2, 3, 4, 5];  
+var arr5 = arr4.slice(0, 3); 
+    
+    console.log (arr5)
+    
+// 5) Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [4, 5]. 
+    
+var arr4 = [1, 2, 3, 4, 5];  
+var arr6 = arr4.slice(3, 5); 
+    
+    console.log (arr6)   
+    
+// 6) Дан массив [1, 2, 3, 4, 5]. С помощью метода splice преобразуйте массив в [1, 4, 5]. 
+    
+ var arr4 = [1, 2, 3, 4, 5]; 
+ var arr7 = arr4.splice(1, 2);  
+    
+      console.log (arr4)   
+    
+// 7) Дан массив [1, 2, 3, 4, 5]. С помощью метода splice запишите в новый массив элементы [2, 3, 4]. 
+    
+ var arr4 = [1, 2, 3, 4, 5]; 
+ var arr8 = arr4.splice(1, 3);  
+    
+      console.log (arr8)   
+    
+// 8) Дан массив [1, 2, 3, 4, 5]. Сделайте из него массив [1, 2, 3, 'a', 'b', 'c', 4, 5].  
+    
+var arr10 = [1, 2, 3, 4, 5]; 
+var arr9 = arr10.splice(3, 0, 'a', 'b', 'c');  
+    
+      console.log (arr10)   
+    
+
+</script>    
+      
+</body>
+</html>
