@@ -14,349 +14,75 @@
 
 // array methods
 
-// concat array1.concat(array2, array3, ..., arrayX)
+// 1) реализовать методы вычитания, умножения и деления, используя только оператор +
 
-let girls = ['Mary', 'Jane', 'Ann'];
-let boys = ['John', 'Peter', 'James'];
-let children = girls.concat(boys); // сначала девочки, потом мальчики
-
-console.log(children);
-
-// copyWithin array.copyWithin(target, start, end)
-const fruits = ["Banana", "Orange", "Apple", "Mango"];
-fruits.copyWithin(2, 0); // ["Banana", "Orange", "Banana", "Orange",];
-
-// array.entries() returns iterator
-
-let c = children.entries();
-
-for(let child of c){
-	console.log(child);
-}
-
-// every(fn) true/false
-
-console.log(children.every((name) => name.length > 4)); // every name in children array has length > 4
-
-
-// array.fill(value, start, end)
-
-// array.filter(function(currentValue, index, arr), thisValue)  /returns new array
-
-let longNames = children.filter(name => name.length > 4);
-console.log(longNames);
-
-
-// find /returns value or undefined
-
-console.log(children.find(name => name.length > 4));
-
-// findIndex / index or -1
-console.log(children.findIndex(name => name.length > 4));
-
-//array.forEach(function(currentValue, index, arr), thisValue)
-children.forEach((child, index) => {
-	console.log(`${index}: ${child}`);
-})
-
-
-// Array.from(object, mapFunction, thisValue)
-
-let nums = Array.from('12345', (num)=> num*2);
-console.log(nums);
-
-// indexOf array.indexOf(item, start) index/undefined
-
-console.log(children.indexOf('Kate')); // => -1 -> Kate not found
-
-// array.includes(element, start)
-
-console.log(children.includes('Kate'));
-
-
-// Array.isArray(obj)
-
-console.log(Array.isArray('12345'));
-console.log(Array.isArray(children));
-
-
-// array.join(separator)
-
-// array.keys() - returns object Iterator only with indexes
-
-
-// array.lastIndexOf(item, start) 
-
-// array.map(function(currentValue, index, arr), thisValue)
-
-console.log(children.map(name => name + ' Lastanme'));
-
-// push() - adds new value to the end of arr and returns new arr.length
-// pop() - removes last element of arr and returns IT
-// shift() - Removes the first element of an array, and returns that element
-// unshift() - adds new value to the start of arr and returns new arr.length
-
-//array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
-
-let sum = nums.reduce((total, num) => total += num);
-console.log(sum);
-
-// reduceRight()
-
-console.log(children.reduceRight((str, name) => str += ' ' + name));
-
-// reverse()
-
-children.reverse(); //  ['James', 'Peter', 'John', 'Ann', 'Jane', 'Mary']
-
-// slice(start, end)
-
-let childrenCopy = children.slice();
-
-let boys2 = children.slice(0, 3); // end is not included
-console.log(boys2);
-
-// some()
-
-console.log(children.some(name => name.length > 4));
-
-
-// array.sort(compareFunction)
-childrenCopy.sort(); // sorts strings a-z
-console.log(childrenCopy);
-
-let numbers = [5,1,3,2,8,6,9,7,4];
-numbers.sort();
-
-console.log(numbers);
-
-
-let students = [
-	{
-		name: 'Jane',
-		age: 19
-	},
-	{
-		name: 'Rob',
-		age: 23
-	},
-	{
-		name: 'Mary',
-		age: 21
-	},
-	{
-		name: 'Ann',
-		age: 17
+function extr(a,b){
+	let res = a;
+	for(let i = 0; i < b; i++){
+		res += -1;
 	}
-];
+	console.log(res);
+}
+extr(5,2);
 
-
-students.sort(); // no effect
-students.sort(function(a,b){ // by ascending
-	if(a.age > b.age){
-		return 1;
+function mul(a,b){
+	let res = 0;
+	for(let i = 0; i < b; i++){
+		res += a;
 	}
-	else if(a.age < b.age){
-		return -1;
+	console.log(res);
+}
+mul(2,10);
+
+function div(a,b){
+	let res = 0;
+	let i = 0;
+	while(res < a){
+		res += b;
+		i++;
 	}
-	else{
-		return 0
-	}
-});
-console.log(students);
-
-// toString
-
-// flat(level) 
-
-let arr = [[1,2,3], [4, [5, [6]]]];
-console.log(arr.flat(10));
-
-
-//  sum of arr 
-// 1
-function sumArr(a){
-	let flatArr = a.flat(Infinity);
-	let total = 0;
-	for(let num of flatArr){
-		total += num;
-	}
-	console.log(total);
+	return i;
 }
-sumArr(arr);
-
-let arr2 = [[1,2,3], [4,5,6], [7,8,9]];
-// 2
-function sumArr2(a){
-	let flatArr = a.reduce((full, inner) => { // reduce сворачивает массив
-		return full.concat(inner); // присоединяет массивы
-	});
-	console.log(flatArr);
-	let sum = flatArr.reduce((total, num) => total+= num);// reduce сворачивает массив
-	return sum;
-}
-
-console.log(sumArr2(arr2));
-
-// *HW сделать sumArr2 с подсчетом суммы сразу ** recursion
-
-//из списка товаров интернет-магазина вывести только те, которые участвуют в акции
-
-let toys = [
-	{
-		name: 'Ball',
-		price: 55,
-		sale: true
-	},
-	{
-		name: 'Doll',
-		price: 555
-	},
-	{
-		name: 'Busyboard',
-		price: 1099,
-		sale: true
-	},
-	{
-		name: 'Guitar',
-		price: 1095,
-		sale: true
-	},
-	{
-		name: 'Piano',
-		price: 999
-	},
-];
-
-function showToysInSale(a){
-	let inSale = hasSale(a);
-	inSale.forEach(toy => console.log(`${toy.name}: ${toy.price}UAH`));
-}
-
-function hasSale(a){
-	let newa = a.filter((toy)=>{
-		if(toy.sale){
-			return toy;
-		}
-	});
-	return newa;
-}
-function hasNotSale(a){
-	let newa = a.filter((toy)=>{
-		if(!toy.sale){
-			return toy;
-		}
-	});
-	return newa;
-}
-
-showToysInSale(toys);
+// 2 = 10/5
+console.log(div(10,1));
 
 
-// отсортировать список игрушек так, чтобы сначала шли товары с акцией по возрастанию цены, а потом без акции и тоже по возрастанию цены
+// 2)Даны два массива: [1, 2, 3] и [4, 5, 6]. Объедините их вместе. 
 
-function sortToys(a){
-	// сначала создаем массив игрушек с акцией и сортируем по цене
-	let withSale = hasSale(a);
-	let sortedWithSale = sortByPrice(withSale);
-	// потом создаем массив игрушек без акций и сортируем по цене
-	let withoutSale = hasNotSale(a);
-	let sortedWithoutSale = sortByPrice(withoutSale);
+let arr1 = [1, 2, 3];
+let arr2 =  [4, 5, 6];
+console.log(arr1.concat(arr2));
 
-	let fullSorted = sortedWithSale.concat(withoutSale);
-	console.log(fullSorted);
-}
+//  3) Дан массив [1, 2, 3]. Добавьте ему в начало элементы 4, 5, 6.
+let arr3 = [1,2,3];
+arr3.unshift(4,5,6);
+console.log(arr3);
 
-function sortByPrice(a){
-	let acopy = a.slice();// копируем исходный массив, чтобы не мутировать исходный
-	acopy.sort((a,b)=>{
-		if(a.price > b.price){
-			return 1;
-		}
-		else if(a.price < b.price){
-			return -1;
-		}
-		else{
-			return 0;
-		}
-	});
-	return acopy;
-}
+//  4)  Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [1, 2, 3].
 
-sortToys(toys);
+let arr4 = [1,2,3,4,5];
+let arr42 = arr4.slice(0,3);
+console.log(arr42);
 
+//  5) Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [4, 5]. 
+let arr5 = [1,2,3,4,5];
+let arr52 = arr5.slice(3);
+console.log(arr52);
 
-// create obj with methods sum/extr/div/mul
+//  6)  Дан массив [1, 2, 3, 4, 5]. С помощью метода splice преобразуйте массив в [1, 4, 5].
+let arr6 = [1,2,3,4,5];
+arr6.splice(1,2);
+console.log(arr6);
 
-let calc = {
-	sum(a,b){
-		if(typeof a !== 'number' || typeof b !== 'number'){
-			console.error('Can not execute sum not on numbers');
-		}
-		else{
-			return a+b
-		}
-	},
-	extr(a,b){
-		if(typeof a !== 'number' || typeof b !== 'number'){
-			console.error('Can not execute extraction not on numbers');
-		}
-		else{
-			return a-b;
-		}
-	},
-	div(a,b){
-		if(typeof a !== 'number' || typeof b !== 'number'){
-			console.error('Can not execute divide not on numbers');
-		}
-		else{
-			return a/b;
-		}
-	},
-	mul(a,b){
-		if(typeof a !== 'number' || typeof b !== 'number'){
-			console.error('Can not execute multiply not on numbers');
-		}
-		else{
-			return a*b;
-		}
-	}
-}
+//  7) Дан массив [1, 2, 3, 4, 5]. С помощью метода splice запишите в новый массив элементы [2, 3, 4]. 
+let arr7 = [1,2,3,4,5];
+let arr72 = arr7.splice(1,3);
+console.log(arr72);
+//  8) Дан массив [1, 2, 3, 4, 5]. Сделайте из него массив [1, 2, 3, 'a', 'b', 'c', 4, 5].
 
-console.log(calc.sum(2,3));
-console.log(calc.mul(2,3));
-console.log(calc.div(6,3));
-console.log(calc.extr(7,3));
-
-// HW 1) реализовать методы вычитания, умножения и деления, используя только оператор + 
-
-// создать массив из 99 рандомных целых чисел в диапазоне от 1 до 100 и найти отсутствующее число
-
-function randomArrSearch(){
-	let arr = [];
-	while(arr.length < 99){
-		let newnum = Math.ceil(Math.random()*100); //  генерируем число от 1 до 100
-		if(!arr.includes(newnum)){ // если такого числа еще нет в массиве
-			arr.push(newnum); // добавляем его
-		}
-	}
-	arr.sort(); // сортируем массив для упрощения визуальной проверки
-	console.log(arr); // необязательная строка решения, для визуальной проверки
-
-	let sumFull = 0; // считаем сумму все чисел от 1 до 100
-	for(let i = 1; i <= 100; i++){
-		sumFull += i;
-	}
-
-	let arrSum = arr.reduce((total, num) => total += num); // считаем сумму всех элементов массива
-
-	let notInArr = sumFull - arrSum; // путем вычитания от общей суммы суммы по массиву, получаем искомое число
-
-	console.warn(`Number ${notInArr} was not in arr`);
-}
-
-
-randomArrSearch();
+let arr8 = [1,2,3,4,5];
+arr8.splice(3, 0, 'a', 'b', 'c');
+console.log(arr8);
 
 </script>
 
