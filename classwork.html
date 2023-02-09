@@ -12,77 +12,213 @@
 
 <script>
 
-// array methods
+// string methods
 
-// 1) реализовать методы вычитания, умножения и деления, используя только оператор +
+// almost all methods return new string
 
-function extr(a,b){
-	let res = a;
-	for(let i = 0; i < b; i++){
-		res += -1;
-	}
-	console.log(res);
+
+let message = 'Hello World';
+
+//charAt()
+console.log(message.charAt(0));
+
+// charCodeAt()
+console.log(message.charCodeAt(0)); // -, i
+
+//concat()
+let name = 'User';
+console.log(message.concat(' My name is ', name)); /// `{message} My name is ${name}`
+
+// endsWith() case sensitive
+console.warn(message.endsWith('World')); // true
+console.warn(message.endsWith('!')); // false
+
+// fromCharCode()
+console.log(String.fromCharCode(72));
+
+// includes()
+console.log(message.includes('ll'));
+
+
+//indexOf() lastIndexOf
+console.log(message.indexOf('l'));
+console.log(message.lastIndexOf('l'));
+
+// match()
+console.log(message.match(/l/g)); // .length returns 3
+
+//repeat()
+console.log(message.repeat(5));
+
+// replace
+console.log(message.replace(/l/g, 'L'));
+
+// search
+console.log(message.search('l'));
+
+// slice  (start, end[not incl])
+let msg = message.slice(2,4);
+console.log(msg);
+
+// split
+console.log(message.split(' '));
+
+
+// startsWith()
+console.log(message.startsWith('Hello'));
+
+// substr (start, count)
+console.log(message.substr(0, 5));
+
+// substring(strt,end[not incl]), can swap args
+console.log(message.substring(9,4));
+
+// toLowerCase()
+console.log(message.toLowerCase());
+
+// toUpperCase()
+console.log(message.toUpperCase());
+
+// trim() trimEnd() trimStart()
+
+let longstr = `
+	    ksjdjfk		   jdsfhdff
+			          `
+console.log(longstr);
+console.log(longstr.trim());
+
+
+// http or https
+
+function checkSecureConnection(url){
+	return url.startsWith('https');
 }
-extr(5,2);
+console.warn(checkSecureConnection('http://mysite.com'));
+console.warn(checkSecureConnection('https://mysite.com'));
 
-function mul(a,b){
-	let res = 0;
-	for(let i = 0; i < b; i++){
-		res += a;
+// check image
+
+function checkImageFormat(filename){
+	if(filename.endsWith('.jpg') || filename.endsWith('.png')){
+		console.log('Uploaded successful!');
 	}
-	console.log(res);
-}
-mul(2,10);
-
-function div(a,b){
-	let res = 0;
-	let i = 0;
-	while(res < a){
-		res += b;
-		i++;
+	else{
+		console.error('File format is not supported');
 	}
-	return i;
 }
-// 2 = 10/5
-console.log(div(10,1));
+
+checkImageFormat('icon.png');
+checkImageFormat('img_324324.psd');
 
 
-// 2)Даны два массива: [1, 2, 3] и [4, 5, 6]. Объедините их вместе. 
+// active menu link
 
-let arr1 = [1, 2, 3];
-let arr2 =  [4, 5, 6];
-console.log(arr1.concat(arr2));
+let menulinks = [ 'about', 'catalog', 'cart', 'blog'];
 
-//  3) Дан массив [1, 2, 3]. Добавьте ему в начало элементы 4, 5, 6.
-let arr3 = [1,2,3];
-arr3.unshift(4,5,6);
-console.log(arr3);
+function setActiveLink(url){
+	let active = '';
+	for(let link of menulinks){
+		if(url.includes(link)){
+			active = link;
+		}
+	}
+	if(active){
+		// set active class
+		console.log(`Active link for page ${active}`);
+	}
+	else{
+		console.log('Active Home page');
+	}
+}
 
-//  4)  Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [1, 2, 3].
+setActiveLink('http://myshop.com/catalog/category/bikes');
+setActiveLink('http://myshop.com/about_us');
+setActiveLink('http://myshop.com/blog/post_111');
+setActiveLink('http://myshop.com/');
 
-let arr4 = [1,2,3,4,5];
-let arr42 = arr4.slice(0,3);
-console.log(arr42);
+// check is anagram
 
-//  5) Дан массив [1, 2, 3, 4, 5]. С помощью метода slice запишите в новый элементы [4, 5]. 
-let arr5 = [1,2,3,4,5];
-let arr52 = arr5.slice(3);
-console.log(arr52);
+function isAnagram(str1, str2){
+	if(str1.length !== str2.length){
+		return false;
+	}
+	let arr1 = str1.toLowerCase().split('');
+	let arr2 = str2.toLowerCase().split('');
 
-//  6)  Дан массив [1, 2, 3, 4, 5]. С помощью метода splice преобразуйте массив в [1, 4, 5].
-let arr6 = [1,2,3,4,5];
-arr6.splice(1,2);
-console.log(arr6);
+	arr1.sort();
+	arr2.sort();
 
-//  7) Дан массив [1, 2, 3, 4, 5]. С помощью метода splice запишите в новый массив элементы [2, 3, 4]. 
-let arr7 = [1,2,3,4,5];
-let arr72 = arr7.splice(1,3);
-console.log(arr72);
-//  8) Дан массив [1, 2, 3, 4, 5]. Сделайте из него массив [1, 2, 3, 'a', 'b', 'c', 4, 5].
+	str1 = arr1.join('');
+	str2 = arr2.join('');
 
-let arr8 = [1,2,3,4,5];
-arr8.splice(3, 0, 'a', 'b', 'c');
-console.log(arr8);
+	return str1 == str2;
+}
+
+console.log(isAnagram('Пасечник', 'песчаник'));
+console.log(isAnagram('норматив', 'минотавр'));
+console.log(isAnagram('мама', 'рама'));
+console.log(isAnagram('mama', 'llama'));
+
+
+// count Letter in Word
+// loop
+// function countLetter(str, letter){
+// 	let count = 0;
+// 	for(let i = 0; i < str.length; i++){
+// 		if(str.charAt(i).toLowerCase() === letter.toLowerCase()){
+// 			count += 1;
+// 		}
+// 	}
+// 	console.log(`${count} ${letter}'s in ${str}`);
+// }
+
+// function countLetter(str, letter){
+// 	let count = 0;
+// 	for(let char of str){
+// 		if(char.toLowerCase() === letter.toLowerCase()){
+// 			count++;
+// 		}
+// 	}
+// 	console.log(`${count} ${letter}'s in ${str}`);
+// }
+
+function countLetter(str, letter){
+	let regexp = new RegExp(letter, 'gi');
+	let count = str.match(regexp).length;
+	console.log(`${count} ${letter}'s in ${str}`);
+}
+
+countLetter('Bubble', 'b');
+
+// input type tel validation
+
+function validateTel(tel){
+	if(tel.match(/\+(38)\s[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}/)){
+		console.log('Validated Successful');
+	}
+	else{
+		console.warn('Type your phone in format +38 000-000-00-00');
+	}
+}
+
+validateTel('+38000-000-00-00');
+validateTel('+38 000-000-00-00');
+
+
+// input type email
+
+function validateEmail(email){
+	if(email.match(/[a-z]+\@[a-z]{3,}\.[a-z]{2,}/)){
+		console.log('Validated Successful');
+	}
+	else{
+		console.warn('Type your email correctly');
+	}
+}
+
+validateEmail('prepod@gmail.com');
+validateEmail('222@gl.m');
+
 
 </script>
 
