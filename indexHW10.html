@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JS FE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+
+
+    <script>
+        // 1)  Дана строка из 6 - ти цифр.Проверьте, что сумма первых трех цифр равняется сумме вторых трех цифр.
+        //         Если это так - выведите 'да', в противном случае выведите 'нет'. 
+
+        function checkSum(string) {
+            let sum13 = 0;
+            let sum46 = 0;
+            for(let i = 0; i < string.length; i++) {
+                if(i <= 2) {
+                    sum13 += Number(string[i]);
+                }
+                else if(i >= 3 && i <=5) {
+                    sum46 += Number(string[i]);
+                }
+            }
+            return sum13 === sum46 ? 'да' : 'нет';
+        }
+        console.log(checkSum("321123"));
+
+        //------------------------------------------------------------------------------------------------------
+        // 2)  Дана строка.Сделайте заглавным первый символ этой строки не используя цикл.Найдите два решения.
+
+        // function UpperCaseFirst(string) {
+        //     let result = string.replace(string.charAt(0), string.charAt(0).toUpperCase())
+        //     return result;
+        // }
+        // console.log(UpperCaseFirst('hello'));
+
+        //------------------------------------------------------------------------------------------------------
+        // 3)  Нужно написать функцию, принимающую строку в качестве аргумента и возвращающую количество гласных, 
+        //         которые содержатся в строке.Гласными являются «a», «e», «i», «o», «u».
+
+        // function filter(string) {
+        //     return string.match(/[aeiou]/g).length;
+            
+        // }
+        // console.log(filter('hello world'));
+        //------------------------------------------------------------------------------------------------------
+
+        // 4)  написать функцию toCamelCase, которая принимает строку в формате border - left - color, 
+        //         а возвращает borderLeftColor.Напишите минимум два решения
+
+        // function checkSym(string) {
+        //     let arrResult = string.split(' - ');
+        //     for (let i = 1; i < arrResult.length; i++) {
+        //         arrResult[i] = arrResult[i].replace(arrResult[i].charAt(0), arrResult[i].charAt(0).toUpperCase());
+        //     }
+        //     let result = ''
+        //     for( let item of arrResult ) {
+        //         result += item;
+        //     } 
+        //     return result;
+        // }
+        // console.log(checkSym('border - left - color'));
+
+    </script>
