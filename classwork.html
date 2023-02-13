@@ -12,212 +12,111 @@
 
 <script>
 
-// string methods
+// 1)  Дана строка из 6-ти цифр. Проверьте, что сумма первых трех цифр равняется сумме вторых трех цифр. Если это так - выведите 'да', в противном случае выведите 'нет'. 
 
-// almost all methods return new string
+function compareNums(str){
+	let sum1 = 0;
+	let sum2 = 0;
 
-
-let message = 'Hello World';
-
-//charAt()
-console.log(message.charAt(0));
-
-// charCodeAt()
-console.log(message.charCodeAt(0)); // -, i
-
-//concat()
-let name = 'User';
-console.log(message.concat(' My name is ', name)); /// `{message} My name is ${name}`
-
-// endsWith() case sensitive
-console.warn(message.endsWith('World')); // true
-console.warn(message.endsWith('!')); // false
-
-// fromCharCode()
-console.log(String.fromCharCode(72));
-
-// includes()
-console.log(message.includes('ll'));
-
-
-//indexOf() lastIndexOf
-console.log(message.indexOf('l'));
-console.log(message.lastIndexOf('l'));
-
-// match()
-console.log(message.match(/l/g)); // .length returns 3
-
-//repeat()
-console.log(message.repeat(5));
-
-// replace
-console.log(message.replace(/l/g, 'L'));
-
-// search
-console.log(message.search('l'));
-
-// slice  (start, end[not incl])
-let msg = message.slice(2,4);
-console.log(msg);
-
-// split
-console.log(message.split(' '));
-
-
-// startsWith()
-console.log(message.startsWith('Hello'));
-
-// substr (start, count)
-console.log(message.substr(0, 5));
-
-// substring(strt,end[not incl]), can swap args
-console.log(message.substring(9,4));
-
-// toLowerCase()
-console.log(message.toLowerCase());
-
-// toUpperCase()
-console.log(message.toUpperCase());
-
-// trim() trimEnd() trimStart()
-
-let longstr = `
-	    ksjdjfk		   jdsfhdff
-			          `
-console.log(longstr);
-console.log(longstr.trim());
-
-
-// http or https
-
-function checkSecureConnection(url){
-	return url.startsWith('https');
-}
-console.warn(checkSecureConnection('http://mysite.com'));
-console.warn(checkSecureConnection('https://mysite.com'));
-
-// check image
-
-function checkImageFormat(filename){
-	if(filename.endsWith('.jpg') || filename.endsWith('.png')){
-		console.log('Uploaded successful!');
-	}
-	else{
-		console.error('File format is not supported');
-	}
-}
-
-checkImageFormat('icon.png');
-checkImageFormat('img_324324.psd');
-
-
-// active menu link
-
-let menulinks = [ 'about', 'catalog', 'cart', 'blog'];
-
-function setActiveLink(url){
-	let active = '';
-	for(let link of menulinks){
-		if(url.includes(link)){
-			active = link;
+	for(let i = 0; i < 6; i++){
+		if(i < 3){
+			sum1 += +str.charAt(i);
+		}
+		else{
+			sum2 += +str.charAt(i);
 		}
 	}
-	if(active){
-		// set active class
-		console.log(`Active link for page ${active}`);
+
+	if(sum1 === sum2){
+		console.log('Yes');
 	}
 	else{
-		console.log('Active Home page');
+		console.log('No');
 	}
 }
 
-setActiveLink('http://myshop.com/catalog/category/bikes');
-setActiveLink('http://myshop.com/about_us');
-setActiveLink('http://myshop.com/blog/post_111');
-setActiveLink('http://myshop.com/');
-
-// check is anagram
-
-function isAnagram(str1, str2){
-	if(str1.length !== str2.length){
-		return false;
-	}
-	let arr1 = str1.toLowerCase().split('');
-	let arr2 = str2.toLowerCase().split('');
-
-	arr1.sort();
-	arr2.sort();
-
-	str1 = arr1.join('');
-	str2 = arr2.join('');
-
-	return str1 == str2;
+function compareNums2(str){
+	let sum1 = +str.charAt(0) + +str.charAt(1) + +str.charAt(2);
+	let sum2 = +str.charAt(3) + +str.charAt(4) + +str.charAt(5);
+	console.log(sum1 == sum2 ? 'Yes' : 'No');
 }
 
-console.log(isAnagram('Пасечник', 'песчаник'));
-console.log(isAnagram('норматив', 'минотавр'));
-console.log(isAnagram('мама', 'рама'));
-console.log(isAnagram('mama', 'llama'));
+compareNums('123321');
+compareNums('123456');
 
+compareNums2('123321');
+compareNums2('123456');
 
-// count Letter in Word
-// loop
-// function countLetter(str, letter){
-// 	let count = 0;
-// 	for(let i = 0; i < str.length; i++){
-// 		if(str.charAt(i).toLowerCase() === letter.toLowerCase()){
-// 			count += 1;
+//  2) Дана строка. Сделайте заглавным первый символ этой строки не используя цикл. Найдите два решения. 
+
+function capitalize(str){
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+console.log(capitalize('bubble'));
+console.log(capitalize('trouble'));
+
+// 3)  Нужно написать функцию, принимающую строку в качестве аргумента и возвращающую количество гласных, которые содержатся в строке. Гласными являются «a», «e», «i», «o», «u». 
+
+function countSounds(str){
+	let letters = {};
+
+	for(let i = 0; i < str.length; i++){ // перебираем буквы
+		if(str.charAt(i) === 'a' || str.charAt(i) === 'e' || 
+		str.charAt(i) === 'i' || str.charAt(i) === 'o' || str.charAt(i) === 'u'){ // если нашли гласную
+			if(letters[str.charAt(i)] != undefined){ // если она была в обьекте, то добавляем значение +1
+				letters[str.charAt(i)] += 1;
+			}
+			else{ // или записываем первый раз свойство в обьект со значением 1
+				letters[str.charAt(i)] = 1;
+			} 
+		}
+	}
+	console.log(letters);
+}
+
+countSounds('extraordinary');
+countSounds('carboxytherapy');
+
+// 4) написать функцию toCamelCase, которая принимает строку в формате border-left-color, а возвращает borderLeftColor. Напишите минимум два решения
+
+// function toCamelCase(str){
+// 	let newStr = ''; // сюда мы будем записывать трансформированную строку
+// 	let lastScore = 0; // последний индекс, на котором стоял пробел
+// 	for(let i = 0; i < str.length; i++){ // по буквам перебираем строку 
+// 		if(str.charAt(i) == '-'){ // и находим дефис
+// 			newStr += str.substring(lastScore, i) + str.charAt(i+1).toUpperCase(); 
+// 			// в новую строку дописываем то, что было до дефиса без изменений и букву после дефиса toUpperCase()
+// 			lastScore = i+2;  // перезаписываем последнее найденное место дефиса
 // 		}
 // 	}
-// 	console.log(`${count} ${letter}'s in ${str}`);
+// 	newStr += str.substring(lastScore); // поскольку цикл собирал строку между дефисами, 
+// 	// то часть после последнего дефиса нужно добавить после выхода из цикла
+// 	console.log(newStr);
 // }
 
-// function countLetter(str, letter){
-// 	let count = 0;
-// 	for(let char of str){
-// 		if(char.toLowerCase() === letter.toLowerCase()){
-// 			count++;
-// 		}
+// function toCamelCase(str){
+// 	let arr = str.split('-');
+// 	let newStr = arr[0];
+// 	for(let i = 1; i < arr.length; i++){
+// 		newStr += arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
 // 	}
-// 	console.log(`${count} ${letter}'s in ${str}`);
+// 	console.log(newStr);
 // }
 
-function countLetter(str, letter){
-	let regexp = new RegExp(letter, 'gi');
-	let count = str.match(regexp).length;
-	console.log(`${count} ${letter}'s in ${str}`);
+function toCamelCase(str){
+	let newStr = str.replace(/\-[a-z]/g, function(x,y){ // \- дефис [a-z] следующая любая буква
+		// x - совпадение с регуляркой
+		// y - индекс первой буквы совпадения 
+		console.log(`x: ${x}, y: ${y}`);
+		// return x.charAt(1).toUpperCase(); // 
+		return str.charAt(y+1).toUpperCase(); // возвращаем следующую за пробелом букву заглавной
+	});
+	console.log(newStr);
 }
 
-countLetter('Bubble', 'b');
+toCamelCase('border-left-color');
 
-// input type tel validation
-
-function validateTel(tel){
-	if(tel.match(/\+(38)\s[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}/)){
-		console.log('Validated Successful');
-	}
-	else{
-		console.warn('Type your phone in format +38 000-000-00-00');
-	}
-}
-
-validateTel('+38000-000-00-00');
-validateTel('+38 000-000-00-00');
-
-
-// input type email
-
-function validateEmail(email){
-	if(email.match(/[a-z]+\@[a-z]{3,}\.[a-z]{2,}/)){
-		console.log('Validated Successful');
-	}
-	else{
-		console.warn('Type your email correctly');
-	}
-}
-
-validateEmail('prepod@gmail.com');
-validateEmail('222@gl.m');
 
 
 </script>
