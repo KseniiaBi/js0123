@@ -12,112 +12,185 @@
 
 <script>
 
-// 1)  Дана строка из 6-ти цифр. Проверьте, что сумма первых трех цифр равняется сумме вторых трех цифр. Если это так - выведите 'да', в противном случае выведите 'нет'. 
+// sum + using memory for prev calls
 
-function compareNums(str){
-	let sum1 = 0;
-	let sum2 = 0;
-
-	for(let i = 0; i < 6; i++){
-		if(i < 3){
-			sum1 += +str.charAt(i);
+function sum(){
+	let memo = [];
+	return function (start,end){
+		let sum = 0;
+		
+		if(memo.length == 0){
+			for(let i = start; i <= end; i++){
+				sum += i;
+			}
 		}
 		else{
-			sum2 += +str.charAt(i);
+			memo.sort((a,b) => {
+				if(a.end < b.end){
+					return 1;
+				}
+				else if(a.end > b.end){
+					return -1;
+				}
+				else{
+					return 0;
+				}
+			});
+			memo.forEach(prevSum => {
+				if(prevSum.start == start && prevSum.end <= end){
+					sum = prevSum.sum;
+					let start2 = prevSum.end + 1;
+					for(let i = start2; i <= end; i++){
+						sum += i;
+					}
+				}
+				else if(prevSum.start > start && prevSum.end <= end){
+					sum = prevSum.sum;
+					let prevStart = prevSum.start;
+					let prevEnd = prevSum.end + 1;
+					for(let i = start; i < prevStart; i++){
+						sum += i; // 1+2
+					}
+					for(let j = prevEnd; j <= end; j++){ // 21 ... 30
+						sum += j;
+					}
+				}
+			});
 		}
-	}
-
-	if(sum1 === sum2){
-		console.log('Yes');
-	}
-	else{
-		console.log('No');
+		
+		memo.push({
+			start: start,
+			end: end,
+			sum: sum
+		});
+		console.log(sum);
+		console.log(memo);
 	}
 }
 
-function compareNums2(str){
-	let sum1 = +str.charAt(0) + +str.charAt(1) + +str.charAt(2);
-	let sum2 = +str.charAt(3) + +str.charAt(4) + +str.charAt(5);
-	console.log(sum1 == sum2 ? 'Yes' : 'No');
-}
+let memoizedSum = sum();
+memoizedSum(3,5);1
+memoizedSum(3,10);
+memoizedSum(3,20);
+memoizedSum(1,30);
 
-compareNums('123321');
-compareNums('123456');
+// Напишите функцию words(),  которая в зависимости от переданного в нее целочисленного аргумента n, 
+// будет выводить слово «товар» в нужной форме («12 товаров», но «22 товара»). По умолчанию аргумент n должен иметь значение 0
 
-compareNums2('123321');
-compareNums2('123456');
-
-//  2) Дана строка. Сделайте заглавным первый символ этой строки не используя цикл. Найдите два решения. 
-
-function capitalize(str){
-	return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-console.log(capitalize('bubble'));
-console.log(capitalize('trouble'));
-
-// 3)  Нужно написать функцию, принимающую строку в качестве аргумента и возвращающую количество гласных, которые содержатся в строке. Гласными являются «a», «e», «i», «o», «u». 
-
-function countSounds(str){
-	let letters = {};
-
-	for(let i = 0; i < str.length; i++){ // перебираем буквы
-		if(str.charAt(i) === 'a' || str.charAt(i) === 'e' || 
-		str.charAt(i) === 'i' || str.charAt(i) === 'o' || str.charAt(i) === 'u'){ // если нашли гласную
-			if(letters[str.charAt(i)] != undefined){ // если она была в обьекте, то добавляем значение +1
-				letters[str.charAt(i)] += 1;
-			}
-			else{ // или записываем первый раз свойство в обьект со значением 1
-				letters[str.charAt(i)] = 1;
-			} 
-		}
+function words(n){
+	let word = 'товар';
+	let m = n;
+	// n = n%100;
+	if(n > 1 && n < 5 || n > 20 && n%10 == 2 || n%10 == 3 || n%10 == 4){
+		word += 'a';
 	}
-	console.log(letters);
+	else if(n >= 5 && n <= 20 || n > 20 && n%10 == 5 || n%10 == 6 || n%10 == 7 || n%10 == 8 || n%10 == 9 || n%10 == 0){
+		word += 'ов';
+	}
+	console.log(`${m} ${word}`);
 }
 
-countSounds('extraordinary');
-countSounds('carboxytherapy');
+words(1);
+words(2);
+words(5);
+words(11);
+words(12);
+words(21);
+words(22);
+words(35);
+words(44);
+words(50);
+words(101);
+words(102);
+words(112);
+words(202);
 
-// 4) написать функцию toCamelCase, которая принимает строку в формате border-left-color, а возвращает borderLeftColor. Напишите минимум два решения
 
-// function toCamelCase(str){
-// 	let newStr = ''; // сюда мы будем записывать трансформированную строку
-// 	let lastScore = 0; // последний индекс, на котором стоял пробел
-// 	for(let i = 0; i < str.length; i++){ // по буквам перебираем строку 
-// 		if(str.charAt(i) == '-'){ // и находим дефис
-// 			newStr += str.substring(lastScore, i) + str.charAt(i+1).toUpperCase(); 
-// 			// в новую строку дописываем то, что было до дефиса без изменений и букву после дефиса toUpperCase()
-// 			lastScore = i+2;  // перезаписываем последнее найденное место дефиса
+// посчитать в каком количестве цифр от 1 до 1000 есть цифра 3 (при этом 33, 333, 233 - считается 1 тройка)
+
+// function countThrees(){
+// 	let count = 0;
+// 	for(let i = 1; i <= 1000; i++){
+// 		if(i.toString().includes('3')){
+// 			count++;
 // 		}
 // 	}
-// 	newStr += str.substring(lastScore); // поскольку цикл собирал строку между дефисами, 
-// 	// то часть после последнего дефиса нужно добавить после выхода из цикла
-// 	console.log(newStr);
+// 	console.log(count);
 // }
 
-// function toCamelCase(str){
-// 	let arr = str.split('-');
-// 	let newStr = arr[0];
-// 	for(let i = 1; i < arr.length; i++){
-// 		newStr += arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-// 	}
-// 	console.log(newStr);
-// }
-
-function toCamelCase(str){
-	let newStr = str.replace(/\-[a-z]/g, function(x,y){ // \- дефис [a-z] следующая любая буква
-		// x - совпадение с регуляркой
-		// y - индекс первой буквы совпадения 
-		console.log(`x: ${x}, y: ${y}`);
-		// return x.charAt(1).toUpperCase(); // 
-		return str.charAt(y+1).toUpperCase(); // возвращаем следующую за пробелом букву заглавной
-	});
-	console.log(newStr);
+function countThrees(){
+	let count = 0;
+	for(let i = 1; i <= 1000; i++){
+		let str = '' + i;
+		let wasFoundThree = false;
+		for(let j = 0; j < str.length; j++){
+			if(str[j] === '3' && !wasFoundThree){
+				count++;
+				wasFoundThree = true;
+				// break;
+			}
+		}
+	}
+	console.log(count);
 }
 
-toCamelCase('border-left-color');
+countThrees();
+
+// Дан массив цветов colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'] выводите цвета из него по каждому вызову функции
 
 
+let colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
+
+function color(){
+	let current = 0;
+
+	return function(){
+		console.log(colors[current]);
+		current = current < colors.length - 1 ? ++current : 0;
+	}
+}
+
+let getColor = color();
+getColor();
+getColor();
+getColor();
+getColor();
+getColor();
+getColor();
+getColor();
+getColor();
+
+
+// напиши функцию pluck, которая берет массив объектов и возвращает массив значений определенного поля: var characters = [
+//   { 'name': 'barney', 'age': 36 },
+//   { 'name': 'fred', 'age': 40 }
+// ];
+
+let arr = [ 
+	{ 'name': 'barney', 'age': 36 },
+	{ 'name': 'fred', 'age': 40 }
+];
+
+function pluck(ar, field){
+	return ar.map(item => item[field]); // arr[0].name || arr[0]['name']
+}
+
+// function pluck(ar, field){
+// 	let arr = [];
+// 	ar.forEach(item => arr.push(item[field])); 
+// 	return arr;
+// }
+
+// function pluck(ar, field){
+// 	let arr = [];
+// 	for(let i = 0; i < ar.length; i++){
+// 		arr.push(ar[i][field]);
+// 	}
+// 	return arr;
+// }
+
+console.log(pluck(arr, 'name'));
+console.log(pluck(arr, 'age'));
 
 </script>
 
