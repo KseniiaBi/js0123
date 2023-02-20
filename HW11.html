@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+    // function fo(a,b){
+    //     if (a || b == 3){
+    //         console.log(true);
+    //     }
+    //     return a + b
+    // }
+    // fo(3,5)
+
+    // let regexp = /\s+b+[a-z]+/
+
+    let str = "adams, dmytra, end, article, from, arabica"
+        let count = 0;
+        let arr = [];
+        function fo(str, letter){
+            str = str.split(' ');
+            for( let key of str){
+              if(key[0] == letter){
+                    count += key[0].length;
+                    arr += key;
+                }
+                
+            }  
+            console.log(`Кол слов : ${count}`);
+            console.log(arr);
+        }
+        fo(str, "a")
+        // console.log(arr);
+   </script> 
+</body>
+</html>
