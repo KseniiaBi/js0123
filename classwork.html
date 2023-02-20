@@ -12,333 +12,207 @@
 
 <script>
 
-// 1) Напишите функцию map(fn, array), которая принимает на вход функцию и массив, и обрабатывает каждый элемент массива этой функцией, возвращая новый массив.  
+ // ... + деструктуризации
 
-function map(fn, array){
-	let newArr = [];
-	for(let n of array){
-		newArr.push(fn(n));
-	}
-	return newArr;
+ let fullname = ['John', 'Doe'];
+ let [firstname, lastname] = fullname; // let firstname = fullname[0], lastname = fullname[1];
+
+
+ let user = ['Mary', 'Peterson', '22.02.1992', 'admin', 'copywriter'];
+ let [username, , , role, reason] = user;
+
+ let parameters = [100, 80, 70, 'oak', 'white'];
+ let [length, w, h, ...details] = parameters;
+
+ function destructParams(){
+	let [p1, p2, ...rest] = arguments;
+	console.log(`p1 ${p1}, p2 ${p2}, ${rest}`);
+ }
+
+ destructParams(1,2,3,4,5);
+
+
+ // data change
+
+ let a = 1;
+let b = 2;
+
+[a, b] = [b, a]; // swap values with destructuring
+
+
+// obj destr
+
+let options = {
+	name: 'Popup',
+	width: 600,
+	height: 350
 }
 
-function square(num){
-	return num * num;
+let {name, width, height} = options;
+
+let {width: w1, height: h1, name: title} = options;
+
+let admin = {
+	login: 'Admin',
+	pass: 12345,
+	lastLogin: '1.1.2023',
+	location: 'LA',
+	browser: 'Safari 13'
 }
 
-console.log(map(square, [2,3,4,5]));
+let {login, pass, ...adminInfo} = admin;
 
-// 2) Описание задачи: Напишите функцию, которая поверхностно находит пересечения объектов и возвращает объект пересечений. 
-// Ожидаемый результат: ({ a: 1, b: 2 }, { c: 1, b: 2 }) => { b: 2 }
+// * можно использовать вложенную деструктуризацию 
 
-function intersection(o1, o2){
-	let inter = {};
-
-	let length1 = objLength(o1);
-	let length2 = objLength(o2);
-
-	let target = length1 > length2 ? o1 : o2;
-	let smaller = length1 > length2 ? o2 : o1;
-
-	for(let prop in target){
-		if(smaller[prop] === target[prop]){
-			inter[prop] = target[prop];
-		}
-	}
-	console.log(inter);
-}
-
-intersection({ a: 1, b: 2 }, { c: 1, b: 2 });
-intersection({ b: 2, c: 3, d: 4 }, { a: 1, b: 2, c: 3, d: 4, e: 5 });
-
-
-// 3)Напишите функцию, считающую число свойств в объекте и записывающую его как length (length не итерируемый)
-
-function objLength(obj){
-	let count = 0;
-
-	for(let prop in obj){
-		count++
-	}
-
-	Object.defineProperty(obj, 'length', {
-		value: count,
-		enumerable: false,
-		writable: false,
-		configurable: true
-	});
-	return count;
-}
-let user = {
-	name: 'John',
-	age: 22
-}
-console.log(objLength(user));
-
-// 4)  Дан массив с числами. Выведите последовательно его элементы используя рекурсию и не используя цикл. (при решении использовать методы массивов)
-
-function printArray(array){
-	if(array.length > 0){
-		console.log(array.shift());
-		printArray(array);
+let sweets = {
+	pastryChef: 'No Name',
+	cakes: ['red velvet', 'victoria`s sponge cake', 'prague'],
+	additionalSweets: {
+		cook: ['american', 'whoopie', 'biscotti'],
+		desserts: ['choux', {
+			eclairs: ['chocolate', 'almond', 'vanilla', 'coffee']
+		}]
 	}
 }
+let {cakes: [cake1, cake2, cake3], additionalSweets: {cook, desserts: [, {eclairs: [...eclairTastes]}]} } = sweets;
 
-printArray([1,2,3,4,5]);
+let tastes = sweets.additionalSweets.desserts.eclairs; // так проще и понятнее для себя. деструктуризация не должна вам усложнять жизнь
 
-// 5) Допустим, вы написали рассказ, и везде для обозначения диалогов использовали одинарные кавычки. 
-// Теперь вы хотите заменить кавычки диалогов на двойные, и оставить одинарные в сокращениях слов типа aren’t.
-// Придумайте шаблон, различающий два этих использования кавычек, и напишите вызов метода replace, который производит замену.
 
-function extendedReplace(str){
-	let newstr = str.replace(/\'/g, '"');
-	newstr = newstr.replace(/(?<=[a-z])\"(?=[a-z])/g, `'`);
-	console.log(newstr);
+// Map, Set, WeakMap, WeakSet
+
+let u = new Map();
+
+u.set('name', 'Ann');
+u.set('city', 'Kh');
+u.set('hobbys', ['JS', 'HTML', 'CSS']);
+
+console.log(u.size);
+
+
+// set()
+// delete()
+// clear()
+// get()
+// has()
+// forEach()
+// keys() values() entries()
+
+for(let data of u.entries()){
+	console.warn(`u: ${data}`);
 }
 
-extendedReplace(`'The weather is charming' - said Moomin. 
-'Yes, soon will start snowing. Let's go' - answered Snoopkin. 
-'Aren't we going?' - asked Moomin`);
 
-// 6) У массивов есть ещё стандартные методы every и some. Они принимают как аргумент некую функцию, которая, будучи вызванной с элементом массива в качестве аргумента, возвращает true или false. 
-//Так же, как && возвращает true, только если выражения с обеих сторон оператора возвращают true, метод every возвращает true, когда функция возвращает true для всех элементов массива. 
-// Соответственно, some возвращает true, когда заданная функция возвращает true при работе хотя бы с одним из элементов массива. Они не обрабатывают больше элементов, чем необходимо – например, если some получает true для первого элемента, он не обрабатывает оставшиеся. 
-// Напишите функции every и some, которые работают так же, как эти методы, только принимают массив в качестве аргумента.
+// set
 
-function every(array, condition){
-	let everyMatches = true;
-	for(let item of array){
-		if(!checkAge(item)){
-			everyMatches = false;
-			break;
-		}
+let numbers = new Set();
+
+while(numbers.size < 10){
+	let newnum = Math.ceil(Math.random()*10);
+	numbers.add(newnum);
+}
+
+console.log(numbers);
+
+// has()
+// add()
+// clear()
+// delete()
+// entries()  (keys and values are equal) keys() values() 
+// forEach()
+// size
+
+
+// ... остаточные параметры  и расширение
+
+let x = Math.max(1,12,3,4,5,22,32,6);
+console.log(x);
+
+function maxOfArrays(arr){
+	return arr.map(item => Math.max(...item));
+}
+
+console.log(maxOfArrays([[1,12,3,8], [32,45,2,87], [1000, 23,4,12], [65, 41, 88]]));
+
+
+let arr = [1,2,3,4,5,6];
+console.log(Math.max(...arr));
+
+function sum(){
+	let sum = 0;
+	for(let num of arguments){
+		sum += num;
 	}
-	return everyMatches;
+	console.log(sum);
 }
 
-function some(array, condition){
-	let someMatches = false;
-	for(let item of array){
-		if(checkAge(item)){
-			someMatches = true;
-			break;
-		}
-	}
-	return 	someMatches;
-;
+sum(1,2,3,4,5);
+sum(...arr);
+
+function greeting(name, message, ...rest){
+	console.log(rest);
+	console.log(`${message}! My name is ${name}. Additional info about me: ${rest.join('/')}`);
 }
 
-function checkAge(age){
-	return age >= 18;
+greeting('Masha', 'Hi', '18 years old', 'Living in Kharkiv', 'Playing chess');
+
+
+// call() apply() bind()
+
+// call(context, arg1, arg2...argN)
+
+function sayHi(){
+	console.warn(`Hi! My name is ${this.firstname}`);
+}
+sayHi();
+
+let student = {
+	firstname: 'Ann',
+	course: 'JS'
 }
 
-console.log(every([12,14,16,18,20], checkAge));
-console.log(every([22,18,20], checkAge));
+sayHi.call(student);
 
-console.log(some([12,14,16,18,20], checkAge));
-console.log(some([12,11,10], checkAge));
-
-// 7) Объекты могут быть использованы для построения различных структур данных. Часто встречающаяся структура – список (не путайте с массивом). Список – связанный набор объектов, где первый объект содержит ссылку на второй, второй – на третий, и т.п.
-// Списки удобны тем, что они могут делиться частью своей структуры. Например, можно сделать два списка, {value: 0, rest: list} и {value: -1, rest: list}, где list – это ссылка на ранее объявленную переменную. Это два независимых списка, при этом у них есть общая структура list, которая включает три последних элемента каждого из них. Кроме того, оригинальный список также сохраняет свои свойства как отдельный список из трёх элементов.
-// Напишите функцию arrayToList, которая строит такую структуру, получая в качестве аргумента [1, 2, 3], а также функцию listToArray, которая создаёт массив из списка. 
-// Также напишите вспомогательную функцию prepend, которая получает элемент и создаёт новый список, где этот элемент добавлен спереди к первоначальному списку, 
-//и функцию nth, которая в качестве аргументов принимает список и число, а возвращает элемент на заданной позиции в списке, или же undefined в случае отсутствия такого элемента.
-
-// Если ваша версия nth не рекурсивна, тогда напишите её рекурсивную версию.
-
-let list = {
-  value: 1,
-  rest: {
-    value: 2,
-    rest: {
-      value: 3,
-      rest: null
-    }
-  }
-};
-
-let arr = [1,2,3];
-
-function arrayToList(array){
-	let list = {};
-	let currObj = list;
-	array.forEach((item, index) => {
-		let newObj = {
-			value: item,
-			rest: index < array.length - 1 ? {} : null
-		}
-		for(let prop in newObj){
-			currObj[prop] = newObj[prop];
-		}
-		currObj = newObj.rest;
-	});
-	console.log(list);
+function hasThreePassed(){
+	console.log([].includes.call(arguments, 3));
 }
 
-function prepend(value, list){
-	let newList = {
-		value: value,
-		rest: list
-	}
+hasThreePassed(1,2,3,4,5);
 
-	console.log(newList);
+// apply(context, [args])
+function printArr(arr){
+	// console.log(`is array ${Array.isArray(arr)}`);
+	console.log(`is array ${Array.isArray.call(arguments)}`);
 }
 
-prepend(0, list);
-prepend(-1, list);
+// printArr([1,2,3]);
+// printArr({name: 'a'});
+printArr(1,2,3);
 
-arrayToList(arr);
 
-function listToArray(obj, arr = []){
-	arr.push(obj.value);
-	if(obj.rest != null){
-		return listToArray(obj.rest, arr);
-	}
-	else{
-		return arr;
-	}
-}
+// bind()
 
-console.log(listToArray(list));
+let studentSayHi = sayHi.bind(student);
+studentSayHi();
 
-function nth(obj, index){
-	if(index > 0){
-		if(obj.rest != null){
-			return nth(obj.rest, index-1) ;
-		}
-		else{
-			return undefined
-		}
-	}
-	else{
-		return obj.value ;
+let siteAdmin = {
+	firstname: 'Admin',
+	lastname: 'Admin',
+	sayHi(){
+		console.log(`Hi! I am ${this.firstname}`);
 	}
 }
 
-console.log(nth(list, 1)); // 2
-console.log(nth(list, 2)); // 3
-console.log(nth(list, 6)); // 1
+let adminSayHi = sayHi.bind(siteAdmin);
+adminSayHi();
 
+siteAdmin.sayHi();
+setTimeout(siteAdmin.sayHi, 1000);
 
-// api call to Instagram
-// fatch user(kseniiabi)
-let instauser = {
-	name: 'kseniiabi',
-	subscribersCount: 100,
-	following: 100,
-	subscribers: 
-		[
-			{
-				name: 'anna111',
-				subscribersCount: 100,
-				following: 200,
-				subscribers: [
-					{
-						name: 'nnn777'
-					}
-				]
-			}
-		]
-	
-}
+// fixes content issue
 
-// 8) Найти самое длинное слово в предложении. Результатом работы функции должна быть длина такого слова.
-
-function findLongestWord(str){
-	let modifiedStr = str.replace(/(\,|\.|\?|\-| '|' )/g, ' ');
-	let arr = modifiedStr.split(' ');
-	arr.sort((a,b) => {
-		if(a.length > b.length){
-			return -1;
-		}
-		else if(a.length < b.length){
-			return 1;
-		}
-		else{
-			return 0;
-		}
-	});
-	console.log(arr);
-	console.log(arr[0].length);
-}
-
-findLongestWord(`'The weather is charming' - said Moomin. 'Yes, soon will start snowing. Let's go' - answered Snoopkin. 'Aren't we going?' - asked Moomin`);
-
-// 9) Преобразовать строку так, чтобы все буквы были в нижнем регистре за исключением первой буквы каждого слова. titleCase("sHoRt AnD sToUt") ⇒ Short And Stout
-
-function titleCase(str){
-	let arr = str.split(' ');
-	let newstr = '';
-
-	for(let word of arr){
-		newstr += word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() + ' ';
-	}
-	newstr = newstr.trim();
-	console.log(newstr);
-}
-
-titleCase('sHoRt AnD sToUt');
-
-// 10) Обрежьте данную строку str, если ее длина превосходит данное число num. Добавьте в конец обрезанной строки троеточие "...", если str более num. Заметим, что троеточие должно учитываться при проверке длины строки str.
-
-function trimString(str, num){
-	let trimmed = '';
-	if(str.length > num - 3){
-		trimmed = str.slice(0, num - 3) + '...';
-		console.log(trimmed.length);
-	}
-	else{
-		trimmed = str;
-	}
-	console.log(trimmed);
-}
-
-trimString('The weather is charming - said Moomin.', 20);
-
-// 11) Найти массив из наибольших чисел каждого из  подмассивов переданного массива.
-// Пример: largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]]) ⇒ [27,5,39,1001]
-
-function largestOfFour(arr){
-	let max = [];
-	arr.forEach(item => {
-		let sorted = item.slice().sort((a,b) => b -a);
-		max.push(sorted[0]);
-	});
-	console.log(max);
-}
-
-largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]]);
-
-
-//  1) Напишите простую функцию, чтобы узнать равен ли один из входных параметров 3.
-
-function isThreePassed(){
-	let threePassed = false;
-	for(let num of arguments){ // for ... of || for let i = 0 ... 
-		if(num === 3){
-			threePassed = true;
-		}
-	}
-	console.log(threePassed ? 'yes' : 'no')
-}
-
-isThreePassed(2,3,34,54);
-isThreePassed(1,2,4,5,6);
-
-
-//  2) Напишите функцию, которая считает количество слов в строке, которые начинаются на заданную букву и выводит массив с этими словами
-
-function checkWords(str, letter){
-
-	let arr = str.split(' ');
-	let result = arr.filter(item => item.toLowerCase().startsWith(letter.toLowerCase()));
-
-	console.log(`Found ${result.length} occurencies of letter ${letter}: ${result}`);
-}
-
-checkWords('Three trees turned yellow this week', 't');
-
-
+setTimeout(() => {siteAdmin.sayHi()}, 1000);
+setTimeout(siteAdmin.sayHi.call(siteAdmin), 1000);
 
 </script>
 
