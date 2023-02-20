@@ -281,8 +281,64 @@ titleCase('sHoRt AnD sToUt');
 
 // 10) Обрежьте данную строку str, если ее длина превосходит данное число num. Добавьте в конец обрезанной строки троеточие "...", если str более num. Заметим, что троеточие должно учитываться при проверке длины строки str.
 
+function trimString(str, num){
+	let trimmed = '';
+	if(str.length > num - 3){
+		trimmed = str.slice(0, num - 3) + '...';
+		console.log(trimmed.length);
+	}
+	else{
+		trimmed = str;
+	}
+	console.log(trimmed);
+}
+
+trimString('The weather is charming - said Moomin.', 20);
+
 // 11) Найти массив из наибольших чисел каждого из  подмассивов переданного массива.
 // Пример: largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]]) ⇒ [27,5,39,1001]
+
+function largestOfFour(arr){
+	let max = [];
+	arr.forEach(item => {
+		let sorted = item.slice().sort((a,b) => b -a);
+		max.push(sorted[0]);
+	});
+	console.log(max);
+}
+
+largestOfFour([[13, 27, 18, 26], [4, 5, 1, 3], [32, 35, 37, 39], [1000, 1001, 857, 1]]);
+
+
+//  1) Напишите простую функцию, чтобы узнать равен ли один из входных параметров 3.
+
+function isThreePassed(){
+	let threePassed = false;
+	for(let num of arguments){ // for ... of || for let i = 0 ... 
+		if(num === 3){
+			threePassed = true;
+		}
+	}
+	console.log(threePassed ? 'yes' : 'no')
+}
+
+isThreePassed(2,3,34,54);
+isThreePassed(1,2,4,5,6);
+
+
+//  2) Напишите функцию, которая считает количество слов в строке, которые начинаются на заданную букву и выводит массив с этими словами
+
+function checkWords(str, letter){
+
+	let arr = str.split(' ');
+	let result = arr.filter(item => item.toLowerCase().startsWith(letter.toLowerCase()));
+
+	console.log(`Found ${result.length} occurencies of letter ${letter}: ${result}`);
+}
+
+checkWords('Three trees turned yellow this week', 't');
+
+
 
 </script>
 
