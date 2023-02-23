@@ -12,208 +12,317 @@
 
 <script>
 
- // ... + деструктуризации
-
- let fullname = ['John', 'Doe'];
- let [firstname, lastname] = fullname; // let firstname = fullname[0], lastname = fullname[1];
+ // oop
+ // наследование, инкапсуляция, полиморфизм и абстракция
 
 
- let user = ['Mary', 'Peterson', '22.02.1992', 'admin', 'copywriter'];
- let [username, , , role, reason] = user;
-
- let parameters = [100, 80, 70, 'oak', 'white'];
- let [length, w, h, ...details] = parameters;
-
- function destructParams(){
-	let [p1, p2, ...rest] = arguments;
-	console.log(`p1 ${p1}, p2 ${p2}, ${rest}`);
- }
-
- destructParams(1,2,3,4,5);
-
-
- // data change
-
- let a = 1;
-let b = 2;
-
-[a, b] = [b, a]; // swap values with destructuring
-
-
-// obj destr
-
-let options = {
-	name: 'Popup',
-	width: 600,
-	height: 350
+let animal = {
+	sleep: true,
+	speak(){
+		console.log(`Hi! I am ${this.name? this.name : 'animal'}`);
+	}
 }
 
-let {name, width, height} = options;
+let cat = {
+	purr: true
+}
 
-let {width: w1, height: h1, name: title} = options;
+cat.__proto__ = animal;
+
+let dog = {
+	bark: true,
+	__proto__: animal
+}
+
+let husky = {
+	size: 'big',
+	__proto__: dog
+}
+
+// animal.__proto__ = husky; // Uncaught TypeError: Cyclic __proto__ value
+
+// for(let prop in husky){
+// 	console.log(`${prop}: ${husky[prop]}`);  // sleep, bark, size 
+// }
+
+for(let prop in husky){
+	if(husky.hasOwnProperty(prop)){
+		console.log(`${prop}: ${husky[prop]}`);  // size 
+	}
+}
+
+for(let key of Object.keys(dog)){
+	console.log(key);
+}
+
+let user = {
+	device: 'Lenovo',
+	_name: 'John',
+	_lastname: 'Doe',
+	set fullname(value){
+		[this._name, this._lastname] = value.split(' ');
+		console.warn(`New username was set as ${this._name} ${this._lastname}`);
+	},
+	get fullname() {
+		return `${this._name} ${this._lastname}`;
+	}
+}
+
+console.log(user.fullname);
+
 
 let admin = {
-	login: 'Admin',
-	pass: 12345,
-	lastLogin: '1.1.2023',
-	location: 'LA',
-	browser: 'Safari 13'
+	__proto__: user,
+	isAdmin: true
 }
 
-let {login, pass, ...adminInfo} = admin;
+console.log(admin.fullname);
+user.fullname = 'Harry Potter'; // both user and admin
+admin.fullname = 'Jamie Oliver'; // user Harry Potter, admin Jamie Oliver
 
-// * можно использовать вложенную деструктуризацию 
 
-let sweets = {
-	pastryChef: 'No Name',
-	cakes: ['red velvet', 'victoria`s sponge cake', 'prague'],
-	additionalSweets: {
-		cook: ['american', 'whoopie', 'biscotti'],
-		desserts: ['choux', {
-			eclairs: ['chocolate', 'almond', 'vanilla', 'coffee']
-		}]
+let rabbit = {
+	jump: true
+}
+
+Object.setPrototypeOf(rabbit, animal);
+console.warn(Object.getPrototypeOf(husky) === animal); // false потому что наследует через один класс
+console.warn(Object.getPrototypeOf(husky) === dog); // true  потому что прямой наследник
+
+let fox = Object.create(animal, {
+	run: {
+		value: true
 	}
-}
-let {cakes: [cake1, cake2, cake3], additionalSweets: {cook, desserts: [, {eclairs: [...eclairTastes]}]} } = sweets;
+}); // (prototype, descriptors)
+// Object.setPrototypeOf(fox, {}); // fox can not sleap and speak, just empty object
 
-let tastes = sweets.additionalSweets.desserts.eclairs; // так проще и понятнее для себя. деструктуризация не должна вам усложнять жизнь
-
-
-// Map, Set, WeakMap, WeakSet
-
-let u = new Map();
-
-u.set('name', 'Ann');
-u.set('city', 'Kh');
-u.set('hobbys', ['JS', 'HTML', 'CSS']);
-
-console.log(u.size);
+let o = Object.create(null); // creates empty object with no properties, prororypes and methods
 
 
-// set()
-// delete()
-// clear()
-// get()
-// has()
-// forEach()
-// keys() values() entries()
+// F.prototype
 
-for(let data of u.entries()){
-	console.warn(`u: ${data}`);
+function Lion(name){
+	this.name = name;
 }
 
+// Lion.prototype = animal; // наследование F.prototype ожидает в правой части выражения ни что иное, как обьект
 
-// set
+let simba = new Lion('Simba');
+console.log(simba.name);
 
-let numbers = new Set();
+console.log(Object.getPrototypeOf(simba)); // 
 
-while(numbers.size < 10){
-	let newnum = Math.ceil(Math.random()*10);
-	numbers.add(newnum);
-}
+// 
 
-console.log(numbers);
+function Device(name, power){
+	this.name = name;
+	this.enabled = false;
+	let status = 'disabled'; // let or const for private vars
+	// this.power = power; // или не записывать это в свойство в целях инкапсуляции 
+	console.log(`Was created device ${this.name} with power ${power}wt`);
 
-// has()
-// add()
-// clear()
-// delete()
-// entries()  (keys and values are equal) keys() values() 
-// forEach()
-// size
-
-
-// ... остаточные параметры  и расширение
-
-let x = Math.max(1,12,3,4,5,22,32,6);
-console.log(x);
-
-function maxOfArrays(arr){
-	return arr.map(item => Math.max(...item));
-}
-
-console.log(maxOfArrays([[1,12,3,8], [32,45,2,87], [1000, 23,4,12], [65, 41, 88]]));
-
-
-let arr = [1,2,3,4,5,6];
-console.log(Math.max(...arr));
-
-function sum(){
-	let sum = 0;
-	for(let num of arguments){
-		sum += num;
+	function showReadiness(){
+		setTimeout(()=>{
+			console.log(`Device ${this.name} is ready to use`);
+		}, 1000);
 	}
-	console.log(sum);
-}
 
-sum(1,2,3,4,5);
-sum(...arr);
-
-function greeting(name, message, ...rest){
-	console.log(rest);
-	console.log(`${message}! My name is ${name}. Additional info about me: ${rest.join('/')}`);
-}
-
-greeting('Masha', 'Hi', '18 years old', 'Living in Kharkiv', 'Playing chess');
-
-
-// call() apply() bind()
-
-// call(context, arg1, arg2...argN)
-
-function sayHi(){
-	console.warn(`Hi! My name is ${this.firstname}`);
-}
-sayHi();
-
-let student = {
-	firstname: 'Ann',
-	course: 'JS'
-}
-
-sayHi.call(student);
-
-function hasThreePassed(){
-	console.log([].includes.call(arguments, 3));
-}
-
-hasThreePassed(1,2,3,4,5);
-
-// apply(context, [args])
-function printArr(arr){
-	// console.log(`is array ${Array.isArray(arr)}`);
-	console.log(`is array ${Array.isArray.call(arguments)}`);
-}
-
-// printArr([1,2,3]);
-// printArr({name: 'a'});
-printArr(1,2,3);
-
-
-// bind()
-
-let studentSayHi = sayHi.bind(student);
-studentSayHi();
-
-let siteAdmin = {
-	firstname: 'Admin',
-	lastname: 'Admin',
-	sayHi(){
-		console.log(`Hi! I am ${this.firstname}`);
+	this.enable = function(){
+		this.enabled = true;
+		status = 'enabled';
+		console.log(`Device ${this.name} was enabled, status: ${status}`);
+		showReadiness.call(this);
+	}
+	this.disable = ()=> {
+		this.enabled = false;
+		status = 'disabled';
+		console.log(`Device ${this.name} was disabled`);
 	}
 }
 
-let adminSayHi = sayHi.bind(siteAdmin);
-adminSayHi();
+let owen = new Device('Ariston', 1000);
 
-siteAdmin.sayHi();
-setTimeout(siteAdmin.sayHi, 1000);
 
-// fixes content issue
+function Fridge(name, power){
+	Device.call(this, name, power); // в контексте this (Fridge) вызвать конструктор Device
 
-setTimeout(() => {siteAdmin.sayHi()}, 1000);
-setTimeout(siteAdmin.sayHi.call(siteAdmin), 1000);
+	let parentEnable = this.enable;
+	this.enable = function(){
+		parentEnable.call(this); // parent enable full functionality
+		console.log('Was enabled Fridge');
+	}
 
+	this.disable = function(){
+		this.enabled = false;
+		console.log(`Fridge ${this.name} was disabled`);
+	}
+}
+
+let fridge = new Fridge('Samsung', 800);
+fridge.enable();
+
+
+// constructor + .prototype methods
+
+function CoffeeMachine(name, power){
+	Device.call(this, name, power);
+	// this.name = name;
+	// this.enabled = false;
+	// power is private
+}
+
+CoffeeMachine.prototype.enable = function(){
+	// console.log(this.power); // can not use power outside of Fn Constructor
+}
+CoffeeMachine.prototype.disable = function() {
+	this.enabled = false;
+}
+
+let saeco = new CoffeeMachine('Saeco', 900);
+saeco.enable();
+console.log(saeco.enabled);
+saeco.disable();
+console.log(saeco.enabled);
+
+
+// ES6 Classes
+
+class Car{
+	constructor(name, model, color, year){
+		this.color = color;
+		this.year = year;
+		this.name = name;
+		this.model = model;
+		this.speed = 0;
+		this.fuel = 0;
+		this.capacity = 60;
+		this.isDriving = false;
+	}
+
+	sell(){
+		console.log(`For sale ${this.color} ${this.name} ${this.model} ${this.year}. Not colored, not broken`);
+	}
+
+	getFuel(){
+		console.log(this.fuel);
+	}
+
+	setFuel(amount){
+		if(typeof amount != 'number' || amount < 0 || (amount + this.fuel)> this.capacity){
+			console.error('Try another amount!');
+		}
+		else{
+			this.fuel += amount;
+		}
+	}
+
+	drive(speed){
+		if(this.fuel < 2){
+			console.error('Not enough fuel');
+		}
+		else{
+			this.isDriving = true;
+			this.speed = (speed) ? speed : 50;
+			console.log(`${this.name} is driving with speed ${this.speed} km/h`);
+		}
+	}
+
+	stop(){
+		if(this.isDriving){
+			this.isDriving = false;
+			this.speed = 0;
+			console.log(`${this.name} arrived, speed is ${this.speed} km/h`);
+		}
+	}
+
+}
+
+let car = new Car('Toyota', 'Camry', 'black', 2023);
+car.drive();
+setTimeout(()=> {
+	car.stop();
+}, 2000);
+
+car.setFuel(20);
+car.setFuel(-20);
+car.getFuel();
+car.setFuel('lpg');
+car.setFuel(80);
+
+car.drive(100);
+car.sell();
+
+
+class HybridCar extends Car {
+	constructor(props){
+		super(props); // наследование родительских свойств
+		this.pluggedIn = false;
+		this.charged = 0;
+		this.currentPower = 'fuel';
+		this.interval;
+	}
+
+	charge(){
+		this.pluggedIn = true;
+		this.interval = setInterval(()=>{
+			this.charged += 3;
+		},100);
+	}
+
+	stopCharging(){
+		this.pluggedIn = false;
+		clearInterval(this.interval);
+		console.log(`${this.name} was charged on ${this.charged}%`);
+	}
+
+	drive(speed){
+		if(this.fuel < 2 && this.charged < 5){
+			console.error('Can not drive');
+		}
+		else if(this.pluggedIn){
+			console.error('Please, stop charging');
+		}
+		else{
+			if(this.charged > 5 && this.fuel < 5){
+				this.currentPower = 'electricity';
+				this.interval = setInterval(()=>{
+					this.charged -= 2;
+				}, 100);
+			}
+			else{
+				this.currentPower = 'fuel';
+				this.interval = setInterval(()=>{
+					this.fuel -= 0.5;
+				}, 100);
+			}
+			this.isDriving = true;
+			this.speed = (speed) ? speed : 50;
+			console.log(`${this.name} is driving with speed ${this.speed} km/h`);
+		}
+	}
+
+	stop(){
+		super.stop(); // сначала вызываем родительский метод
+		clearInterval(this.interval);
+		console.log(`Fuel: ${this.fuel}, charged: ${this.charged}`);
+	}
+}
+
+let ecar = new HybridCar('Honda', 'CR-Z', 'white', 2017);
+
+ecar.drive();
+ecar.charge();
+setTimeout(()=>{
+	ecar.stopCharging();
+}, 1500);
+
+setTimeout(()=>{
+	ecar.drive();
+}, 1700);
+
+setTimeout(()=>{
+	ecar.stop();
+}, 3500);
 </script>
 
 </body>
