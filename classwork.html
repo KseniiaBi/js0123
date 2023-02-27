@@ -13,317 +13,130 @@
 <script>
 
  // oop
- // наследование, инкапсуляция, полиморфизм и абстракция
 
 
-let animal = {
-	sleep: true,
-	speak(){
-		console.log(`Hi! I am ${this.name? this.name : 'animal'}`);
+ class Book {
+	static bookCount = 0;
+	static countBooks(){
+		Book.bookCount++;
+		console.log(`Total number of books ${Book.bookCount}`);
+	}
+
+	constructor(name, author){
+		this.name = name;
+		this.author = author;
+
+		Book.countBooks();
+	}
+ }
+
+ let book1 = new Book('Dzherelo', 'Ain Rend');
+ let book2 = new Book('The Hobbit', 'J. Tolkien');
+
+
+ class CoffeeMachine{
+	_waterAmount = 0;
+	#waterLimit = 1000;
+
+	constructor (name, power){
+		this.name = name;
+		this._power = power;
+
+		console.log(`Was created coffemachine ${this.name} with power ${this.power}wt`);
+	}
+	// set waterAmount(amount){
+	// 	this._waterAmount += amount;
+	// }
+	// get waterAmount(){
+	// 	console.log(this._waterAmount);
+	// }
+
+	#fixWaterAmount(value){
+		if(value < 0){
+			return 0;
+		}
+		else if(value > this.#waterLimit) {
+			return this.#waterLimit;
+		}
+		else{
+			return value;
+		}
+	}
+
+	setWaterAmount(amount){
+		this.#waterLimit = this.#fixWaterAmount(amount);
+	}
+ }
+
+ let saeco = new CoffeeMachine('saeco', 1000);
+
+ // saeco.#waterLimit // Private field '#waterLimit' must be declared in an enclosing class
+
+
+// OOP Design Patterns
+
+// singleton
+
+class ActiveUser{
+	static instance = null;
+	static objects = [];
+	constructor(name, role){
+		if(ActiveUser.instance === null){
+			this.name = name;
+			this.role = role;
+			ActiveUser.instance = this;
+		}
+		else{
+			return ActiveUser.instance;
+		}
+	}
+
+	logout(){
+		ActiveUser.instance = null;
 	}
 }
 
-let cat = {
-	purr: true
-}
-
-cat.__proto__ = animal;
-
-let dog = {
-	bark: true,
-	__proto__: animal
-}
-
-let husky = {
-	size: 'big',
-	__proto__: dog
-}
-
-// animal.__proto__ = husky; // Uncaught TypeError: Cyclic __proto__ value
-
-// for(let prop in husky){
-// 	console.log(`${prop}: ${husky[prop]}`);  // sleep, bark, size 
-// }
-
-for(let prop in husky){
-	if(husky.hasOwnProperty(prop)){
-		console.log(`${prop}: ${husky[prop]}`);  // size 
-	}
-}
-
-for(let key of Object.keys(dog)){
-	console.log(key);
-}
-
-let user = {
-	device: 'Lenovo',
-	_name: 'John',
-	_lastname: 'Doe',
-	set fullname(value){
-		[this._name, this._lastname] = value.split(' ');
-		console.warn(`New username was set as ${this._name} ${this._lastname}`);
-	},
-	get fullname() {
-		return `${this._name} ${this._lastname}`;
-	}
-}
-
-console.log(user.fullname);
+let u1 = new ActiveUser('Masha', 'Copywriter');
+let u2 = new ActiveUser('Dasha', 'Admin');
 
 
-let admin = {
-	__proto__: user,
-	isAdmin: true
-}
-
-console.log(admin.fullname);
-user.fullname = 'Harry Potter'; // both user and admin
-admin.fullname = 'Jamie Oliver'; // user Harry Potter, admin Jamie Oliver
-
-
-let rabbit = {
-	jump: true
-}
-
-Object.setPrototypeOf(rabbit, animal);
-console.warn(Object.getPrototypeOf(husky) === animal); // false потому что наследует через один класс
-console.warn(Object.getPrototypeOf(husky) === dog); // true  потому что прямой наследник
-
-let fox = Object.create(animal, {
-	run: {
-		value: true
-	}
-}); // (prototype, descriptors)
-// Object.setPrototypeOf(fox, {}); // fox can not sleap and speak, just empty object
-
-let o = Object.create(null); // creates empty object with no properties, prororypes and methods
-
-
-// F.prototype
-
-function Lion(name){
-	this.name = name;
-}
-
-// Lion.prototype = animal; // наследование F.prototype ожидает в правой части выражения ни что иное, как обьект
-
-let simba = new Lion('Simba');
-console.log(simba.name);
-
-console.log(Object.getPrototypeOf(simba)); // 
-
-// 
-
-function Device(name, power){
-	this.name = name;
-	this.enabled = false;
-	let status = 'disabled'; // let or const for private vars
-	// this.power = power; // или не записывать это в свойство в целях инкапсуляции 
-	console.log(`Was created device ${this.name} with power ${power}wt`);
-
-	function showReadiness(){
-		setTimeout(()=>{
-			console.log(`Device ${this.name} is ready to use`);
-		}, 1000);
-	}
-
-	this.enable = function(){
-		this.enabled = true;
-		status = 'enabled';
-		console.log(`Device ${this.name} was enabled, status: ${status}`);
-		showReadiness.call(this);
-	}
-	this.disable = ()=> {
-		this.enabled = false;
-		status = 'disabled';
-		console.log(`Device ${this.name} was disabled`);
-	}
-}
-
-let owen = new Device('Ariston', 1000);
-
-
-function Fridge(name, power){
-	Device.call(this, name, power); // в контексте this (Fridge) вызвать конструктор Device
-
-	let parentEnable = this.enable;
-	this.enable = function(){
-		parentEnable.call(this); // parent enable full functionality
-		console.log('Was enabled Fridge');
-	}
-
-	this.disable = function(){
-		this.enabled = false;
-		console.log(`Fridge ${this.name} was disabled`);
-	}
-}
-
-let fridge = new Fridge('Samsung', 800);
-fridge.enable();
-
-
-// constructor + .prototype methods
-
-function CoffeeMachine(name, power){
-	Device.call(this, name, power);
-	// this.name = name;
-	// this.enabled = false;
-	// power is private
-}
-
-CoffeeMachine.prototype.enable = function(){
-	// console.log(this.power); // can not use power outside of Fn Constructor
-}
-CoffeeMachine.prototype.disable = function() {
-	this.enabled = false;
-}
-
-let saeco = new CoffeeMachine('Saeco', 900);
-saeco.enable();
-console.log(saeco.enabled);
-saeco.disable();
-console.log(saeco.enabled);
-
-
-// ES6 Classes
+// factory
 
 class Car{
-	constructor(name, model, color, year){
-		this.color = color;
-		this.year = year;
-		this.name = name;
-		this.model = model;
-		this.speed = 0;
-		this.fuel = 0;
-		this.capacity = 60;
-		this.isDriving = false;
+	constructor(options){
+		this.state = options.state || 'new';
+		this.color = options.color || 'black'
 	}
-
-	sell(){
-		console.log(`For sale ${this.color} ${this.name} ${this.model} ${this.year}. Not colored, not broken`);
-	}
-
-	getFuel(){
-		console.log(this.fuel);
-	}
-
-	setFuel(amount){
-		if(typeof amount != 'number' || amount < 0 || (amount + this.fuel)> this.capacity){
-			console.error('Try another amount!');
-		}
-		else{
-			this.fuel += amount;
-		}
-	}
-
-	drive(speed){
-		if(this.fuel < 2){
-			console.error('Not enough fuel');
-		}
-		else{
-			this.isDriving = true;
-			this.speed = (speed) ? speed : 50;
-			console.log(`${this.name} is driving with speed ${this.speed} km/h`);
-		}
-	}
-
-	stop(){
-		if(this.isDriving){
-			this.isDriving = false;
-			this.speed = 0;
-			console.log(`${this.name} arrived, speed is ${this.speed} km/h`);
-		}
-	}
-
 }
-
-let car = new Car('Toyota', 'Camry', 'black', 2023);
-car.drive();
-setTimeout(()=> {
-	car.stop();
-}, 2000);
-
-car.setFuel(20);
-car.setFuel(-20);
-car.getFuel();
-car.setFuel('lpg');
-car.setFuel(80);
-
-car.drive(100);
-car.sell();
-
-
-class HybridCar extends Car {
-	constructor(props){
-		super(props); // наследование родительских свойств
-		this.pluggedIn = false;
-		this.charged = 0;
-		this.currentPower = 'fuel';
-		this.interval;
-	}
-
-	charge(){
-		this.pluggedIn = true;
-		this.interval = setInterval(()=>{
-			this.charged += 3;
-		},100);
-	}
-
-	stopCharging(){
-		this.pluggedIn = false;
-		clearInterval(this.interval);
-		console.log(`${this.name} was charged on ${this.charged}%`);
-	}
-
-	drive(speed){
-		if(this.fuel < 2 && this.charged < 5){
-			console.error('Can not drive');
-		}
-		else if(this.pluggedIn){
-			console.error('Please, stop charging');
-		}
-		else{
-			if(this.charged > 5 && this.fuel < 5){
-				this.currentPower = 'electricity';
-				this.interval = setInterval(()=>{
-					this.charged -= 2;
-				}, 100);
-			}
-			else{
-				this.currentPower = 'fuel';
-				this.interval = setInterval(()=>{
-					this.fuel -= 0.5;
-				}, 100);
-			}
-			this.isDriving = true;
-			this.speed = (speed) ? speed : 50;
-			console.log(`${this.name} is driving with speed ${this.speed} km/h`);
-		}
-	}
-
-	stop(){
-		super.stop(); // сначала вызываем родительский метод
-		clearInterval(this.interval);
-		console.log(`Fuel: ${this.fuel}, charged: ${this.charged}`);
+class Truck{
+	constructor(options){
+		this.state = options.state || 'used';
+		this.color = options.color || 'gray'
 	}
 }
 
-let ecar = new HybridCar('Honda', 'CR-Z', 'white', 2017);
+class VehicleFactory{
+	createVehicle(options){
+		if(options.type === 'car'){
+			return new Car(options);
+		}
+		else{
+			return new Truck(options);
+		}
+	}
+}
 
-ecar.drive();
-ecar.charge();
-setTimeout(()=>{
-	ecar.stopCharging();
-}, 1500);
+let factory = new VehicleFactory();
 
-setTimeout(()=>{
-	ecar.drive();
-}, 1700);
+let vehicle1 = factory.createVehicle({type: 'car', color: 'blue'});
+let vehicle2 = factory.createVehicle({});
 
-setTimeout(()=>{
-	ecar.stop();
-}, 3500);
+
+
+
 </script>
+
+<script type="module" src="common.js"></script>
 
 </body>
 </html>
