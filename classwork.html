@@ -6,137 +6,69 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1"> 
 </head>
 <body>
-	Hello world!
+
+
+	<div id="box" onclick="alert(111)">box</div>
+	<div class="block">block</div>
+	<button>click me!</button>
+	<section>section1</section>
+	<section>section</section>
 
 
 
 <script>
 
- // oop
+	const box = document.getElementById('box');// can use id already
+	const block = document.getElementsByClassName('block')[0]; // if no [] return HTMLCollection
+	const btn = document.getElementsByTagName('button')[0]; // if no [] return HTMLCollection
+	const section1 = document.querySelector('section'); // querySelector() can accept any valid CSS selector div>div input+label #id .class
+	const sections = document.querySelectorAll('section'); // returns NodeList
 
+	box.onclick = () => console.log('box clicked');
 
- class Book {
-	static bookCount = 0;
-	static countBooks(){
-		Book.bookCount++;
-		console.log(`Total number of books ${Book.bookCount}`);
+	function sayHi(){
+		console.log('Hi!');
 	}
 
-	constructor(name, author){
-		this.name = name;
-		this.author = author;
-
-		Book.countBooks();
-	}
- }
-
- let book1 = new Book('Dzherelo', 'Ain Rend');
- let book2 = new Book('The Hobbit', 'J. Tolkien');
-
-
- class CoffeeMachine{
-	_waterAmount = 0;
-	#waterLimit = 1000;
-
-	constructor (name, power){
-		this.name = name;
-		this._power = power;
-
-		console.log(`Was created coffemachine ${this.name} with power ${this.power}wt`);
-	}
-	// set waterAmount(amount){
-	// 	this._waterAmount += amount;
-	// }
-	// get waterAmount(){
-	// 	console.log(this._waterAmount);
-	// }
-
-	#fixWaterAmount(value){
-		if(value < 0){
-			return 0;
-		}
-		else if(value > this.#waterLimit) {
-			return this.#waterLimit;
-		}
-		else{
-			return value;
+	function makeCounter(){
+		let count = 1;
+		return function(){
+			console.log(count++);
 		}
 	}
 
-	setWaterAmount(amount){
-		this.#waterLimit = this.#fixWaterAmount(amount);
-	}
- }
 
- let saeco = new CoffeeMachine('saeco', 1000);
+	btn.onclick = makeCounter(); // указывать круглые скобки при присвоении функции в обработчик событий 
+	// можно только если вам нужно записать туда результат вызова функции, 
+	// иначе присваем только ссылку на функцию без скобок
 
- // saeco.#waterLimit // Private field '#waterLimit' must be declared in an enclosing class
+	section1.onmouseover = sayHi;
 
-
-// OOP Design Patterns
-
-// singleton
-
-class ActiveUser{
-	static instance = null;
-	static objects = [];
-	constructor(name, role){
-		if(ActiveUser.instance === null){
-			this.name = name;
-			this.role = role;
-			ActiveUser.instance = this;
+	document.addEventListener('click', function(event){
+		if(event.target.classList.contains('block')){
+			event.target.style.color = 'green';
 		}
-		else{
-			return ActiveUser.instance;
+		if(event.target.tagName.toLowerCase() === 'section'){
+			event.target.style.background = 'hotpink';
 		}
+	});
+
+
+	function sayBye(){
+		console.log('Bye!');
 	}
 
-	logout(){
-		ActiveUser.instance = null;
-	}
-}
-
-let u1 = new ActiveUser('Masha', 'Copywriter');
-let u2 = new ActiveUser('Dasha', 'Admin');
+	sections[1].addEventListener('click', sayBye);
 
 
-// factory
-
-class Car{
-	constructor(options){
-		this.state = options.state || 'new';
-		this.color = options.color || 'black'
-	}
-}
-class Truck{
-	constructor(options){
-		this.state = options.state || 'used';
-		this.color = options.color || 'gray'
-	}
-}
-
-class VehicleFactory{
-	createVehicle(options){
-		if(options.type === 'car'){
-			return new Car(options);
-		}
-		else{
-			return new Truck(options);
-		}
-	}
-}
-
-let factory = new VehicleFactory();
-
-let vehicle1 = factory.createVehicle({type: 'car', color: 'blue'});
-let vehicle2 = factory.createVehicle({});
-
+	setTimeout(()=>{
+		sections[1].removeEventListener('click', sayBye);
+	},2500);
 
 
 
 </script>
 
-<script type="module" src="common.js"></script>
 
 </body>
 </html>
