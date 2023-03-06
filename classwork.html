@@ -6,117 +6,71 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	
 	<style>
-		.carousel{
-			position: relative;
-			width: 100%;
-			overflow: hidden;
-		}
-
-		.animated{
-			transition: transform 0.45s linear;
-		}
-
-		.carousel_wrap{
+		.tab_names{
 			display: flex;
-
 		}
-		.slide{
-			flex: 0 0 auto;
-			width: 300px;
-			height: 100px;
+
+		.tab_name{
+			border: 2px solid green;
+			border-radius: 10px 10px 0 0;
+			margin-right: 10px;
 			text-align: center;
-			font-size: 50px;
-			padding-top: 50px;
-			background-color: lightblue;
-			margin-right: 30px;
-		}
-		
-
-		.slide.active{
-			opacity: 1;
-		}
-
-		.arr_left, .arr_right{
-			font-size: 40px;
-			position: absolute;
-			top: 50px;
-			transform: scaleX(0.6);
+			width: 120px;
+			padding: 5px 0;
 			cursor: pointer;
-			z-index: 10;
-			color: #fff;
 		}
-		.arr_right{
-			right: 0;
+		.tab_name.active{
+			color: #fff;
+			background-color: green;
+		}
+		.tab_content{
+			border: 1px solid green;
+			padding: 30px;
 		}
 
+		.tab{
+			display: none;
+		}
+		.tab.active{
+			display: block;
+		}
 
 	</style>
 </head>
 <body>
 
-	<div class="carousel">
-		<div class="carousel_wrap">
-			<div class="slide">Slide 1</div>
-			<div class="slide">Slide 2</div>
-			<div class="slide">Slide 3</div>
-			<div class="slide">Slide 4</div>
-			<div class="slide">Slide 5</div>
+	<div class="tabs">
+		<div class="tab_names">
+			<div data-tab="tab1" class="tab_name active">Tab 1</div>
+			<div data-tab="tab2" class="tab_name">Tab 2</div>
+			<div data-tab="tab3" class="tab_name">Tab 3</div>
+		</div>
+		<div class="tab_content">
+			<div id="tab1" class="tab active">
+				<h2>Tab 1</h2>
+				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
+			<div id="tab2" class="tab"><h2>Tab 2</h2>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
+			<div id="tab3" class="tab"><h2>Tab 3</h2>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
 		</div>
 
-		<div class="arr_left">&lt;</div>
-		<div class="arr_right">&gt;</div>
 	</div>
 	
 
 <script>
 
-	const prev = document.querySelector('.arr_left');
-	const next = document.querySelector('.arr_right');
-	const wrap = document.querySelector('.carousel_wrap');
-	const carouselItems = document.querySelectorAll('.slide');
+	const names = document.querySelectorAll('.tab_name');
+	const tabs = document.querySelectorAll('.tab');
 
-	const slideWidth = carouselItems[0].offsetWidth;
-	const margin = window.getComputedStyle(carouselItems[0]).marginRight; // '30px'
-	const targetTransform = slideWidth + Number(margin.substr(0, margin.length-2));
-	let currentTransform = 0;
-	let currentSlide = 0;
-
-	let elementsInView = Math.ceil(wrap.offsetWidth / targetTransform);
-	let maxShowing = carouselItems.length  - elementsInView;
-
-	function prevSlide(){
-		currentTransform += targetTransform;
-		currentSlide--;
-		wrap.style.transform = `translateX(${currentTransform}px)`;
-
-		checkArrows();
-	}
-
-	function nextSlide(){
-		currentTransform -= targetTransform;
-		currentSlide++;
-		wrap.style.transform = `translateX(${currentTransform}px)`;
-		checkArrows();
-	}
-
-	function checkArrows(){
-		if(currentSlide === 0){
-			prev.style.display = 'none';
-			next.style.display = 'block';
+	document.addEventListener('click', (e)=>{
+		if(e.target.classList.contains('tab_name')){
+			for(let i = 0; i < tabs.length; i++){
+				tabs[i].classList.remove('active');
+				names[i].classList.remove('active');
+			}
+			e.target.classList.add('active');
+			document.querySelector(`#${e.target.dataset.tab}`).classList.add('active');
 		}
-		else if(currentSlide === maxShowing){
-			prev.style.display = 'block';
-			next.style.display = 'none';
-		}
-		else{
-			prev.style.display = 'block';
-			next.style.display = 'block';
-		}
-	}
-
-	prev.onclick = prevSlide;
-	next.onclick = nextSlide;
-	checkArrows();
+	});
 
 </script>
 
