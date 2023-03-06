@@ -91,53 +91,6 @@
 		<div class="slide">Slide 4</div>
 		<div class="slide">Slide 5</div>
 
-		<ul class="dots">
-			<li data-slide="0" class="slide_dot active"></li>
-			<li data-slide="1" class="slide_dot"></li>
-			<li data-slide="2" class="slide_dot"></li>
-			<li data-slide="3" class="slide_dot"></li>
-			<li data-slide="4" class="slide_dot"></li>
-		</ul>
-
-		<div class="arr_left">&lt;</div>
-		<div class="arr_right">&gt;</div>
-	</div>
-
-
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
-
-		<ul class="dots">
-			<li data-slide="0" class="slide_dot active"></li>
-			<li data-slide="1" class="slide_dot"></li>
-			<li data-slide="2" class="slide_dot"></li>
-			<li data-slide="3" class="slide_dot"></li>
-			<li data-slide="4" class="slide_dot"></li>
-		</ul>
-
-		<div class="arr_left">&lt;</div>
-		<div class="arr_right">&gt;</div>
-	</div>
-
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
-
-		<ul class="dots">
-			<li data-slide="0" class="slide_dot active"></li>
-			<li data-slide="1" class="slide_dot"></li>
-			<li data-slide="2" class="slide_dot"></li>
-			<li data-slide="3" class="slide_dot"></li>
-			<li data-slide="4" class="slide_dot"></li>
-		</ul>
-
 		<div class="arr_left">&lt;</div>
 		<div class="arr_right">&gt;</div>
 	</div>
@@ -149,12 +102,13 @@
 	class Slider{
 		constructor(parent, dur){
 			this.slides = parent.querySelectorAll('.slide');
-	 		this.navs = parent.querySelectorAll('.slide_dot');
 	 		this.prev = parent.querySelector('.arr_left');
 	 		this.next = parent.querySelector('.arr_right');
 			this.currentSlide = 0;
 			this.duration = dur;
 			this.interval;
+
+
 			
 			this.prev.onclick = () => {
 				this.currentSlide = this.currentSlide > 0 ? --this.currentSlide : this.slides.length - 1;
@@ -166,13 +120,24 @@
 				this.changeSlide(this.currentSlide);
 			}
 	
-			for(let nav of this.navs){
+			const dots = document.createElement('ul');
+			dots.classList.add('dots');
+			this.navs = [];
+			for(let i = 0; i < this.slides.length; i++){
+				let nav = document.createElement('li');
+				nav.dataset.slide = i;
+				nav.classList.add('slide_dot');
+				if(i === 0){
+					nav.classList.add('active');
+				}
 				nav.onclick = () => {
 					this.currentSlide = +nav.dataset.slide;
-					this.changeSlide(currentSlide);
+					this.changeSlide(this.currentSlide);
 				}
+				dots.append(nav);
+				this.navs.push(nav);
 			}
-
+			parent.append(dots);
 			this.init();
 		}
 
@@ -196,9 +161,9 @@
 	}
 
 	const sliders = document.querySelectorAll('.slider');
-	// for(let s of sliders){
-	// 	new Slider(s, Math.floor(Math.random()*(3500 - 1500) + 1500));
-	// }
+	for(let s of sliders){
+		new Slider(s, Math.floor(Math.random()*(3500 - 1500) + 1500));
+	}
 	
 
 // slider
