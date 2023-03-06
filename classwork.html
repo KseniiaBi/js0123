@@ -78,36 +78,45 @@
 	const slideWidth = carouselItems[0].offsetWidth;
 	const margin = window.getComputedStyle(carouselItems[0]).marginRight; // '30px'
 	const targetTransform = slideWidth + Number(margin.substr(0, margin.length-2));
+	let currentTransform = 0;
+	let currentSlide = 0;
+
+	let elementsInView = Math.ceil(wrap.offsetWidth / targetTransform);
+	let maxShowing = carouselItems.length  - elementsInView;
 
 	function prevSlide(){
-		wrap.style.transform = `translateX(${-targetTransform}px)`;
-		wrap.insertBefore(wrap.lastElementChild, wrap.firstElementChild);
+		currentTransform += targetTransform;
+		currentSlide--;
+		wrap.style.transform = `translateX(${currentTransform}px)`;
 
-		setTimeout(()=>{
-			wrap.classList.add('animated');
-			wrap.style.transform = `translateX(0px)`;
-		},100);
-		
-
-		setTimeout(()=>{
-			wrap.classList.remove('animated');
-		},600);
+		checkArrows();
 	}
 
 	function nextSlide(){
-		wrap.classList.add('animated');
-		wrap.style.transform = `translateX(${-targetTransform}px)`;
+		currentTransform -= targetTransform;
+		currentSlide++;
+		wrap.style.transform = `translateX(${currentTransform}px)`;
+		checkArrows();
+	}
 
-		setTimeout(()=>{
-			wrap.classList.remove('animated');
-			wrap.append(wrap.firstElementChild);
-			wrap.style.transform = `translateX(0px)`;
-		},500);
-
+	function checkArrows(){
+		if(currentSlide === 0){
+			prev.style.display = 'none';
+			next.style.display = 'block';
+		}
+		else if(currentSlide === maxShowing){
+			prev.style.display = 'block';
+			next.style.display = 'none';
+		}
+		else{
+			prev.style.display = 'block';
+			next.style.display = 'block';
+		}
 	}
 
 	prev.onclick = prevSlide;
 	next.onclick = nextSlide;
+	checkArrows();
 
 </script>
 
