@@ -103,57 +103,103 @@
 		<div class="arr_right">&gt;</div>
 	</div>
 
-	
+
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
+
+		<ul class="dots">
+			<li data-slide="0" class="slide_dot active"></li>
+			<li data-slide="1" class="slide_dot"></li>
+			<li data-slide="2" class="slide_dot"></li>
+			<li data-slide="3" class="slide_dot"></li>
+			<li data-slide="4" class="slide_dot"></li>
+		</ul>
+
+		<div class="arr_left">&lt;</div>
+		<div class="arr_right">&gt;</div>
+	</div>
+
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
+
+		<ul class="dots">
+			<li data-slide="0" class="slide_dot active"></li>
+			<li data-slide="1" class="slide_dot"></li>
+			<li data-slide="2" class="slide_dot"></li>
+			<li data-slide="3" class="slide_dot"></li>
+			<li data-slide="4" class="slide_dot"></li>
+		</ul>
+
+		<div class="arr_left">&lt;</div>
+		<div class="arr_right">&gt;</div>
+	</div>
 	
 
 
 <script>
 
-	const slides = document.querySelectorAll('.slide');
-	const navs = document.querySelectorAll('.slide_dot');
-	const prev = document.querySelector('.arr_left');
-	const next = document.querySelector('.arr_right');
+	class Slider{
+		constructor(parent, dur){
+			this.slides = parent.querySelectorAll('.slide');
+	 		this.navs = parent.querySelectorAll('.slide_dot');
+	 		this.prev = parent.querySelector('.arr_left');
+	 		this.next = parent.querySelector('.arr_right');
+			this.currentSlide = 0;
+			this.duration = dur;
+			this.interval;
+			
+			this.prev.onclick = () => {
+				this.currentSlide = this.currentSlide > 0 ? --this.currentSlide : this.slides.length - 1;
+				this.changeSlide(this.currentSlide);
+			}
 
-	let currentSlide = 0;
-	let interval;
-
-	function init(){
-		interval = setInterval(()=>{
-			currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
-			changeSlide(currentSlide);
-		}, 1500);
-	}
-
-	function changeSlide(n){
-		for(let i = 0; i < slides.length; i++){
-			slides[i].classList.remove('active');
-			navs[i].classList.remove('active');
-		}
-		slides[n].classList.add('active');
-		navs[n].classList.add('active');
-		clearInterval(interval);
-		init();
-	}
-
-	prev.onclick = () => {
-		currentSlide = currentSlide > 0 ? --currentSlide : slides.length - 1;
-		changeSlide(currentSlide);
-	}
-
-	next.onclick = () => {
-		currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
-		changeSlide(currentSlide);
-	}
+			this.next.onclick = () => {
+				this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
+				this.changeSlide(this.currentSlide);
+			}
 	
-	for(let nav of navs){
-		nav.onclick = () => {
-			currentSlide = +nav.dataset.slide;
-			changeSlide(currentSlide);
+			for(let nav of this.navs){
+				nav.onclick = () => {
+					this.currentSlide = +nav.dataset.slide;
+					this.changeSlide(currentSlide);
+				}
+			}
+
+			this.init();
+		}
+
+		init(){
+			this.interval = setInterval(()=>{
+				this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
+				this.changeSlide(this.currentSlide);
+			}, this.duration);
+		}
+
+		changeSlide(n){
+			for(let i = 0; i < this.slides.length; i++){
+				this.slides[i].classList.remove('active');
+				this.navs[i].classList.remove('active');
+			}
+			this.slides[n].classList.add('active');
+			this.navs[n].classList.add('active');
+			clearInterval(this.interval);
+			this.init();
 		}
 	}
 
-
-	init();
+	const sliders = document.querySelectorAll('.slider');
+	// for(let s of sliders){
+	// 	new Slider(s, Math.floor(Math.random()*(3500 - 1500) + 1500));
+	// }
+	
 
 // slider
 
