@@ -6,36 +6,31 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	
 	<style>
-		.slider{
+		.carousel{
 			position: relative;
-			height: 300px;
+			width: 100%;
+			overflow: hidden;
 		}
 
+		.animated{
+			transition: transform 0.45s linear;
+		}
+
+		.carousel_wrap{
+			display: flex;
+
+		}
 		.slide{
-			position: absolute;
-			left: 0;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			transition: opacity 0.4s linear;
+			flex: 0 0 auto;
+			width: 300px;
+			height: 100px;
 			text-align: center;
 			font-size: 50px;
-			padding-top: 100px;
+			padding-top: 50px;
 			background-color: lightblue;
-			opacity: 0;
+			margin-right: 30px;
 		}
-		.slide:nth-of-type(2){
-			background-color: lightgreen;
-		}
-		.slide:nth-of-type(3){
-			background-color: hotpink;
-		}
-		.slide:nth-of-type(4){
-			background-color: gold;
-		}
-		.slide:nth-of-type(5){
-			background-color: deepskyblue;
-		}
+		
 
 		.slide.active{
 			opacity: 1;
@@ -44,7 +39,7 @@
 		.arr_left, .arr_right{
 			font-size: 40px;
 			position: absolute;
-			top: 120px;
+			top: 50px;
 			transform: scaleX(0.6);
 			cursor: pointer;
 			z-index: 10;
@@ -54,126 +49,65 @@
 			right: 0;
 		}
 
-		.dots{
-			position: absolute;
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			bottom: 10px;
-			list-style: none;
-			padding: 0;
-		}
-
-		.slide_dot{
-			width: 12px;
-			height: 12px;
-			border-radius: 50%;
-			border: 2px solid #fff;
-			margin: 0 5px;
-			cursor: pointer;
-		}
-		.slide_dot.active{
-			width: 14px;
-			height: 14px;
-			background-color: #fff;
-		}
-
 
 	</style>
 </head>
 <body>
 
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
+	<div class="carousel">
+		<div class="carousel_wrap">
+			<div class="slide">Slide 1</div>
+			<div class="slide">Slide 2</div>
+			<div class="slide">Slide 3</div>
+			<div class="slide">Slide 4</div>
+			<div class="slide">Slide 5</div>
+		</div>
 
 		<div class="arr_left">&lt;</div>
 		<div class="arr_right">&gt;</div>
 	</div>
 	
 
-
 <script>
 
-	class Slider{
-		constructor(parent, dur){
-			this.slides = parent.querySelectorAll('.slide');
-	 		this.prev = parent.querySelector('.arr_left');
-	 		this.next = parent.querySelector('.arr_right');
-			this.currentSlide = 0;
-			this.duration = dur;
-			this.interval;
+	const prev = document.querySelector('.arr_left');
+	const next = document.querySelector('.arr_right');
+	const wrap = document.querySelector('.carousel_wrap');
+	const carouselItems = document.querySelectorAll('.slide');
 
+	const slideWidth = carouselItems[0].offsetWidth;
+	const margin = window.getComputedStyle(carouselItems[0]).marginRight; // '30px'
+	const targetTransform = slideWidth + Number(margin.substr(0, margin.length-2));
 
-			
-			this.prev.onclick = () => {
-				this.currentSlide = this.currentSlide > 0 ? --this.currentSlide : this.slides.length - 1;
-				this.changeSlide(this.currentSlide);
-			}
+	function prevSlide(){
+		wrap.style.transform = `translateX(${-targetTransform}px)`;
+		wrap.insertBefore(wrap.lastElementChild, wrap.firstElementChild);
 
-			this.next.onclick = () => {
-				this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
-				this.changeSlide(this.currentSlide);
-			}
-	
-			const dots = document.createElement('ul');
-			dots.classList.add('dots');
-			this.navs = [];
-			for(let i = 0; i < this.slides.length; i++){
-				let nav = document.createElement('li');
-				nav.dataset.slide = i;
-				nav.classList.add('slide_dot');
-				if(i === 0){
-					nav.classList.add('active');
-				}
-				nav.onclick = () => {
-					this.currentSlide = +nav.dataset.slide;
-					this.changeSlide(this.currentSlide);
-				}
-				dots.append(nav);
-				this.navs.push(nav);
-			}
-			parent.append(dots);
-			this.init();
-		}
+		setTimeout(()=>{
+			wrap.classList.add('animated');
+			wrap.style.transform = `translateX(0px)`;
+		},100);
+		
 
-		init(){
-			this.interval = setInterval(()=>{
-				this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
-				this.changeSlide(this.currentSlide);
-			}, this.duration);
-		}
-
-		changeSlide(n){
-			for(let i = 0; i < this.slides.length; i++){
-				this.slides[i].classList.remove('active');
-				this.navs[i].classList.remove('active');
-			}
-			this.slides[n].classList.add('active');
-			this.navs[n].classList.add('active');
-			clearInterval(this.interval);
-			this.init();
-		}
+		setTimeout(()=>{
+			wrap.classList.remove('animated');
+		},600);
 	}
 
-	const sliders = document.querySelectorAll('.slider');
-	for(let s of sliders){
-		new Slider(s, Math.floor(Math.random()*(3500 - 1500) + 1500));
+	function nextSlide(){
+		wrap.classList.add('animated');
+		wrap.style.transform = `translateX(${-targetTransform}px)`;
+
+		setTimeout(()=>{
+			wrap.classList.remove('animated');
+			wrap.append(wrap.firstElementChild);
+			wrap.style.transform = `translateX(0px)`;
+		},500);
+
 	}
-	
 
-// slider
-
-// autoplay +	
-// fade-in fade-out + 
-// arrow navigation +
-// dots navigation +
-// * oop
-
+	prev.onclick = prevSlide;
+	next.onclick = nextSlide;
 
 </script>
 
