@@ -6,71 +6,89 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	
 	<style>
-		.tab_names{
-			display: flex;
-		}
-
-		.tab_name{
-			border: 2px solid green;
-			border-radius: 10px 10px 0 0;
-			margin-right: 10px;
-			text-align: center;
-			width: 120px;
-			padding: 5px 0;
-			cursor: pointer;
-		}
-		.tab_name.active{
-			color: #fff;
-			background-color: green;
-		}
-		.tab_content{
-			border: 1px solid green;
-			padding: 30px;
-		}
-
-		.tab{
-			display: none;
-		}
-		.tab.active{
-			display: block;
+		canvas{
+			border: 1px solid black;
 		}
 
 	</style>
 </head>
 <body>
 
-	<div class="tabs">
-		<div class="tab_names">
-			<div data-tab="tab1" class="tab_name active">Tab 1</div>
-			<div data-tab="tab2" class="tab_name">Tab 2</div>
-			<div data-tab="tab3" class="tab_name">Tab 3</div>
-		</div>
-		<div class="tab_content">
-			<div id="tab1" class="tab active">
-				<h2>Tab 1</h2>
-				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
-			<div id="tab2" class="tab"><h2>Tab 2</h2>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
-			<div id="tab3" class="tab"><h2>Tab 3</h2>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</div>
-		</div>
-
-	</div>
+	<canvas id="game" width="500" height="300"></canvas>
 	
 
 <script>
 
-	const names = document.querySelectorAll('.tab_name');
-	const tabs = document.querySelectorAll('.tab');
+	const canvas = document.getElementById('game');
+	const ctx = canvas.getContext('2d');
+	const cWidth = canvas.offsetWidth;
+	const cHeight = canvas.offsetHeight;
 
-	document.addEventListener('click', (e)=>{
-		if(e.target.classList.contains('tab_name')){
-			for(let i = 0; i < tabs.length; i++){
-				tabs[i].classList.remove('active');
-				names[i].classList.remove('active');
+	const maxCount = 10;
+	const balls = [];
+	const minRad = 5;
+	const maxRad = 30;
+
+	function createBall(){
+		if(balls.length < maxCount){
+			const red = Math.floor(Math.random()*155 + 100);
+			const green = Math.floor(Math.random()*155 + 100);
+			const blue = Math.floor(Math.random()*155 + 100);
+			const color = `rgb(${red}, ${green}, ${blue})`;
+
+			const rad = Math.floor(Math.random()*(maxRad - minRad) + minRad);
+			const ball = {
+				radius: rad,
+				color: color,
+				x: rad,
+				y: rad,
+				d_x: 3,
+				d_y: 3
 			}
-			e.target.classList.add('active');
-			document.querySelector(`#${e.target.dataset.tab}`).classList.add('active');
+			balls.push(ball);
 		}
-	});
+	}
+
+	function drawBall(ball){
+		ctx.beginPath();
+		ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.fillStyle = ball.color;
+		ctx.fill();
+	}
+
+	function moveBalls(){
+		balls.forEach(ball=>{
+			// отскакивает от правой и левой границ канваса
+			if(ball.x > (cWidth - ball.radius) || ball.x < ball.radius ){
+				ball.d_x = -ball.d_x;
+			}
+			// отскакивает от верхней и нижней границ канваса
+			if(ball.y > (cHeight - ball.radius) || ball.y < ball.radius ){
+				ball.d_y = -ball.d_y;
+			}
+			
+			
+
+			ball.x += ball.d_x;
+			ball.y += ball.d_y;
+
+			drawBall(ball);
+		});
+	}
+
+	let interval = setInterval(createBall, 1000);
+
+	function clearCanvas(){
+		ctx.clearRect(0,0, cWidth, cHeight);
+	}
+
+	let drawInterval = setInterval(()=>{
+		clearCanvas();
+		moveBalls();
+	},16);
+
+
 
 </script>
 
