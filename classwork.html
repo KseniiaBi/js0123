@@ -6,87 +6,14 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	
 	<style>
-		canvas{
-			border: 1px solid black;
-		}
+		
 
 	</style>
 </head>
 <body>
 
-	<canvas id="game" width="500" height="300"></canvas>
-	
-
 <script>
 
-	const canvas = document.getElementById('game');
-	const ctx = canvas.getContext('2d');
-	const cWidth = canvas.offsetWidth;
-	const cHeight = canvas.offsetHeight;
-
-	const maxCount = 10;
-	const balls = [];
-	const minRad = 5;
-	const maxRad = 30;
-
-	function createBall(){
-		if(balls.length < maxCount){
-			const red = Math.floor(Math.random()*155 + 100);
-			const green = Math.floor(Math.random()*155 + 100);
-			const blue = Math.floor(Math.random()*155 + 100);
-			const color = `rgb(${red}, ${green}, ${blue})`;
-
-			const rad = Math.floor(Math.random()*(maxRad - minRad) + minRad);
-			const ball = {
-				radius: rad,
-				color: color,
-				x: rad,
-				y: rad,
-				d_x: 3,
-				d_y: 3
-			}
-			balls.push(ball);
-		}
-	}
-
-	function drawBall(ball){
-		ctx.beginPath();
-		ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.fillStyle = ball.color;
-		ctx.fill();
-	}
-
-	function moveBalls(){
-		balls.forEach(ball=>{
-			// отскакивает от правой и левой границ канваса
-			if(ball.x > (cWidth - ball.radius) || ball.x < ball.radius ){
-				ball.d_x = -ball.d_x;
-			}
-			// отскакивает от верхней и нижней границ канваса
-			if(ball.y > (cHeight - ball.radius) || ball.y < ball.radius ){
-				ball.d_y = -ball.d_y;
-			}
-			
-			
-
-			ball.x += ball.d_x;
-			ball.y += ball.d_y;
-
-			drawBall(ball);
-		});
-	}
-
-	let interval = setInterval(createBall, 1000);
-
-	function clearCanvas(){
-		ctx.clearRect(0,0, cWidth, cHeight);
-	}
-
-	let drawInterval = setInterval(()=>{
-		clearCanvas();
-		moveBalls();
-	},16);
 
 
 
