@@ -10,8 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/ordering.css" type="text/css" />
     <link rel="stylesheet" href="css/fonts.css" type="text/css" />
-    <script type="text/javascript" src="js/main.js"></script>
     <title>Ordering</title>
+    <style>
+           .cart_info{
+            position: relative;
+        }
+        .cart_count{
+            position: absolute;
+            top: 15px;
+            left: 14px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +43,10 @@
                 <div class="nav-img">
                     <img src="images/icon-contact.png" alt="contact">
                     <img src="images/icon-heart.png" alt="icon-heart">
-                    <img src="images/icon-case.png" alt="icon-case">
+                    <div class="cart_info">
+                        <img src="images/icon-case.png" alt="icon-case">
+                        <span class="cart_count"></span>
+                    </div>
                 </div>
             </div>
 
@@ -80,7 +93,7 @@
             <div class="ordering-body-two-parts">
                 <div class="ordering-left-part">
                     <div class="ordering-row">
-                        <div class="row">
+                        <!-- <div class="row">
                             <img src="images/img-order-4.png" alt="img">
                             <p class="row-text">Антиоксидантний крем <br>
                                 для обличчя</p>
@@ -88,25 +101,8 @@
                                 list="numbList">
                             <p class="row-price">850 грн</p>
                             <img class="row-icon-delete" src="images/icon-delete.png" alt="icon">
-                        </div>
-                        <div class="row-without-border">
-                            <img src="images/img-order-5.png" alt="img">
-                            <p class="row-text">Антиоксидантний крем <br>
-                                для обличчя</p>
-                            <input class="input-row" type="number" placeholder="1" name="" id="numbList"
-                                list="numbList">
-                            <p class="row-price">850 грн</p>
-                            <img class="row-icon-delete" src="images/icon-delete.png" alt="icon">
-                        </div>
-                        <div class="row">
-                            <img src="images/img-order-6.png" alt="img">
-                            <p class="row-text">Антиоксидантний крем <br>
-                                для обличчя</p>
-                            <input class="input-row" type="number" placeholder="1" name="" id="numbList"
-                                list="numbList">
-                            <p class="row-price">850 грн</p>
-                            <img class="row-icon-delete" src="images/icon-delete.png" alt="icon">
-                        </div>
+                        </div> -->
+                        
                     </div>
                 </div>
                 <div class="cabinet-right-part">
@@ -115,7 +111,7 @@
             </div>
 
             <!-- text -->
-            <p class="ordering-total-sum">Загальна сумма: 2800 грн</p>
+            <p class="ordering-total-sum">Загальна сумма: <span class="order_total">2800</span> грн</p>
 
             <div class="save">
                 <p>Оформити</p>
@@ -171,7 +167,7 @@
             </div>
 
             <!-- aftee rows -->
-            <h3>Загальна сумма: 2800 грн</h3>
+            <h3>Загальна сумма: <span class="order_total">2800</span> грн</h3>
 
             <!-- Personal data -->
             <div class="personal-data">
@@ -346,6 +342,9 @@
             </div>
         </div>
     </div>
+
+
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
 
 </html>

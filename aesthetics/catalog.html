@@ -125,6 +125,26 @@
             align-items: center;
             justify-content: space-between;
         }
+        .cart_popup{
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            background: rgba(0,255,0,0.5);
+            text-align: center;
+            padding: 10px;
+        }
+
+        .cart_info{
+            position: relative;
+        }
+        .cart_count{
+            position: absolute;
+            top: 15px;
+            left: 14px;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -147,7 +167,10 @@
                 <div class="nav-img">
                     <img src="images/icon-contact.png" alt="contact">
                     <img src="images/icon-heart.png" alt="icon-heart">
-                    <img src="images/icon-case.png" alt="icon-case">
+                    <div class="cart_info">
+                        <img src="images/icon-case.png" alt="icon-case">
+                        <span class="cart_count"></span>
+                    </div>
                 </div>
             </div>
 
@@ -169,28 +192,28 @@
             <div class="aside-item-list filter_content">
                 <ul>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Гель для вмивання</p>
+                        <input id="type_gel" type="checkbox" value="гель">
+                        <p><label for="type_gel">Гель для вмивання</label></p>
                     </li>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Крем для обличчя</p>
+                        <input id="type_cream" type="checkbox" value="крем">
+                        <p><label for="type_cream">Крем для обличчя</label></p>
                     </li>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Маска для обличчя</p>
+                        <input id="type_mask" type="checkbox" value="маска">
+                        <p><label for="type_mask">Маска для обличчя</label></p>
                     </li>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Пінка для вмивання</p>
+                        <input id="type_foam" type="checkbox" value="пінка">
+                        <p><label for="type_foam">Пінка для вмивання</label></p>
                     </li>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Сироватка для обличчя</p>
+                        <input id="type_serum" type="checkbox" value="сироватка">
+                        <p><label for="type_serum">Сироватка для обличчя</label></p>
                     </li>
                     <li>
-                        <img src="images/icon-aside.png" alt="icon">
-                        <p>Тонік для обличчя</p>
+                        <input id="type_tonic" type="checkbox" value="тонік">
+                        <p><label for="type_tonic">Тонік для обличчя</label></p>
                     </li>
                 </ul>
             </div>
@@ -801,7 +824,7 @@
         </div>
     </div>
 
-
+    <div class="cart_popup"></div>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 
