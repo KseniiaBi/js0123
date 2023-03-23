@@ -6,16 +6,117 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	
 	<style>
-		
+		.carousel{
+			height: 150px;
+			position: relative;
+		}
+		.carousel_wrap{
+			position: relative;
+		}
 
+		#arr_prev, #arr_next{
+			position: absolute;
+			top: 50px;
+			font-size: 40px;
+			transform: scaleX(0.5);
+			z-index: 2;
+		}
+		#arr_next{
+			right: 0;
+		}
+		.carousel_wrap{
+			display: flex;
+			overflow: hidden;
+		}
+		.carousel_item{
+			flex: 0 0 200px;
+			line-height: 150px;
+			height: 150px;
+			background: hotpink;
+			color: #fff;
+			text-align: center;
+			margin-right: 20px;
+		}
+		.scroll{
+			height: 1500px;
+			background-color: yellow;
+		}
+		footer{
+			height: 400px;
+		}
 	</style>
 </head>
 <body>
+	<nav>
+		<a class="scroll_link" href="#portfolio">portfolio</a>
+		<a class="scroll_link" href="#footer">link to footer</a>
+	</nav>
 
+	<div class="carousel">
+		<div class="carousel_wrap">
+			<div class="carousel_item">1</div>
+			<div class="carousel_item">2</div>
+			<div class="carousel_item">3</div>
+			<div class="carousel_item">4</div>
+			<div class="carousel_item">5</div>
+			<div class="carousel_item">6</div>
+			<div class="carousel_item">7</div>
+		</div>
+		<div id="arr_prev">&lt;</div>
+		<div id="arr_next">&gt;</div>
+	</div>
+
+
+	<a href="contact.html#map">Map in tab</a>
+
+	<div class="scroll"></div>
+	<section id="portfolio">
+		<h2>portfolio</h2>
+	</section>
+	<div class="scroll"></div>
+
+	<footer id="footer">footer</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
 
+	const carousel = $('.carousel_wrap');
+	const items = $('.carousel_item');
+	const prevBtn = $('#arr_prev');
+	const nextBtn = $('#arr_next');
+	const targetShift = items.outerWidth(true);
+	const duration = 700;
+
+	prevBtn.click(prev);
+	nextBtn.click(next);
+
+	function next(){
+		carousel.animate({
+			left: -targetShift
+		}, duration, ()=>{
+			$('.carousel_item').last().after($('.carousel_item').first()); // после последнего вставить первый
+			carousel.css({left: 0});
+		});
+	}
+
+	function prev(){
+		$('.carousel_item').first().before($('.carousel_item').last()); // перед первым элементом вставляем последний
+		carousel.css({left: -targetShift});
+		carousel.animate({
+			left: 0
+		}, duration);
+	}
 
 
+	// scroll to anchor
+
+	$('.scroll_link').click(function(e){
+		e.preventDefault();
+		$('html, body').animate({
+			scrollTop: $($(this).attr('href')).offset().top,
+		}, 500);
+	});
 
 </script>
 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<style>
+		.active.tab_name{
+			font-weight: bold;
+		}
+		.tab_names{
+			display: flex;
+			gap: 30px;
+		}
+
+		.tab{
+			display: none;
+		}
+		.tab.active{
+			display: block;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class="tab_names">
+		<div class="tab_name active" data-tab="socials">Socials</div>
+		<div class="tab_name" data-tab="map">Map</div>
+	</div>
+	<div class="tabs">
+		<div class="tab active" id="socials">
+			<h2>Socials</h2>
+			<p>const carousel = $('.carousel_wrap');
+				const items = $('.carousel_item');
+				const prevBtn = $('#arr_prev');
+				const nextBtn = $('#arr_next');
+				const targetShift = items.outerWidth(true);
+				const duration = 700;
+			
+				prevBtn.click(prev);
+				nextBtn.click(next);
+			
+				function next(){
+					carousel.animate({
+						left: -targetShift
+					}, duration, ()=>{
+						$('.carousel_item').last().after($('.carousel_item').first()); // после последнего вставить первый
+						carousel.css({left: 0});
+					});
+				}</p>
+		</div>
+		<div class="tab" id="map">
+			<h2>Map</h2>
+			<p>const carousel = $('.carousel_wrap');
+				const items = $('.carousel_item');
+				const prevBtn = $('#arr_prev');
+				const nextBtn = $('#arr_next');
+				const targetShift = items.outerWidth(true);
+				const duration = 700;
+			
+				prevBtn.click(prev);
+				nextBtn.click(next);
+			
+				function next(){
+					carousel.animate({
+						left: -targetShift
+					}, duration, ()=>{
+						$('.carousel_item').last().after($('.carousel_item').first()); // после последнего вставить первый
+						carousel.css({left: 0});
+					});
+				}</p>
+		</div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function(){
+		const hash = window.location.hash;
+		if(hash.length > 0){
+			$('.tab').removeClass('active');
+			$('.tab_name').removeClass('active');
+
+			$(hash).addClass('active');
+			$('.tab_name').each(function(){
+				if($(this).attr('data-tab') === hash.substring(1)){
+					$(this).addClass('active');
+				}
+			});
+		}
+	});
+
+	$('.tab_name').click(function(){
+		const anchor = $(this).attr('data-tab');
+		$('.tab').removeClass('active');
+		$('.tab_name').removeClass('active');
+		$(this).addClass('active');
+		$(`#${anchor}`).addClass('active');
+	});
+
+
+
+
+</script>
+
+
+</body>
+</html>
