@@ -4,99 +4,139 @@
 	<title>JS FE</title> 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	
-	<style>
-		#game{
-			display: flex;
-			flex-flow: row wrap;
-			width: 310px;
-			margin: 100px auto; 
-		}
-		.square{
-			width: 100px;
-			height: 100px;
-			border: 1px solid black;
-			text-align: center;
-			font-size: 60px;
-			line-height: 100px;
-		}
-
-	</style>
 </head>
 <body>
 
-	<div class="stats">Current player is X </div>
-	<button class="restart">Restart game</button>
-	<div id="game">
-	</div>
-	
 
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
 
-let squares = ['', '', '', '', '', '', '', '', ''];
-const game = $('#game');
-let isActiveX = true;
+	const url = 'aesthetics/js/catalog.json';
 
-function init(){
-	game.text('');
-	squares.forEach((item, index)=>{
-		game.append(`<div data-index="${index}" class="square">${item}</div>`);
-	});
-}
-init();
-
-
-$('.square').click(function(){
-	doTurn($(this));
-});
-
-
-function doTurn(el){
-	console.log(111);
-	if($(el).text() == ''){	
-		let current = isActiveX ? 'X' : 'O';
-		$(el).text(current);
-		squares[$(el).attr('data-index')] = current;
-		isActiveX = !isActiveX;
-		$('.stats').text(`Current player is ${isActiveX ? 'X' : 'O'}`);
-		checkGameOver();
-		checkWinner();
-	}
-}
-
-
-function checkGameOver(){
-	if(!squares.includes('')){
-		$('.stats').text('All full');
-	}
-}
-
-function checkWinner(){
-	if(	squares[0] == squares[1] && squares[1] == squares[2] && squares[0] != '' ||
-	squares[3] == squares[4] && squares[4] == squares[5] && squares[3] != ''  ||
-	squares[6] == squares[7] && squares[7] == squares[8] && squares[6] != '' || 
-	squares[0] == squares[4] && squares[4] == squares[8] && squares[4] != '' ||
-	squares[2] == squares[4] && squares[4] == squares[6] && squares[6] != '' ||
-	squares[0] == squares[3] && squares[3] == squares[6] && squares[0] != '' ||
-	squares[1] == squares[4] && squares[4] == squares[7] && squares[7] != ''  ||
-	squares[2] == squares[5] && squares[5] == squares[8] && squares[5] != '' ){
-		$('.stats').text(`${isActiveX ? 'O' : 'X'} Won!`);
-		squares.fill(''); // очищаем массив старых значений
-		isActiveX = true;
-		$('.stats').text(`Current player is ${isActiveX ? 'X' : 'O'}`);
-		init();
-	}
-}
-
-	// $('.restart').click(function(){
-		
+	// let promise = new Promise(function(resolve,reject){
+	// 	setTimeout(()=> reject('error!'), 500);
+	// 	// setTimeout(()=> resolve('success!'), 1000);
 	// });
 
 
+	// promise.then(
+	// 	function(result){
+	// 		console.log(result);
+	// 	},
+	// 	function(error){
+	// 		console.error(error);
+	// 	});
+
+	// promise.then((result)=>{
+	// 	console.log(result);
+	// }).catch(function(error){
+	// 	console.error(error);
+	// });
+
+		// promise.then().then().then().catch();
+		// promise.then().then().then().catch().finally();
+
+
+	// let p = new Promise(function(resolve, reject){
+	// 	let xhr = new XMLHttpRequest();
+	// 	xhr.open('GET', url, true);
+	// 	xhr.send();
+	// 	xhr.onload = () =>{
+	// 		if(xhr.status === 200){
+	// 			resolve(xhr.responseText);
+	// 		}
+	// 		else{
+	// 			reject(xhr.statusText)
+	// 		}
+	// 	} 
+	// });
+	// let data;
+	// p.then((result)=>{
+	// 	console.log(result);
+	// 	data = JSON.parse(result);
+	// })
+	//  .catch((error)=> console.error(error));
+
+
+	//  let p2 = new Promise(function(resolve,reject){
+	// 	confirm('Really delete item?') ? resolve('Yes'): reject('No');
+	//  });
+
+	//  p2.then(()=>{
+	// 	console.warn('Item was deleted');
+	//  }).catch(()=>{
+	// 	console.error('Item was not deleted');
+	// });
+
+	// script type="module"
+	// let response = await fetch(url);
+	// let data;
+	// if(response.ok){
+	// 	data = await response.json();
+	// 	console.log(data);
+	// }
+	// else{
+	// 	console.error(response.statusText)
+	// }
+
+	// let response = fetch(url)
+	// .then(response=>response.json())
+	// .then(items => console.log(items));
+
+
+	let range = {
+		from: 1,
+		to: 5,
+
+		[Symbol.iterator](){
+			this.current = this.from;
+			return this;
+		},
+
+		next(){
+			if(this.current <= this.to){
+				return{
+					done: false,
+					value: this.current++
+				}
+			}
+			else{
+				return{
+					done: true
+				}
+			}
+		}
+	}
+
+	
+	for(let num of range){
+		console.log(num);
+	}
+
+
+
+	function* generateNumbers(){
+		yield 1;
+		yield 2;
+		yield 3;
+	}
+
+	let gen = generateNumbers();
+	
+	for(let value of gen){
+		console.error(value);
+	}
+
+	let arr = [0, ...generateNumbers()];
+	console.log(arr);
+
+	let a = 5;
+	let b = 10;
+
+	let c = a + b;
+
+	a = 20;
+	
+
 </script>
-
-
 </body>
 </html>
