@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/catalog.css" type="text/css" />
+    <link rel="stylesheet" href="css/fonts.css" type="text/css" />
+    <title>Catalog</title>
+    <style>
+        .scroll_top {
+            position: fixed;
+            right: 343px;
+            bottom: 30px;
+            cursor: pointer;
+        }
+
+        .filter_title>img{
+            display: none;
+        }
+
+        .filter_title{
+            position: relative;
+        }
+
+        .filter_title::before, .filter_title::after{
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 12px;
+            right: 0px;
+            transition: transform 0.2s linear;
+            height: 1px;
+            background: #000;
+            width: 12px;
+        }
+
+        .filter_title::after{
+            width: 11px;
+            transform: rotate(90deg);
+        }
+
+        .filter_title.active::after{
+            transform: rotate(0deg);
+        }
+
+        .filter_title.active {
+            display: block;
+        }
+
+        .filter_content {
+            display: none;
+        }
+
+        .filter_title.active + .filter_content, .filter_title.active > .filter_content{
+            display: block;
+
+        }
+
+        .sort {
+            position: absolute;
+            width: 250px;
+            margin-left: 237px;
+            z-index: 10;
+            margin-top: -36px;
+        }
+
+           .value.selected::after{
+            content: '';
+            display: block;
+            position: absolute;
+            top: 8px;
+            right: 0px;
+            width: 13px;
+            height: 6px;
+            background: url('images/icon-filter.png') no-repeat center;
+            transition: transform 0.3s linear;
+        }
+
+        .opened .value.selected::after{
+            transform: rotate(180deg);
+        }
+
+        .options{
+            display: none;
+            background: #fff;
+        }
+
+        .opened .options{
+            display: block;
+        }
+        .opt {
+            padding: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="nav-container">
+        <nav class="logo-header">
+            <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/homepage.html"> <img src="images/icon-logo-header.png" alt="logo"></a>
+        </nav>
+        <nav>
+            <div class="nav-list">
+                <div class="nav-ul">
+                    <ul>
+                        <li class="border-left"><a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/catalog.html">Каталог</a></li>
+                        <li class="border-middle"><a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/delivery.html">Доставка та оплата</a></li>
+                        <li class="border-middle"><a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/Vlog.html">Блог</a></li>
+                        <li class="border-right"><a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/contacts.html">Контакти</a></li>
+                    </ul>
+                </div>
+                <div class="nav-img">
+                    <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/cabinet.html"><img
+                            src="images/icon-contact.png" alt="cabinet"></a>
+                    <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/cabinet_third.html"><img
+                            src="images/icon-heart.png" alt="favorite"></a>
+                    <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/ordering.html"><img
+                            src="images/icon-case.png" alt="basket"></a>
+                </div>
+            </div>
+            <div class="nav-ul-media">
+                <ul>
+                    <li class="border-left-media">Каталог</li>
+                    <li class="border-middle-media">Доставка та оплата</li>
+                    <li class="border-middle-media">Блог</li>
+                    <li class="border-right-media">Контакти</li>
+                </ul>
+            </div>
+            <div class="nav-btn">
+                <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/cabinet.html"><img
+                        src="images/icon-contact-media.png" alt="cabinet"></a>
+                <a href="file:///C:/Users/%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD/Desktop/AESTHETICS/ordering.html"><img
+                        src="images/icon-case-media.png" alt="basket"></a>
+                <div class="burger">
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="wraper">
+        <!-- Aside -->
+        <aside class="aside-container">
+            <div class="aside-info-list">
+                <ul>
+                    <li class="filter_title">
+                        <h4>Група товару</h4>
+                        <img src="images/icon+.png" alt="icon">
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="filter_title">
+                        <h4>Вік</h4>
+                        <img src="images/icon+.png" alt="icon">
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                       
+                    </li>
+                    <li class="filter_title">
+                        <h4>Призначення</h4>
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="filter_title">
+                        <h4>Час застосування</h4>
+                        <img src="images/icon+.png" alt="icon">
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="filter_title">
+                        <h4>Ступінь захисту</h4>
+                        <img src="images/icon+.png" alt="icon">
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="filter_title">
+                        <h4>Тип шкіри</h4>
+                        <img src="images/icon+.png" alt="icon">
+                        <div class="filter_content">
+                            <ul>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Гель для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Крем для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Маска для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Пінка для вмивання</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Сироватка для обличчя</p>
+                                </li>
+                                <li>
+                                    <img src="images/icon-aside.png" alt="icon">
+                                    <p>Тонік для обличчя</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="aside-input">
+                <h4>Ціна</h4>
+                <input type="text" name="" id="" placeholder="від">
+                <img src="images/icon-tire.png" alt="icon">
+                <input type="text" name="" id="" placeholder="до">
+            </div>
+        </aside>
+
+        <!-- Catalog-container -->
+        <div class="sort">
+            <div class="value selected">Сортування</div>
+            <div class="options">
+                <div class="opt">За популярністю</div>
+                <div class="opt">За рейтингом</div>
+                <div class="opt">За ціною: від вищої</div>
+                <div class="opt">За ціною: від нищої</div>
+            </div>
+        </div>
+        <section class="catalog-container">
+            <div class="cat-list">
+                <div class="cat-row">
+                    <div class="cat-item-first-row">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-1.png" alt="img">
+                        <p class="cat-text">Флюїд для обличчя <br>
+                            для сухої шкіри</p>
+                        <p class="cat-price">630 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item-first-row">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-2.png" alt="img">
+                        <p class="cat-text">Антиоксидантний <br>
+                            крем для обличчя</p>
+                        <p class="cat-price">850 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item-first-row">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-3.png" alt="img">
+                        <p class="cat-text">Гель для вмивання <br>
+                            для проблемної шкіри</p>
+                        <p class="cat-price">590 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <img class="scroll_top" src="images/icon-up-green.png" alt="icon">
+                </div>
+                <div class="cat-row">
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-4.png" alt="img">
+                        <p class="cat-text">Зволожуюча сироватка <br>
+                            для нормальної шкіри</p>
+                        <p class="cat-price">480 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-5.png" alt="img">
+                        <p class="cat-text">Зволожуючий крем <br>
+                            для сухої шкіри</p>
+                        <p class="cat-price">830 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-6.png" alt="img">
+                        <p class="cat-text">Тонік для обличчя <br>
+                            для нормальної шкіри</p>
+                        <p class="cat-price">450 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-row">
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-7.png" alt="img">
+                        <p class="cat-text">Пінка для очищення <br>
+                            шкіри обличчя</p>
+                        <p class="cat-price">560 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-8.png" alt="img">
+                        <p class="cat-text">Набір <br>
+                            Денний та нічний крем</p>
+                        <p class="cat-price">1230 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-9.png" alt="img">
+                        <p class="cat-text">Матуючий денний крем <br>
+                            для жиної шкіри</p>
+                        <p class="cat-price">680 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-row">
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-10.png" alt="img">
+                        <p class="cat-text">Нічний антивіковий крем <br>
+                            для сухої шкіри</p>
+                        <p class="cat-price">860 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-11.png" alt="img">
+                        <p class="cat-text">Гель для зняття макіяжу</p>
+                        <p class="cat-price-onerow">730 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-12.png" alt="img">
+                        <p class="cat-text">Антивікова сироватка <br>
+                            для зони навколо очей</p>
+                        <p class="cat-price">900 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-row">
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-13.png" alt="img">
+                        <p class="cat-text">Лосьон для нормальної <br>
+                            та комбінованої шкіри</p>
+                        <p class="cat-price">1050 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-14.png" alt="img">
+                        <p class="cat-text">Скраб для чутливої шкіри</p>
+                        <p class="cat-price-onerow">890 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                    <div class="cat-item">
+                        <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                        <img class="cat-img" src="images/img-catal-15.png" alt="img">
+                        <p class="cat-text">Гель для глубокого <br>
+                            очищення шкіри обличчя</p>
+                        <p class="cat-price">890 грн</p>
+                        <div class="cat-icons">
+                            <p class="cat-detailes">Детальніше</p>
+                            <p class="text-green">В кошик</p>
+                            <img src="images/icon-catalog-green-item.png" alt="icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-info-more">
+                    <p>Показати ще</p>
+                    <img src="images/icon-more.png" alt="icon">
+                </div>
+            </div>
+
+        </section>
+        <section class="previously-seen">
+            <p>Ви нещодавно переглядали:</p>
+            <div class="seen-list">
+                <div class="cat-item-seen">
+                    <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                    <img class="cat-img" src="images/img-catal-16.png" alt="img">
+                    <p class="cat-text">Антивікова сироватка <br>
+                        для зони навколо очей</p>
+                    <p class="cat-price">900 грн</p>
+                </div>
+                <div class="cat-item-seen">
+                    <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                    <img class="cat-img" src="images/img-catal-17.png" alt="img">
+                    <p class="cat-text">Гель для зняття <br>
+                        макіяжу</p>
+                    <p class="cat-price">730 грн</p>
+                </div>
+                <div class="cat-item-seen">
+                    <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                    <img class="cat-img" src="images/img-catal-18.png" alt="img">
+                    <p class="cat-text">Міцелярний тонік <br>
+                        для нормальної шкіри</p>
+                    <p class="cat-price">780 грн</p>
+                </div>
+                <div class="cat-item-seen">
+                    <img class="cat-heart" src="images/icon-heart.png" alt="icon">
+                    <img class="cat-img" src="images/img-catal-19.png" alt="img">
+                    <p class="cat-text">Пінка для очищення <br>
+                        шкіри обличчя</p>
+                    <p class="cat-price">560 грн</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="catalog-container-media">
+            <div class="filter-media">
+                <p>Фільтри</p>
+                <img src="images/icon-filter.png" alt="icon">
+                <p class="sort-text">Сортування</p>
+                <img src="images/icon-filter.png" alt="icon">
+            </div>
+            <div class="cat-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-1-media.png" alt="img">
+                    <p class="cat-text-media">Флюїд для обличчя <br>
+                        для сухої шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>630 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-2-media.png" alt="img">
+                    <p class="cat-text-media">Антиоксидантний <br>
+                        крем для обличчя</p>
+                    <div class="cat-icons-media">
+                        <p>850 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="cat-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-3-media.png" alt="img">
+                    <p class="cat-text-media">Гель для вмивання <br>
+                        для проблемної шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>590 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-4-media.png" alt="img">
+                    <p class="cat-text-media">Зволожуюча сироватка <br>
+                        для нормальної шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>480 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="cat-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-5-media.png" alt="img">
+                    <p class="cat-text-media">Зволожуючий крем <br>
+                        для сухої шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>830 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-6-media.png" alt="img">
+                    <p class="cat-text-media">Тонік для обличчя <br>
+                        для нормальної шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>450 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="cat-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-7-media.png" alt="img">
+                    <p class="cat-text-media">ЗПінка для очищення <br>
+                        шкіри обличчя</p>
+                    <div class="cat-icons-media">
+                        <p>560 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-8-media.png" alt="img">
+                    <p class="cat-text-media">Набір <br>
+                        Денний та нічний крем</p>
+                    <div class="cat-icons-media">
+                        <p>1230 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="cat-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-9-media.png" alt="img">
+                    <p class="cat-text-media">Матуючий денний крем <br>
+                        для жиної шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>680 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-10-media.png" alt="img">
+                    <p class="cat-text-media">Нічний антивіковий крем <br>
+                        для сухої шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>860 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="icon-info-more-media">
+            <p>Показати ще</p>
+            <img src="images/icon-more-media.png" alt="icon">
+        </div>
+        <section class="previously-seen-media">
+            <p>Ви нещодавно переглядали:</p>
+            <div class="seen-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-11-media.png" alt="img">
+                    <p class="cat-text-media">Антивікова сироватка <br>
+                        для зони навколо очей</p>
+                    <div class="cat-icons-media">
+                        <p>900 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-12-media.png" alt="img">
+                    <p class="cat-text-media">Гель для зняття <br>
+                        макіяжу</p>
+                    <div class="cat-icons-media">
+                        <p>730 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="seen-row-media">
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-13-media.png" alt="img">
+                    <p class="cat-text-media">Міцелярний тонік <br>
+                        для нормальної шкіри</p>
+                    <div class="cat-icons-media">
+                        <p>780 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+                <div class="cat-item-media">
+                    <img class="cat-heart-media" src="images/icon-heart-media.png" alt="icon">
+                    <img class="cat-img-media" src="images/img-catal-14-media.png" alt="img">
+                    <p class="cat-text-media">Пінка для очищення <br>
+                        шкіри обличчя</p>
+                    <div class="cat-icons-media">
+                        <p>560 грн</p>
+                        <img src="images/icon-case-media.png" alt="icon">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- Fotter -->
+    <div class="footer">
+        <div class="footer-icons">
+            <div class="row">
+            </div>
+            <a href="https://www.instagram.com/"><img src="images/icon-insta.png" alt="icon"></a>
+            <a href="mailto:art@gmail.com"><img src="images/icon-mail.png" alt="icon"></a>
+            <a href="tel:+380635542221"><img src="images/icon-call.png" alt="icon"></a>
+            <a href="https://www.google.com/maps"><img src="images/icon-location.png" alt="icon"></a>
+        </div>
+        <div class="footer-container">
+            <div class="logo-footer">
+                <img src="images/logo-footter.png" alt="logo">
+            </div>
+            <div class="footer-list-one">
+                <ul>
+                    <li>Каталог</li>
+                    <li>Доставка та оплата</li>
+                    <li>Блог</li>
+                    <li>Контакти</li>
+                </ul>
+            </div>
+            <div class="footer-list-two">
+                <ul>
+                    <li>Режим роботи:</li>
+                    <li>Понеділок - Субота</li>
+                    <li>З 9:00 до 21:00</li>
+                </ul>
+            </div>
+            <div class="footer-list-three">
+                <ul>
+                    <li>Політика конфіденціальності</li>
+                    <li>+38 (063) 554 22 21 </li>
+                    <li>+38 (095) 678 99 00 </li>
+                </ul>
+                <div class="footer-visa-pay">
+                    <img src="images/icon-mactercard.png" alt="icon">
+                    <img src="images/icon-visa.png" alt="icon">
+                    <img src="images/icon-applepay.png" alt="icon">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-media">
+        <div class="footer-icons-media">
+            <a href="https://www.instagram.com/"><img src="images/icon-insta-media.png" alt="icon"></a>
+            <a href="mailto:art@gmail.com"><img src="images/icon-mail-media.png" alt="icon"></a>
+            <a href="tel:+380635542221"><img src="images/icon-call-media.png" alt="icon"></a>
+            <a href="https://www.google.com/maps"><img src="images/icon-location-media.png" alt="icon"></a>
+        </div>
+        <div class="footer-container-media">
+            <div class="logo-footer-media">
+                <img src="images/logo-footer-media.png" alt="logo">
+            </div>
+            <div class="footer-text-one-media">
+                <div class="footer-list-two-media">
+                    <ul>
+                        <li>Режим роботи:</li>
+                        <li>Понеділок - Субота</li>
+                        <li>З 9:00 до 21:00</li>
+                    </ul>
+                </div>
+                <div class="footer-list-three-media">
+                    <ul>
+                        <li>+38 (063) 554 22 21 </li>
+                        <li>+38 (095) 678 99 00 </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-text-two-media">
+                <div class="footer-list-one-media">
+                    <ul>
+                        <li>Каталог</li>
+                        <li>Доставка та оплата</li>
+                        <li>Блог</li>
+                        <li>Контакти</li>
+                    </ul>
+                </div>
+                <div class="footer-list-four-media">
+                    <ul>
+                        <li>Політика конфіденціальності</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-visa-pay-media">
+                <img src="images/icon-mactercard-media.png" alt="icon">
+                <img src="images/icon-visa-media.png" alt="icon">
+                <img src="images/icon-applepay-media.png" alt="icon">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
